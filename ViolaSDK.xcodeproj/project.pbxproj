@@ -1,0 +1,759 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FF66078F20DBA1A300A99EE0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FF66078E20DBA1A300A99EE0 /* AppDelegate.m */; };
+		FF66079220DBA1A300A99EE0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF66079120DBA1A300A99EE0 /* ViewController.m */; };
+		FF66079520DBA1A300A99EE0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF66079320DBA1A300A99EE0 /* Main.storyboard */; };
+		FF66079720DBA1A300A99EE0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF66079620DBA1A300A99EE0 /* Assets.xcassets */; };
+		FF66079A20DBA1A300A99EE0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF66079820DBA1A300A99EE0 /* LaunchScreen.storyboard */; };
+		FF66079D20DBA1A300A99EE0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF66079C20DBA1A300A99EE0 /* main.m */; };
+		FF6607A720DBA1A300A99EE0 /* ViolaSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6607A620DBA1A300A99EE0 /* ViolaSDKTests.m */; };
+		FF6607B220DBA1A300A99EE0 /* ViolaSDKUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6607B120DBA1A300A99EE0 /* ViolaSDKUITests.m */; };
+		FF6607EE20DBA23B00A99EE0 /* ViolaEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6607C120DBA23B00A99EE0 /* ViolaEngine.m */; };
+		FF6607EF20DBA23B00A99EE0 /* ViolaInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6607C620DBA23B00A99EE0 /* ViolaInstance.m */; };
+		FF6607F020DBA23B00A99EE0 /* VAComponentController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6607C720DBA23B00A99EE0 /* VAComponentController.m */; };
+		FF6607F120DBA23B00A99EE0 /* VAComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6607C820DBA23B00A99EE0 /* VAComponent.m */; };
+		FF6607F220DBA23B00A99EE0 /* VABridgeCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6607CA20DBA23B00A99EE0 /* VABridgeCategory.m */; };
+		FF6607F320DBA23B00A99EE0 /* VAMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6607CB20DBA23B00A99EE0 /* VAMethod.m */; };
+		FF6607F420DBA23B00A99EE0 /* VAJSBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6607CC20DBA23B00A99EE0 /* VAJSBridge.m */; };
+		FF6607F520DBA23B00A99EE0 /* VAJSContext.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6607CD20DBA23B00A99EE0 /* VAJSContext.m */; };
+		FF6607F620DBA23B00A99EE0 /* VADomModule.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6607D420DBA23B00A99EE0 /* VADomModule.m */; };
+		FF6607F820DBA23B00A99EE0 /* VAConvertUtl.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6607D720DBA23B00A99EE0 /* VAConvertUtl.m */; };
+		FF6607F920DBA23B00A99EE0 /* VALog.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6607DB20DBA23B00A99EE0 /* VALog.m */; };
+		FF6607FA20DBA23B00A99EE0 /* VAUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6607DD20DBA23B00A99EE0 /* VAUtil.m */; };
+		FF6607FB20DBA23B00A99EE0 /* VARegisterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6607E220DBA23B00A99EE0 /* VARegisterManager.m */; };
+		FF6607FC20DBA23B00A99EE0 /* VAThreadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6607E320DBA23B00A99EE0 /* VAThreadManager.m */; };
+		FF6607FD20DBA23B00A99EE0 /* VABridgeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6607E520DBA23B00A99EE0 /* VABridgeManager.m */; };
+		FF6607FE20DBA23B00A99EE0 /* VAInstanceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6607E620DBA23B00A99EE0 /* VAInstanceManager.m */; };
+		FF6607FF20DBA23B00A99EE0 /* VARootView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6607ED20DBA23B00A99EE0 /* VARootView.m */; };
+		FF66080520DBA8B000A99EE0 /* viola_test.js in Resources */ = {isa = PBXBuildFile; fileRef = FF66080420DBA8B000A99EE0 /* viola_test.js */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FF6607A320DBA1A300A99EE0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF66078220DBA1A300A99EE0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF66078920DBA1A300A99EE0;
+			remoteInfo = ViolaSDK;
+		};
+		FF6607AE20DBA1A300A99EE0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF66078220DBA1A300A99EE0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF66078920DBA1A300A99EE0;
+			remoteInfo = ViolaSDK;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		FF66078A20DBA1A300A99EE0 /* ViolaSDK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ViolaSDK.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF66078D20DBA1A300A99EE0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		FF66078E20DBA1A300A99EE0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		FF66079020DBA1A300A99EE0 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		FF66079120DBA1A300A99EE0 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		FF66079420DBA1A300A99EE0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FF66079620DBA1A300A99EE0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FF66079920DBA1A300A99EE0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		FF66079B20DBA1A300A99EE0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF66079C20DBA1A300A99EE0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FF6607A220DBA1A300A99EE0 /* ViolaSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ViolaSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF6607A620DBA1A300A99EE0 /* ViolaSDKTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViolaSDKTests.m; sourceTree = "<group>"; };
+		FF6607A820DBA1A300A99EE0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF6607AD20DBA1A300A99EE0 /* ViolaSDKUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ViolaSDKUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF6607B120DBA1A300A99EE0 /* ViolaSDKUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViolaSDKUITests.m; sourceTree = "<group>"; };
+		FF6607B320DBA1A300A99EE0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF6607C120DBA23B00A99EE0 /* ViolaEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViolaEngine.m; sourceTree = "<group>"; };
+		FF6607C220DBA23B00A99EE0 /* ViolaInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViolaInstance.h; sourceTree = "<group>"; };
+		FF6607C320DBA23B00A99EE0 /* VAComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VAComponent.h; sourceTree = "<group>"; };
+		FF6607C420DBA23B00A99EE0 /* VAComponentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VAComponentController.h; sourceTree = "<group>"; };
+		FF6607C520DBA23B00A99EE0 /* ViolaEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViolaEngine.h; sourceTree = "<group>"; };
+		FF6607C620DBA23B00A99EE0 /* ViolaInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViolaInstance.m; sourceTree = "<group>"; };
+		FF6607C720DBA23B00A99EE0 /* VAComponentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VAComponentController.m; sourceTree = "<group>"; };
+		FF6607C820DBA23B00A99EE0 /* VAComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VAComponent.m; sourceTree = "<group>"; };
+		FF6607CA20DBA23B00A99EE0 /* VABridgeCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VABridgeCategory.m; sourceTree = "<group>"; };
+		FF6607CB20DBA23B00A99EE0 /* VAMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VAMethod.m; sourceTree = "<group>"; };
+		FF6607CC20DBA23B00A99EE0 /* VAJSBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VAJSBridge.m; sourceTree = "<group>"; };
+		FF6607CD20DBA23B00A99EE0 /* VAJSContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VAJSContext.m; sourceTree = "<group>"; };
+		FF6607CE20DBA23B00A99EE0 /* VAMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VAMethod.h; sourceTree = "<group>"; };
+		FF6607CF20DBA23B00A99EE0 /* VABridgeCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VABridgeCategory.h; sourceTree = "<group>"; };
+		FF6607D020DBA23B00A99EE0 /* VAJSContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VAJSContext.h; sourceTree = "<group>"; };
+		FF6607D120DBA23B00A99EE0 /* VAJSBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VAJSBridge.h; sourceTree = "<group>"; };
+		FF6607D320DBA23B00A99EE0 /* VADomModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VADomModule.h; sourceTree = "<group>"; };
+		FF6607D420DBA23B00A99EE0 /* VADomModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VADomModule.m; sourceTree = "<group>"; };
+		FF6607D720DBA23B00A99EE0 /* VAConvertUtl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VAConvertUtl.m; sourceTree = "<group>"; };
+		FF6607D820DBA23B00A99EE0 /* VALog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VALog.h; sourceTree = "<group>"; };
+		FF6607D920DBA23B00A99EE0 /* VAUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VAUtil.h; sourceTree = "<group>"; };
+		FF6607DA20DBA23B00A99EE0 /* VAConvertUtl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VAConvertUtl.h; sourceTree = "<group>"; };
+		FF6607DB20DBA23B00A99EE0 /* VALog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VALog.m; sourceTree = "<group>"; };
+		FF6607DC20DBA23B00A99EE0 /* VADefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VADefine.h; sourceTree = "<group>"; };
+		FF6607DD20DBA23B00A99EE0 /* VAUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VAUtil.m; sourceTree = "<group>"; };
+		FF6607DE20DBA23B00A99EE0 /* ViolaSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViolaSDK.h; sourceTree = "<group>"; };
+		FF6607E020DBA23B00A99EE0 /* VAInstanceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VAInstanceManager.h; sourceTree = "<group>"; };
+		FF6607E120DBA23B00A99EE0 /* VABridgeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VABridgeManager.h; sourceTree = "<group>"; };
+		FF6607E220DBA23B00A99EE0 /* VARegisterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VARegisterManager.m; sourceTree = "<group>"; };
+		FF6607E320DBA23B00A99EE0 /* VAThreadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VAThreadManager.m; sourceTree = "<group>"; };
+		FF6607E420DBA23B00A99EE0 /* VARegisterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VARegisterManager.h; sourceTree = "<group>"; };
+		FF6607E520DBA23B00A99EE0 /* VABridgeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VABridgeManager.m; sourceTree = "<group>"; };
+		FF6607E620DBA23B00A99EE0 /* VAInstanceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VAInstanceManager.m; sourceTree = "<group>"; };
+		FF6607E720DBA23B00A99EE0 /* VAThreadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VAThreadManager.h; sourceTree = "<group>"; };
+		FF6607EA20DBA23B00A99EE0 /* VAModuleProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VAModuleProtocol.h; sourceTree = "<group>"; };
+		FF6607EC20DBA23B00A99EE0 /* VARootView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VARootView.h; sourceTree = "<group>"; };
+		FF6607ED20DBA23B00A99EE0 /* VARootView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VARootView.m; sourceTree = "<group>"; };
+		FF66080120DBA4F900A99EE0 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		FF66080420DBA8B000A99EE0 /* viola_test.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = viola_test.js; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FF66078720DBA1A300A99EE0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF66079F20DBA1A300A99EE0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF6607AA20DBA1A300A99EE0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FF66078120DBA1A300A99EE0 = {
+			isa = PBXGroup;
+			children = (
+				FF66078C20DBA1A300A99EE0 /* ViolaSDK */,
+				FF6607A520DBA1A300A99EE0 /* ViolaSDKTests */,
+				FF6607B020DBA1A300A99EE0 /* ViolaSDKUITests */,
+				FF66078B20DBA1A300A99EE0 /* Products */,
+				FF66080020DBA4F900A99EE0 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		FF66078B20DBA1A300A99EE0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FF66078A20DBA1A300A99EE0 /* ViolaSDK.app */,
+				FF6607A220DBA1A300A99EE0 /* ViolaSDKTests.xctest */,
+				FF6607AD20DBA1A300A99EE0 /* ViolaSDKUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FF66078C20DBA1A300A99EE0 /* ViolaSDK */ = {
+			isa = PBXGroup;
+			children = (
+				FF66080320DBA88E00A99EE0 /* Resource */,
+				FF6607BF20DBA23B00A99EE0 /* Source */,
+				FF66078D20DBA1A300A99EE0 /* AppDelegate.h */,
+				FF66078E20DBA1A300A99EE0 /* AppDelegate.m */,
+				FF66079020DBA1A300A99EE0 /* ViewController.h */,
+				FF66079120DBA1A300A99EE0 /* ViewController.m */,
+				FF66079320DBA1A300A99EE0 /* Main.storyboard */,
+				FF66079620DBA1A300A99EE0 /* Assets.xcassets */,
+				FF66079820DBA1A300A99EE0 /* LaunchScreen.storyboard */,
+				FF66079B20DBA1A300A99EE0 /* Info.plist */,
+				FF66079C20DBA1A300A99EE0 /* main.m */,
+			);
+			path = ViolaSDK;
+			sourceTree = "<group>";
+		};
+		FF6607A520DBA1A300A99EE0 /* ViolaSDKTests */ = {
+			isa = PBXGroup;
+			children = (
+				FF6607A620DBA1A300A99EE0 /* ViolaSDKTests.m */,
+				FF6607A820DBA1A300A99EE0 /* Info.plist */,
+			);
+			path = ViolaSDKTests;
+			sourceTree = "<group>";
+		};
+		FF6607B020DBA1A300A99EE0 /* ViolaSDKUITests */ = {
+			isa = PBXGroup;
+			children = (
+				FF6607B120DBA1A300A99EE0 /* ViolaSDKUITests.m */,
+				FF6607B320DBA1A300A99EE0 /* Info.plist */,
+			);
+			path = ViolaSDKUITests;
+			sourceTree = "<group>";
+		};
+		FF6607BF20DBA23B00A99EE0 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				FF6607C020DBA23B00A99EE0 /* Core */,
+				FF6607C920DBA23B00A99EE0 /* Bridge */,
+				FF6607D220DBA23B00A99EE0 /* Module */,
+				FF6607D620DBA23B00A99EE0 /* Utils */,
+				FF6607DE20DBA23B00A99EE0 /* ViolaSDK.h */,
+				FF6607DF20DBA23B00A99EE0 /* Manager */,
+				FF6607E820DBA23B00A99EE0 /* Common */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		FF6607C020DBA23B00A99EE0 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				FF6607C120DBA23B00A99EE0 /* ViolaEngine.m */,
+				FF6607C220DBA23B00A99EE0 /* ViolaInstance.h */,
+				FF6607C320DBA23B00A99EE0 /* VAComponent.h */,
+				FF6607C420DBA23B00A99EE0 /* VAComponentController.h */,
+				FF6607C520DBA23B00A99EE0 /* ViolaEngine.h */,
+				FF6607C620DBA23B00A99EE0 /* ViolaInstance.m */,
+				FF6607C720DBA23B00A99EE0 /* VAComponentController.m */,
+				FF6607C820DBA23B00A99EE0 /* VAComponent.m */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		FF6607C920DBA23B00A99EE0 /* Bridge */ = {
+			isa = PBXGroup;
+			children = (
+				FF6607CA20DBA23B00A99EE0 /* VABridgeCategory.m */,
+				FF6607CB20DBA23B00A99EE0 /* VAMethod.m */,
+				FF6607CC20DBA23B00A99EE0 /* VAJSBridge.m */,
+				FF6607CD20DBA23B00A99EE0 /* VAJSContext.m */,
+				FF6607CE20DBA23B00A99EE0 /* VAMethod.h */,
+				FF6607CF20DBA23B00A99EE0 /* VABridgeCategory.h */,
+				FF6607D020DBA23B00A99EE0 /* VAJSContext.h */,
+				FF6607D120DBA23B00A99EE0 /* VAJSBridge.h */,
+			);
+			path = Bridge;
+			sourceTree = "<group>";
+		};
+		FF6607D220DBA23B00A99EE0 /* Module */ = {
+			isa = PBXGroup;
+			children = (
+				FF6607D320DBA23B00A99EE0 /* VADomModule.h */,
+				FF6607D420DBA23B00A99EE0 /* VADomModule.m */,
+			);
+			path = Module;
+			sourceTree = "<group>";
+		};
+		FF6607D620DBA23B00A99EE0 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				FF6607D720DBA23B00A99EE0 /* VAConvertUtl.m */,
+				FF6607D820DBA23B00A99EE0 /* VALog.h */,
+				FF6607D920DBA23B00A99EE0 /* VAUtil.h */,
+				FF6607DA20DBA23B00A99EE0 /* VAConvertUtl.h */,
+				FF6607DB20DBA23B00A99EE0 /* VALog.m */,
+				FF6607DC20DBA23B00A99EE0 /* VADefine.h */,
+				FF6607DD20DBA23B00A99EE0 /* VAUtil.m */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		FF6607DF20DBA23B00A99EE0 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				FF6607E020DBA23B00A99EE0 /* VAInstanceManager.h */,
+				FF6607E120DBA23B00A99EE0 /* VABridgeManager.h */,
+				FF6607E220DBA23B00A99EE0 /* VARegisterManager.m */,
+				FF6607E320DBA23B00A99EE0 /* VAThreadManager.m */,
+				FF6607E420DBA23B00A99EE0 /* VARegisterManager.h */,
+				FF6607E520DBA23B00A99EE0 /* VABridgeManager.m */,
+				FF6607E620DBA23B00A99EE0 /* VAInstanceManager.m */,
+				FF6607E720DBA23B00A99EE0 /* VAThreadManager.h */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		FF6607E820DBA23B00A99EE0 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				FF6607E920DBA23B00A99EE0 /* Protocol */,
+				FF6607EB20DBA23B00A99EE0 /* View */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		FF6607E920DBA23B00A99EE0 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				FF6607EA20DBA23B00A99EE0 /* VAModuleProtocol.h */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		FF6607EB20DBA23B00A99EE0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FF6607EC20DBA23B00A99EE0 /* VARootView.h */,
+				FF6607ED20DBA23B00A99EE0 /* VARootView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		FF66080020DBA4F900A99EE0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FF66080120DBA4F900A99EE0 /* JavaScriptCore.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FF66080320DBA88E00A99EE0 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				FF66080420DBA8B000A99EE0 /* viola_test.js */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FF66078920DBA1A300A99EE0 /* ViolaSDK */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF6607B620DBA1A300A99EE0 /* Build configuration list for PBXNativeTarget "ViolaSDK" */;
+			buildPhases = (
+				FF66078620DBA1A300A99EE0 /* Sources */,
+				FF66078720DBA1A300A99EE0 /* Frameworks */,
+				FF66078820DBA1A300A99EE0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ViolaSDK;
+			productName = ViolaSDK;
+			productReference = FF66078A20DBA1A300A99EE0 /* ViolaSDK.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FF6607A120DBA1A300A99EE0 /* ViolaSDKTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF6607B920DBA1A300A99EE0 /* Build configuration list for PBXNativeTarget "ViolaSDKTests" */;
+			buildPhases = (
+				FF66079E20DBA1A300A99EE0 /* Sources */,
+				FF66079F20DBA1A300A99EE0 /* Frameworks */,
+				FF6607A020DBA1A300A99EE0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FF6607A420DBA1A300A99EE0 /* PBXTargetDependency */,
+			);
+			name = ViolaSDKTests;
+			productName = ViolaSDKTests;
+			productReference = FF6607A220DBA1A300A99EE0 /* ViolaSDKTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		FF6607AC20DBA1A300A99EE0 /* ViolaSDKUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF6607BC20DBA1A300A99EE0 /* Build configuration list for PBXNativeTarget "ViolaSDKUITests" */;
+			buildPhases = (
+				FF6607A920DBA1A300A99EE0 /* Sources */,
+				FF6607AA20DBA1A300A99EE0 /* Frameworks */,
+				FF6607AB20DBA1A300A99EE0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FF6607AF20DBA1A300A99EE0 /* PBXTargetDependency */,
+			);
+			name = ViolaSDKUITests;
+			productName = ViolaSDKUITests;
+			productReference = FF6607AD20DBA1A300A99EE0 /* ViolaSDKUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FF66078220DBA1A300A99EE0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = "邱良雄";
+				TargetAttributes = {
+					FF66078920DBA1A300A99EE0 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Manual;
+					};
+					FF6607A120DBA1A300A99EE0 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = FF66078920DBA1A300A99EE0;
+					};
+					FF6607AC20DBA1A300A99EE0 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = FF66078920DBA1A300A99EE0;
+					};
+				};
+			};
+			buildConfigurationList = FF66078520DBA1A300A99EE0 /* Build configuration list for PBXProject "ViolaSDK" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FF66078120DBA1A300A99EE0;
+			productRefGroup = FF66078B20DBA1A300A99EE0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FF66078920DBA1A300A99EE0 /* ViolaSDK */,
+				FF6607A120DBA1A300A99EE0 /* ViolaSDKTests */,
+				FF6607AC20DBA1A300A99EE0 /* ViolaSDKUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FF66078820DBA1A300A99EE0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF66079A20DBA1A300A99EE0 /* LaunchScreen.storyboard in Resources */,
+				FF66079720DBA1A300A99EE0 /* Assets.xcassets in Resources */,
+				FF66080520DBA8B000A99EE0 /* viola_test.js in Resources */,
+				FF66079520DBA1A300A99EE0 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF6607A020DBA1A300A99EE0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF6607AB20DBA1A300A99EE0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FF66078620DBA1A300A99EE0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF6607F320DBA23B00A99EE0 /* VAMethod.m in Sources */,
+				FF66079220DBA1A300A99EE0 /* ViewController.m in Sources */,
+				FF6607F120DBA23B00A99EE0 /* VAComponent.m in Sources */,
+				FF6607EE20DBA23B00A99EE0 /* ViolaEngine.m in Sources */,
+				FF6607F420DBA23B00A99EE0 /* VAJSBridge.m in Sources */,
+				FF6607FF20DBA23B00A99EE0 /* VARootView.m in Sources */,
+				FF6607FB20DBA23B00A99EE0 /* VARegisterManager.m in Sources */,
+				FF6607FE20DBA23B00A99EE0 /* VAInstanceManager.m in Sources */,
+				FF6607FA20DBA23B00A99EE0 /* VAUtil.m in Sources */,
+				FF6607FD20DBA23B00A99EE0 /* VABridgeManager.m in Sources */,
+				FF6607EF20DBA23B00A99EE0 /* ViolaInstance.m in Sources */,
+				FF6607F820DBA23B00A99EE0 /* VAConvertUtl.m in Sources */,
+				FF6607FC20DBA23B00A99EE0 /* VAThreadManager.m in Sources */,
+				FF66079D20DBA1A300A99EE0 /* main.m in Sources */,
+				FF6607F020DBA23B00A99EE0 /* VAComponentController.m in Sources */,
+				FF66078F20DBA1A300A99EE0 /* AppDelegate.m in Sources */,
+				FF6607F620DBA23B00A99EE0 /* VADomModule.m in Sources */,
+				FF6607F220DBA23B00A99EE0 /* VABridgeCategory.m in Sources */,
+				FF6607F520DBA23B00A99EE0 /* VAJSContext.m in Sources */,
+				FF6607F920DBA23B00A99EE0 /* VALog.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF66079E20DBA1A300A99EE0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF6607A720DBA1A300A99EE0 /* ViolaSDKTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF6607A920DBA1A300A99EE0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF6607B220DBA1A300A99EE0 /* ViolaSDKUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FF6607A420DBA1A300A99EE0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FF66078920DBA1A300A99EE0 /* ViolaSDK */;
+			targetProxy = FF6607A320DBA1A300A99EE0 /* PBXContainerItemProxy */;
+		};
+		FF6607AF20DBA1A300A99EE0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FF66078920DBA1A300A99EE0 /* ViolaSDK */;
+			targetProxy = FF6607AE20DBA1A300A99EE0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		FF66079320DBA1A300A99EE0 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FF66079420DBA1A300A99EE0 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		FF66079820DBA1A300A99EE0 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FF66079920DBA1A300A99EE0 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FF6607B420DBA1A300A99EE0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		FF6607B520DBA1A300A99EE0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FF6607B720DBA1A300A99EE0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = ViolaSDK/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tencent.kandian.viola.ViolaSDK;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		FF6607B820DBA1A300A99EE0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = ViolaSDK/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tencent.kandian.viola.ViolaSDK;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		FF6607BA20DBA1A300A99EE0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = ViolaSDKTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tencent.kandian.viola.ViolaSDKTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ViolaSDK.app/ViolaSDK";
+			};
+			name = Debug;
+		};
+		FF6607BB20DBA1A300A99EE0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = ViolaSDKTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tencent.kandian.viola.ViolaSDKTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ViolaSDK.app/ViolaSDK";
+			};
+			name = Release;
+		};
+		FF6607BD20DBA1A300A99EE0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = ViolaSDKUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tencent.kandian.viola.ViolaSDKUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ViolaSDK;
+			};
+			name = Debug;
+		};
+		FF6607BE20DBA1A300A99EE0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = ViolaSDKUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tencent.kandian.viola.ViolaSDKUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ViolaSDK;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FF66078520DBA1A300A99EE0 /* Build configuration list for PBXProject "ViolaSDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF6607B420DBA1A300A99EE0 /* Debug */,
+				FF6607B520DBA1A300A99EE0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF6607B620DBA1A300A99EE0 /* Build configuration list for PBXNativeTarget "ViolaSDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF6607B720DBA1A300A99EE0 /* Debug */,
+				FF6607B820DBA1A300A99EE0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF6607B920DBA1A300A99EE0 /* Build configuration list for PBXNativeTarget "ViolaSDKTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF6607BA20DBA1A300A99EE0 /* Debug */,
+				FF6607BB20DBA1A300A99EE0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF6607BC20DBA1A300A99EE0 /* Build configuration list for PBXNativeTarget "ViolaSDKUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF6607BD20DBA1A300A99EE0 /* Debug */,
+				FF6607BE20DBA1A300A99EE0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FF66078220DBA1A300A99EE0 /* Project object */;
+}
