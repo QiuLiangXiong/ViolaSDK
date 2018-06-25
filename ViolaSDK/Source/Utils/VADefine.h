@@ -13,7 +13,9 @@
 #import "VAUtil.h"
 #import <objc/runtime.h>
 #import <UIKit/UIKit.h>
+
 #define VA_SDK_VERSION @"1.0.0"
+#define VA_ROOT_REF @"__root"
 
 #define kBlockWeakSelf __weak typeof(&*self) weakSelf = self
 #define kBlockStrongSelf __strong typeof(&*weakSelf) strongSelf = weakSelf
@@ -43,7 +45,9 @@ VAAssert([VAThreadManager isBridgeThread], \
 VAAssert([VAThreadManager isComponentThread], \
 @"must be called on the component thread")
 
-
+#define VAAssertMainThread() \
+VAAssert([NSThread isMainThread], \
+@"must be called on the bridge thread")
 
 #define VA_ENUMBER_CASE(_invoke, idx, code, obj, _type, op, _flist) \
 case code:{\

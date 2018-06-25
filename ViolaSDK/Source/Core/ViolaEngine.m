@@ -9,6 +9,7 @@
 #import "ViolaEngine.h"
 #import "VARegisterManager.h"
 #import "VADomModule.h"
+#import "VADivComponent.h"
 
 @implementation ViolaEngine
 
@@ -40,8 +41,12 @@
 
 
 + (void)_registerDefaults{
-    //dom
-    [self registerModule:@"dom" withClass:[VADomModule class]];
+    //module
+    [self registerModule:@"dom" withClass:[VADomModule class]];    //dom
+    
+    //component
+    
+    [self registerComponent:@"div" withClass:[VADivComponent class]];
     
 }
 

@@ -56,7 +56,6 @@
 #pragma mark - registerDefaultNativeApi
 
 - (void)_registerDefaultNativeApi{
-    kBlockWeakSelf;
     self.jsContext.exceptionHandler = ^(JSContext *context, JSValue *exception){
         context.exception = exception;
         NSString *message = [NSString stringWithFormat:@"[js_error]:%@", exception];

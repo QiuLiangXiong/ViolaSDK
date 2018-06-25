@@ -15,6 +15,7 @@
 + (void)registerHandler:(id)handler protocol:(Protocol *)protocol;
 
 + (Class)classWithModuleName:(NSString *)name;
++ (Class)classWithComponentType:(NSString *)type;
 
 + (SEL)selectorWithModuleName:(NSString *)moduleName methodName:(NSString *)methodName;
 

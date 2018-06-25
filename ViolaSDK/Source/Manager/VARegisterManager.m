@@ -9,6 +9,7 @@
 #import "VARegisterManager.h"
 #import "VADefine.h"
 #import "VAModuleProtocol.h"
+#import "VABridgeManager.h"
 
 @interface VAClassInfo:NSObject
 
@@ -78,12 +79,12 @@
     }];
 }
 + (void)registerComponentWithName:(NSString *)name componentCalss:(Class)aClass{
-    [VAThreadManager performOnBridgeThreadWithBlock:^{
+    [VAThreadManager performOnComponentThreadWithBlock:^{
         [[self _getInstance] _registerComponentWithName:name componentCalss:aClass];
     }];
 }
 + (void)registerHandler:(id)handler protocol:(Protocol *)protocol{
-    [VAThreadManager performOnBridgeThreadWithBlock:^{
+    [VAThreadManager performOnComponentThreadWithBlock:^{
         [[self _getInstance] _registerHandler:handler protocol:protocol];
     }];
 }
@@ -92,6 +93,14 @@
     __block Class res = nil;
     [VAThreadManager performOnBridgeThreadWithBlock:^{
         res = [[self _getInstance] _classWithModuleName:name];
+    } waitUntilDone:true];
+    return res;
+}
+
++ (Class)classWithComponentType:(NSString *)type{
+    __block Class res = nil;
+    [VAThreadManager performOnComponentThreadWithBlock:^{
+        res = [[self _getInstance] _classWithComponentTypeName:type];
     } waitUntilDone:true];
     return res;
 }
@@ -106,7 +115,7 @@
 
 + (SEL)selectorWithComponentName:(NSString *)componentName methodName:(NSString *)methodName{
     __block SEL res = nil;
-    [VAThreadManager performOnBridgeThreadWithBlock:^{
+    [VAThreadManager performOnComponentThreadWithBlock:^{
         res = [[self _getInstance] _selectorWithComponentName:componentName methodName:methodName];
     } waitUntilDone:true];
     return res;
@@ -145,6 +154,16 @@
     }
     return nil;
 }
+
+
+- (Class)_classWithComponentTypeName:(NSString *)name{
+    if([name isKindOfClass:[NSString class]]){
+        VAClassInfo * info = (VAClassInfo *)[self.componentsDic objectForKey:name];
+        return info.aClass;
+    }
+    return nil;
+}
+
 
 - (SEL)_selectorWithModuleName:(NSString *)moduleName methodName:(NSString *)methodName{
     if ([moduleName isKindOfClass:[NSString class]] && [methodName isKindOfClass:[NSString class]]) {

@@ -8,17 +8,22 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "VAComponentController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 @protocol VAModuleProtocol;
+@protocol ViolaInstanceDelegate;
 @class VAComponent;
 @class VARootView;
 @interface ViolaInstance : NSObject
+
+@property (nullable, nonatomic,weak) id<ViolaInstanceDelegate> delegate;
 
 /*
  * 实例唯一ID
  */
 @property (nonatomic, copy ,readonly) NSString * instanceId;
+@property (nonnull, nonatomic, strong, readonly) VAComponentController * componentController;
 
 @property (nonatomic, assign) CGRect instanceFrame;
 
@@ -47,11 +52,20 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)destroyInstance;
 
 
+
+
+
 //- (void)refreshInstance:(id)data;
 
 
 
 
+
+@end
+
+@protocol ViolaInstanceDelegate<NSObject>
+
+- (void)violaIntance:(ViolaInstance *)instance didCreatedView:(UIView *)view;
 
 @end
 NS_ASSUME_NONNULL_END

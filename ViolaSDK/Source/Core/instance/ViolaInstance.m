@@ -14,12 +14,14 @@
 #import "VABridgeManager.h"
 #import "VARootView.h"
 #import "VADefine.h"
+#import "objc/runtime.h"
 @interface ViolaInstance()
 
 @property (nonatomic, copy ,readwrite) NSString * instanceId;
 @property (nonatomic, strong ,readwrite) VARootView * rootView;
-@property (nullable, nonatomic, strong) VAComponentController * componentController;
+
 @property (nonnull, nonatomic, strong) NSMutableDictionary * modules;
+@property (nonnull, nonatomic, strong, readwrite) VAComponentController * componentController;
 
 @end
 
@@ -41,6 +43,7 @@
         _instanceId = [NSString stringWithFormat:@"%d", (int)instanceId];
         _modules = [NSMutableDictionary new];
         _componentController = [VAComponentController new];
+        _componentController.vaInstance = self;
         
         [VAInstanceManager setInstance:self forID:self.instanceId];
 
@@ -55,16 +58,21 @@
 - (void)renderViewWithScript:(NSString *)script data:(NSDictionary *)data{
     NSMutableDictionary * realData = [NSMutableDictionary dictionaryWithDictionary:data];
     
+
+    kBlockWeakSelf;
     [VAThreadManager performOnMainThreadWithBlock:^{
         _rootView = [[VARootView alloc] initWithFrame:self.instanceFrame];
         _rootView.vaInstance = self;
-        //通过代理其实也不错的。。。。
-//                if(self.onCreate) {//tomqiu todo
-//                    self.onCreate(_rootView);
-//                }
+        if([weakSelf.delegate respondsToSelector:@selector(violaIntance:didCreatedView:)]){
+            [weakSelf.delegate violaIntance:weakSelf didCreatedView:_rootView];
+        }
     }];
     [[VABridgeManager shareManager] executeJSScript:script];//tomqiu todo 
     
+#if  DEBUG
+//    script = @"callNative('1', [{  module:'dom',method:'test',args:['','1'] }])";
+    script = @"nativeLog(22222)";
+#endif
     [[VABridgeManager shareManager] createInstanceWithID:self.instanceId script:script data:realData];
 }
 
@@ -115,6 +123,7 @@
     if (!CGRectEqualToRect(instanceFrame, _instanceFrame)) {
         _instanceFrame = instanceFrame;
         kBlockWeakSelf;
+        if(!weakSelf.rootView) return ;
         [VAThreadManager performOnMainThreadWithBlock:^{
             if (weakSelf.rootView) {
                 weakSelf.rootView.frame = weakSelf.instanceFrame;

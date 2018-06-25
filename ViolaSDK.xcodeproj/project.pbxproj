@@ -33,6 +33,12 @@
 		FF6607FE20DBA23B00A99EE0 /* VAInstanceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6607E620DBA23B00A99EE0 /* VAInstanceManager.m */; };
 		FF6607FF20DBA23B00A99EE0 /* VARootView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6607ED20DBA23B00A99EE0 /* VARootView.m */; };
 		FF66080520DBA8B000A99EE0 /* viola_test.js in Resources */ = {isa = PBXBuildFile; fileRef = FF66080420DBA8B000A99EE0 /* viola_test.js */; };
+		FFB278B520DE463C009FD859 /* VADivComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB278B420DE463C009FD859 /* VADivComponent.m */; };
+		FFB278BC20DE9AED009FD859 /* Layout.c in Sources */ = {isa = PBXBuildFile; fileRef = FFB278BB20DE9AED009FD859 /* Layout.c */; };
+		FFB278C220DE9C41009FD859 /* VAComponent+layout.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB278C120DE9C41009FD859 /* VAComponent+layout.m */; };
+		FFB278C720E0F6C9009FD859 /* VAComponent+view.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB278C620E0F6C9009FD859 /* VAComponent+view.m */; };
+		FFB278CA20E0FD14009FD859 /* VAWeakObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB278C920E0FD14009FD859 /* VAWeakObject.m */; };
+		FFB278CD20E12822009FD859 /* VAComponent+event.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB278CC20E12822009FD859 /* VAComponent+event.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +114,19 @@
 		FF6607ED20DBA23B00A99EE0 /* VARootView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VARootView.m; sourceTree = "<group>"; };
 		FF66080120DBA4F900A99EE0 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		FF66080420DBA8B000A99EE0 /* viola_test.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = viola_test.js; sourceTree = "<group>"; };
+		FFB278B320DE463C009FD859 /* VADivComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VADivComponent.h; sourceTree = "<group>"; };
+		FFB278B420DE463C009FD859 /* VADivComponent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VADivComponent.m; sourceTree = "<group>"; };
+		FFB278BA20DE9AED009FD859 /* Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layout.h; sourceTree = "<group>"; };
+		FFB278BB20DE9AED009FD859 /* Layout.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Layout.c; sourceTree = "<group>"; };
+		FFB278C020DE9C41009FD859 /* VAComponent+layout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VAComponent+layout.h"; sourceTree = "<group>"; };
+		FFB278C120DE9C41009FD859 /* VAComponent+layout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "VAComponent+layout.m"; sourceTree = "<group>"; };
+		FFB278C320DEA3F9009FD859 /* VAComponent+private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VAComponent+private.h"; sourceTree = "<group>"; };
+		FFB278C520E0F6C9009FD859 /* VAComponent+view.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VAComponent+view.h"; sourceTree = "<group>"; };
+		FFB278C620E0F6C9009FD859 /* VAComponent+view.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "VAComponent+view.m"; sourceTree = "<group>"; };
+		FFB278C820E0FD14009FD859 /* VAWeakObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VAWeakObject.h; sourceTree = "<group>"; };
+		FFB278C920E0FD14009FD859 /* VAWeakObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAWeakObject.m; sourceTree = "<group>"; };
+		FFB278CB20E12822009FD859 /* VAComponent+event.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VAComponent+event.h"; sourceTree = "<group>"; };
+		FFB278CC20E12822009FD859 /* VAComponent+event.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "VAComponent+event.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,12 +215,14 @@
 			isa = PBXGroup;
 			children = (
 				FF6607C020DBA23B00A99EE0 /* Core */,
+				FFB278B220DE462A009FD859 /* Component */,
 				FF6607C920DBA23B00A99EE0 /* Bridge */,
 				FF6607D220DBA23B00A99EE0 /* Module */,
 				FF6607D620DBA23B00A99EE0 /* Utils */,
-				FF6607DE20DBA23B00A99EE0 /* ViolaSDK.h */,
 				FF6607DF20DBA23B00A99EE0 /* Manager */,
 				FF6607E820DBA23B00A99EE0 /* Common */,
+				FFB278B920DE9A82009FD859 /* Vendor */,
+				FF6607DE20DBA23B00A99EE0 /* ViolaSDK.h */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -209,14 +230,10 @@
 		FF6607C020DBA23B00A99EE0 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				FFB278B720DE993C009FD859 /* instance */,
+				FFB278B620DE991F009FD859 /* component */,
 				FF6607C120DBA23B00A99EE0 /* ViolaEngine.m */,
-				FF6607C220DBA23B00A99EE0 /* ViolaInstance.h */,
-				FF6607C320DBA23B00A99EE0 /* VAComponent.h */,
-				FF6607C420DBA23B00A99EE0 /* VAComponentController.h */,
 				FF6607C520DBA23B00A99EE0 /* ViolaEngine.h */,
-				FF6607C620DBA23B00A99EE0 /* ViolaInstance.m */,
-				FF6607C720DBA23B00A99EE0 /* VAComponentController.m */,
-				FF6607C820DBA23B00A99EE0 /* VAComponent.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -255,6 +272,8 @@
 				FF6607DB20DBA23B00A99EE0 /* VALog.m */,
 				FF6607DC20DBA23B00A99EE0 /* VADefine.h */,
 				FF6607DD20DBA23B00A99EE0 /* VAUtil.m */,
+				FFB278C820E0FD14009FD859 /* VAWeakObject.h */,
+				FFB278C920E0FD14009FD859 /* VAWeakObject.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -314,6 +333,51 @@
 				FF66080420DBA8B000A99EE0 /* viola_test.js */,
 			);
 			path = Resource;
+			sourceTree = "<group>";
+		};
+		FFB278B220DE462A009FD859 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				FFB278B320DE463C009FD859 /* VADivComponent.h */,
+				FFB278B420DE463C009FD859 /* VADivComponent.m */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+		FFB278B620DE991F009FD859 /* component */ = {
+			isa = PBXGroup;
+			children = (
+				FF6607C420DBA23B00A99EE0 /* VAComponentController.h */,
+				FF6607C720DBA23B00A99EE0 /* VAComponentController.m */,
+				FF6607C320DBA23B00A99EE0 /* VAComponent.h */,
+				FF6607C820DBA23B00A99EE0 /* VAComponent.m */,
+				FFB278C020DE9C41009FD859 /* VAComponent+layout.h */,
+				FFB278C120DE9C41009FD859 /* VAComponent+layout.m */,
+				FFB278C320DEA3F9009FD859 /* VAComponent+private.h */,
+				FFB278C520E0F6C9009FD859 /* VAComponent+view.h */,
+				FFB278C620E0F6C9009FD859 /* VAComponent+view.m */,
+				FFB278CB20E12822009FD859 /* VAComponent+event.h */,
+				FFB278CC20E12822009FD859 /* VAComponent+event.m */,
+			);
+			path = component;
+			sourceTree = "<group>";
+		};
+		FFB278B720DE993C009FD859 /* instance */ = {
+			isa = PBXGroup;
+			children = (
+				FF6607C220DBA23B00A99EE0 /* ViolaInstance.h */,
+				FF6607C620DBA23B00A99EE0 /* ViolaInstance.m */,
+			);
+			path = instance;
+			sourceTree = "<group>";
+		};
+		FFB278B920DE9A82009FD859 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				FFB278BB20DE9AED009FD859 /* Layout.c */,
+				FFB278BA20DE9AED009FD859 /* Layout.h */,
+			);
+			path = Vendor;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -450,24 +514,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFB278C220DE9C41009FD859 /* VAComponent+layout.m in Sources */,
 				FF6607F320DBA23B00A99EE0 /* VAMethod.m in Sources */,
 				FF66079220DBA1A300A99EE0 /* ViewController.m in Sources */,
 				FF6607F120DBA23B00A99EE0 /* VAComponent.m in Sources */,
 				FF6607EE20DBA23B00A99EE0 /* ViolaEngine.m in Sources */,
+				FFB278C720E0F6C9009FD859 /* VAComponent+view.m in Sources */,
 				FF6607F420DBA23B00A99EE0 /* VAJSBridge.m in Sources */,
 				FF6607FF20DBA23B00A99EE0 /* VARootView.m in Sources */,
 				FF6607FB20DBA23B00A99EE0 /* VARegisterManager.m in Sources */,
 				FF6607FE20DBA23B00A99EE0 /* VAInstanceManager.m in Sources */,
 				FF6607FA20DBA23B00A99EE0 /* VAUtil.m in Sources */,
 				FF6607FD20DBA23B00A99EE0 /* VABridgeManager.m in Sources */,
+				FFB278B520DE463C009FD859 /* VADivComponent.m in Sources */,
 				FF6607EF20DBA23B00A99EE0 /* ViolaInstance.m in Sources */,
 				FF6607F820DBA23B00A99EE0 /* VAConvertUtl.m in Sources */,
 				FF6607FC20DBA23B00A99EE0 /* VAThreadManager.m in Sources */,
 				FF66079D20DBA1A300A99EE0 /* main.m in Sources */,
 				FF6607F020DBA23B00A99EE0 /* VAComponentController.m in Sources */,
 				FF66078F20DBA1A300A99EE0 /* AppDelegate.m in Sources */,
+				FFB278CD20E12822009FD859 /* VAComponent+event.m in Sources */,
 				FF6607F620DBA23B00A99EE0 /* VADomModule.m in Sources */,
+				FFB278CA20E0FD14009FD859 /* VAWeakObject.m in Sources */,
 				FF6607F220DBA23B00A99EE0 /* VABridgeCategory.m in Sources */,
+				FFB278BC20DE9AED009FD859 /* Layout.c in Sources */,
 				FF6607F520DBA23B00A99EE0 /* VAJSContext.m in Sources */,
 				FF6607F920DBA23B00A99EE0 /* VALog.m in Sources */,
 			);

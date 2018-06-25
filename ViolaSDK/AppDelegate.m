@@ -22,21 +22,9 @@
     // Override point for customization after application launch.
     
     //local test
-    [ViolaEngine startEngine];
+   
     
-    
-    ViolaInstance * intance = [ViolaInstance new];
-    self.vaInstance = intance;
-    
-    
-    
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"viola_test" ofType:@"js"];
-    NSString * script = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
-    
-    
-    [intance renderViewWithScript:script data:@{@"os":@"iOS"}];
-    
-    [[VABridgeManager shareManager] fireEventWithIntanceID:@"1" ref:@"div1" type:@"click" params:@{} domChanges:nil];
+   // [[VABridgeManager shareManager] fireEventWithIntanceID:@"1" ref:@"div1" type:@"click" params:@{} domChanges:nil];
     
     return YES;
 }

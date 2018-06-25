@@ -10,59 +10,59 @@
 #import "VALog.h"
 #define VA_BRIDGE_THREAD_NAME @"com.tencent.viola.bridge"
 #define VA_COMPONENT_THREAD_NAME @"com.tencent.viola.component"
+#import "UIKit/UIKit.h"
+
 
 @implementation VAThreadManager
 
 /*bridge线程*/
-
+static dispatch_queue_t bridgeQueue = NULL;
 + (dispatch_queue_t)getBridgeQueue{
-    static dispatch_queue_t bridgeQueue = NULL;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         dispatch_queue_attr_t queue_attr = dispatch_queue_attr_make_with_qos_class (DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE,0);
         bridgeQueue = dispatch_queue_create([VA_BRIDGE_THREAD_NAME UTF8String], queue_attr);
+        dispatch_queue_set_specific(bridgeQueue, &bridgeQueue, (void *)[VA_BRIDGE_THREAD_NAME UTF8String], (dispatch_function_t)CFRelease);
     });
     return bridgeQueue;
 }
 
 
-+ (BOOL)isBridgeThread{
-    static NSThread * birdgeThread = nil;
++ (instancetype)getIntance{
+    static VAThreadManager * instance ;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        dispatch_async([self getBridgeQueue], ^{
-            birdgeThread = [NSThread currentThread];
-            [[NSRunLoop currentRunLoop] run];
-        });
-        dispatch_sync([self getBridgeQueue], ^{
-        });
+        instance = [VAThreadManager new];
     });
-    return [NSThread currentThread] == birdgeThread;
+    return instance;
 }
 
++ (BOOL)isBridgeThread{
+    if(dispatch_get_specific(&bridgeQueue)){
+        return true;
+    }
+    return false;
+}
+
+
 /*component线程*/
+static dispatch_queue_t componentQueue = NULL;
 + (dispatch_queue_t)getComponentQueue{
-    static dispatch_queue_t componentQueue = NULL;
+
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         dispatch_queue_attr_t queue_attr = dispatch_queue_attr_make_with_qos_class (DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE,0);
         componentQueue = dispatch_queue_create([VA_COMPONENT_THREAD_NAME UTF8String], queue_attr);
+        dispatch_queue_set_specific(componentQueue, &componentQueue, (void *)[VA_COMPONENT_THREAD_NAME UTF8String], (dispatch_function_t)CFRelease);
     });
     return componentQueue;
 }
 
 + (BOOL)isComponentThread{
-    static NSThread * componentThread = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        dispatch_async([self getComponentQueue], ^{
-            componentThread = [NSThread currentThread];
-            [[NSRunLoop currentRunLoop] run];
-        });
-        dispatch_sync([self getComponentQueue], ^{
-        });
-    });
-    return [NSThread currentThread] == componentThread;
+    if(dispatch_get_specific(&componentQueue)){
+        return true;
+    }
+    return false;
 }
 
 

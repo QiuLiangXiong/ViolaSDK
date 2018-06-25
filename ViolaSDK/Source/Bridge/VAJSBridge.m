@@ -14,6 +14,8 @@
 #import "ViolaInstance.h"
 #import "VAConvertUtl.h"
 
+#define VA_BRIDGE_REGISTER_MODULE @"registerModules"
+
 
 @interface VAJSBridge()
 
@@ -36,7 +38,6 @@
 
 
 - (void)executeJSScript:(NSString *)script{
-//    BOOL dfd = [VAThreadManager isBridgeThread];
      VAAssertBridgeThread();
      VAAssert(script,@"can't be nil");
     [self.jsContext executeJavascript:script];
@@ -52,7 +53,6 @@
 }
 
 - (void)callJSMethod:(VAJSMethod *)jsMethod{
-//    BOOL dfd = [VAThreadManager isBridgeThread];
     VAAssertBridgeThread();
     if (jsMethod.instance) {
         [self _callJSMethod:@"callJS" args:@[jsMethod.instance.instanceId , @[[jsMethod callJSTask]]]];
@@ -108,7 +108,9 @@
     VAAssertBridgeThread();
     if (self.executeJSScripted && self.jsMethodQueue.count) {
         for (NSDictionary * task in self.jsMethodQueue) {
-            [self _callJSMethod:task[@"method"] args:task[@"args"]];
+            NSString * method = task[@"method"];
+            NSArray * args = task[@"args"];
+            [self _callJSMethod:method args:args];
         }
         [self.jsMethodQueue removeAllObjects];
     }

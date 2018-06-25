@@ -24,6 +24,7 @@ typedef void (^VAModuleCallback)(id result);
 
 /*
  * 自身对象在该viola实例下被创建
+ * @synthesize vaInstance;
  */
 @property (nonatomic, weak) ViolaInstance *vaInstance;
 
