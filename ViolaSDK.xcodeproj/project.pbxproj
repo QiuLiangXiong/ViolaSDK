@@ -39,6 +39,7 @@
 		FFB278C720E0F6C9009FD859 /* VAComponent+view.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB278C620E0F6C9009FD859 /* VAComponent+view.m */; };
 		FFB278CA20E0FD14009FD859 /* VAWeakObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB278C920E0FD14009FD859 /* VAWeakObject.m */; };
 		FFB278CD20E12822009FD859 /* VAComponent+event.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB278CC20E12822009FD859 /* VAComponent+event.m */; };
+		FFB2793820E206AB009FD859 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB2793720E206AB009FD859 /* TestViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -127,6 +128,8 @@
 		FFB278C920E0FD14009FD859 /* VAWeakObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAWeakObject.m; sourceTree = "<group>"; };
 		FFB278CB20E12822009FD859 /* VAComponent+event.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VAComponent+event.h"; sourceTree = "<group>"; };
 		FFB278CC20E12822009FD859 /* VAComponent+event.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "VAComponent+event.m"; sourceTree = "<group>"; };
+		FFB2793620E206AB009FD859 /* TestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
+		FFB2793720E206AB009FD859 /* TestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +187,8 @@
 				FF66078E20DBA1A300A99EE0 /* AppDelegate.m */,
 				FF66079020DBA1A300A99EE0 /* ViewController.h */,
 				FF66079120DBA1A300A99EE0 /* ViewController.m */,
+				FFB2793620E206AB009FD859 /* TestViewController.h */,
+				FFB2793720E206AB009FD859 /* TestViewController.m */,
 				FF66079320DBA1A300A99EE0 /* Main.storyboard */,
 				FF66079620DBA1A300A99EE0 /* Assets.xcassets */,
 				FF66079820DBA1A300A99EE0 /* LaunchScreen.storyboard */,
@@ -447,7 +452,7 @@
 				TargetAttributes = {
 					FF66078920DBA1A300A99EE0 = {
 						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					FF6607A120DBA1A300A99EE0 = {
 						CreatedOnToolsVersion = 9.2;
@@ -538,6 +543,7 @@
 				FFB278CA20E0FD14009FD859 /* VAWeakObject.m in Sources */,
 				FF6607F220DBA23B00A99EE0 /* VABridgeCategory.m in Sources */,
 				FFB278BC20DE9AED009FD859 /* Layout.c in Sources */,
+				FFB2793820E206AB009FD859 /* TestViewController.m in Sources */,
 				FF6607F520DBA23B00A99EE0 /* VAJSContext.m in Sources */,
 				FF6607F920DBA23B00A99EE0 /* VALog.m in Sources */,
 			);
@@ -702,8 +708,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8G544536K8;
 				INFOPLIST_FILE = ViolaSDK/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -718,8 +725,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8G544536K8;
 				INFOPLIST_FILE = ViolaSDK/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL isEnable;
 
 
+
 - (void)createBody:(NSDictionary *)body;
 
 - (VAComponent *)componentWithRef:(NSString *)ref;
@@ -26,6 +27,15 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)rootViewFrameDidChange:(CGRect)frame;
 
 - (void)unload;
+
+- (void)addComponent:(NSDictionary *)componentData toSupercomponent:(NSString *)parentRef atIndex:(NSInteger)index;
+
+- (void)addTaskToMainQueueOnComponentThead:(dispatch_block_t)block;
+- (void)addTaskToMainQueueOnComponentThead:(dispatch_block_t)block withAnimated:(BOOL)animated;
+
+- (void)setNeedsLayout;
+
+
 
 @end
 NS_ASSUME_NONNULL_END

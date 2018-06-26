@@ -15,14 +15,19 @@
 #import "VAComponent+private.h"
 #import "VARootView.h"
 
+
+
+
 @interface VAComponentController()
 
 @property (nullable, nonatomic, strong ,readwrite) VAComponent * rootComponent;
 
 @property (nullable, nonatomic, strong) NSMapTable<NSString *, VAComponent *> *allComponentsDic;
 
-@property (nullable, nonatomic, strong) NSMutableArray * uiTasks;
+@property (nullable, nonatomic, strong) NSMutableArray * mainQueueTasks;
 
+@property (nonatomic, assign) BOOL __setNeedSyncLayoutAndMainQuequeTasks;
+@property (nonatomic, assign) BOOL mainQueueSyncWithAnimated;
 @end
 
 @implementation VAComponentController
@@ -31,8 +36,9 @@
 {
     self = [super init];
     if (self) {
-       _allComponentsDic = [NSMapTable strongToWeakObjectsMapTable];
-       _uiTasks = [NSMutableArray new];//ui任务数组
+        _mainQueueTasks = [NSMutableArray new];//主线程任务
+        _allComponentsDic = [NSMapTable strongToWeakObjectsMapTable];//
+        _isEnable = true;
     }
     return self;
 }
@@ -44,12 +50,13 @@
     VAAssertComponentThread();
     VAAssertReturn([body isKindOfClass:[NSDictionary class]], @"body type error");
     
-    VAAssertReturn(!_rootComponent, @"can't be call twice in the same instance");//同一个实例不能被调用两次
+//    VAAssertReturn(!_rootComponent, @"can't be call twice in the same instance");//同一个实例不能被调用两次
     
     _rootComponent = [self _createComponentWithEle:@{@"ref":VA_ROOT_REF,@"type":@"div",@"style":@{}}];
+    _rootComponent.isRootComponent = YES;
     [self rootViewFrameDidChange:self.vaInstance.instanceFrame];
     kBlockWeakSelf;
-    [self _addUITask:^{
+    [self _addTaskToMainQueue:^{
         if(weakSelf){
             kBlockStrongSelf;
             [strongSelf.vaInstance.rootView addSubview:strongSelf.rootComponent.view];
@@ -57,6 +64,9 @@
     }];
     //添加真元素
     [self addComponent:body toSupercomponent:_rootComponent.ref atIndex:0];
+    
+    [VAThreadManager violaIntanceRenderFinish];
+    
 }
 
 - (VAComponent *)componentWithRef:(NSString *)ref{
@@ -72,6 +82,8 @@
     NSString * width = [NSString stringWithFormat:@"%ddp",(int)frame.size.width];
     NSString * height = [NSString stringWithFormat:@"%ddp",(int)frame.size.height];
     [_rootComponent _updateLayoutWithStyles:@{@"width":width,@"height":height}];
+    [_rootComponent setNeedsLayout];
+    [self _layoutComponnets];
 }
 
 - (void)unload{
@@ -86,14 +98,28 @@
     VAComponent *superComponent = [_allComponentsDic objectForKey:parentRef];
     VAAssertReturn(superComponent, @"dont't exisxt ref");
     [self _addComponent:componentData toSupercomponent:superComponent atIndex:index];
-    [self _syncLayoutAndUITasks];
+    [self _syncComponentsLayoutAndMainQueueTasks];
+}
+
+- (void)addTaskToMainQueueOnComponentThead:(dispatch_block_t)block{
+    VAAssertComponentThread();
+    [self addTaskToMainQueueOnComponentThead:block withAnimated:false];
+}
+
+- (void)addTaskToMainQueueOnComponentThead:(dispatch_block_t)block withAnimated:(BOOL)animated{
+     _mainQueueSyncWithAnimated = animated;
+     [self _addTaskToMainQueue:block];
+}
+
+- (void)setNeedsLayout{
+    [self _setNeedSyncLayoutAndMainQuequeTasks];
 }
 
 #pragma mark - private
 
 - (VAComponent *)_createComponentWithEle:(NSDictionary *)ele{
-    NSString *ref = ele[@"ref"];
-    NSString *type = ele[@"type"];
+    NSString *ref = [VAConvertUtl convertToString:ele[@"ref"]] ;
+    NSString *type = [VAConvertUtl convertToString:ele[@"type"]];
     NSDictionary *styles = ele[@"style"];
     NSDictionary *attributes = ele[@"attr"];
     NSArray *events = ele[@"event"];
@@ -110,6 +136,12 @@
 - (void)_addComponent:(NSDictionary *)componentData toSupercomponent:(VAComponent *)parentComponent atIndex:(NSInteger)index{
     VAAssertReturn(componentData && parentComponent, @"can't be nil");
     VAComponent *component = [self _createComponentWithEle:componentData];
+    
+    if(parentComponent == _rootComponent){
+        [component _updateLayoutWithStyles:@{@"flex":@(1)
+                                             }];
+    }
+    
     if (!parentComponent.supercomponent) {
         index = 0;
     } else {
@@ -121,7 +153,7 @@
     
     [parentComponent _insertSubcomponent:component atIndex:index];
 
-    [self _addUITask:^{
+    [self _addTaskToMainQueue:^{
         [parentComponent insertSubview:component atIndex:index];
     }];
 
@@ -133,54 +165,97 @@
 
 }
 
-- (void)_addUITask:(dispatch_block_t)block
-{
-    [_uiTasks addObject:block];
-}
 
-- (void)_syncLayoutAndUITasks{
-    [self _layout];
-    
-    if(_uiTasks.count > 0){
-        NSArray<dispatch_block_t> *blocks = _uiTasks;
-        _uiTasks = [NSMutableArray array];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            for(dispatch_block_t block in blocks) {
-                block();
-            }
-        });
+- (void)_layoutComponnets{
+    if ([self _isNeedUpdateLayout]) {
+        css_node_t * rootNode = _rootComponent->_cssNode;
+        layoutNode(rootNode, rootNode->style.dimensions[CSS_WIDTH], rootNode->style.dimensions[CSS_HEIGHT], CSS_DIRECTION_INHERIT);
+        NSMutableArray * dirtyComponents = [NSMutableArray new];
+        [_rootComponent _syncCSSNodeLayoutWithDirtyComponents:dirtyComponents];
+        [self _notifyLayoutDidEndWithComponents:dirtyComponents];
     }
 }
 
-- (void)_layout
-{
-    BOOL needsLayout = NO;
-    
+- (BOOL)_isNeedUpdateLayout{
+    BOOL res = NO;
     NSEnumerator *enumerator = [_allComponentsDic objectEnumerator];
     VAComponent *component;
     while ((component = [enumerator nextObject])) {
         if ([component isNeedsLayout]) {
-            needsLayout = YES;
+            res = YES;
             break;
         }
     }
-    if (!needsLayout) {
-        return;
-    }
-    css_node_t * rootNode = _rootComponent->_cssNode;
-    layoutNode(rootNode, rootNode->style.dimensions[CSS_WIDTH], rootNode->style.dimensions[CSS_HEIGHT], CSS_DIRECTION_INHERIT);
-    
-   
-    
-    NSMutableSet<VAComponent *> *dirtyComponents = [NSMutableSet set];
-    [_rootComponent _calculateComponentFrameWithDirtyComponents:dirtyComponents];
+    return res;
+}
 
-    
-    for (VAComponent *dirtyComponent in dirtyComponents) {
-        [self _addUITask:^{
-            [dirtyComponent layoutDidEnd];
+- (void)_notifyLayoutDidEndWithComponents:(NSMutableArray *)components{
+    for (VAComponent *component in components) {
+        [self _addTaskToMainQueue:^{
+            [component layoutDidEnd];
         }];
     }
+}
+
+
+- (void)_addTaskToMainQueue:(dispatch_block_t)block{
+    if (!_mainQueueTasks) {
+        _mainQueueTasks = [NSMutableArray new];
+    }
+    [_mainQueueTasks addObject:block];
+    [self _setNeedSyncLayoutAndMainQuequeTasks];
+}
+
+//同步布局和主线程队列任务
+- (void)_syncComponentsLayoutAndMainQueueTasks{
+    [self _layoutComponnets];
+    [self _syncMainQueueTask];
+}
+
+- (void)_syncMainQueueTask{
+    if(_mainQueueTasks.count > 0){
+        NSArray<dispatch_block_t> *blocks = _mainQueueTasks;
+        _mainQueueTasks = [NSMutableArray array];
+        BOOL animated = _mainQueueSyncWithAnimated;
+        _mainQueueSyncWithAnimated = false;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (animated) {
+                [UIView animateWithDuration:0.2 animations:^{
+                    for(dispatch_block_t block in blocks) {
+                        block();
+                    }
+                }];
+            }else {
+                for(dispatch_block_t block in blocks) {
+                    block();
+                }
+            }
+            
+
+        });
+    }
+}
+
+
+-(void)_setNeedSyncLayoutAndMainQuequeTasks{
+    if (!___setNeedSyncLayoutAndMainQuequeTasks) {
+         ___setNeedSyncLayoutAndMainQuequeTasks = true;
+        dispatch_queue_t queue = [VAThreadManager getComponentQueue];
+        kBlockWeakSelf;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((0) * NSEC_PER_SEC)),queue, ^{
+              VALogDebug(@"%s___syncComponentsLayoutAndMainQueueTasks",__func__);
+              weakSelf.__setNeedSyncLayoutAndMainQuequeTasks = false;
+              [weakSelf _syncComponentsLayoutAndMainQueueTasks];
+        });
+    }
+
+}
+
+#pragma mark - getter
+
+
+- (void)dealloc{
+    
 }
 
 @end

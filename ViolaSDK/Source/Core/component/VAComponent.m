@@ -14,7 +14,7 @@
 #import "VADefine.h"
 
 @implementation VAComponent 
-
+static int componentAllocCount;
 - (instancetype)initWithRef:(NSString *)ref
                        type:(NSString*)type
                      styles:(nullable NSDictionary *)styles
@@ -35,6 +35,7 @@
         [self _initViewPropWithStyles:_styles];
         //event
         [self _initEvents:_events];
+        componentAllocCount++;
     }
     return self;
 }
@@ -171,6 +172,10 @@
     VAAssertMainThread();
 }
 
+
+- (void)dealloc{
+    VALogDebug(@"%s_componentAllocCount:%d",__func__,--componentAllocCount);
+}
 
 @end
 

@@ -17,6 +17,12 @@ typedef NS_ENUM(NSInteger, VALayoutPosition) {
     VALayoutPositionFixed
 };
 
+typedef NS_ENUM(NSInteger, VABorderStyle) {
+    VABorderStyleNone = 0,
+    VABorderStyleDotted,
+    VABorderStyleDashed,
+    VABorderStyleSolid
+};
 
 @interface VAConvertUtl : NSObject
 

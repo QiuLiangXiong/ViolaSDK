@@ -67,11 +67,12 @@
             [weakSelf.delegate violaIntance:weakSelf didCreatedView:_rootView];
         }
     }];
-    [[VABridgeManager shareManager] executeJSScript:script];//tomqiu todo 
+    [[VABridgeManager shareManager] executeJSScript:script];//tomqiu todo
+
     
 #if  DEBUG
 //    script = @"callNative('1', [{  module:'dom',method:'test',args:['','1'] }])";
-    script = @"nativeLog(22222)";
+    script = @"";
 #endif
     [[VABridgeManager shareManager] createInstanceWithID:self.instanceId script:script data:realData];
 }
@@ -108,6 +109,15 @@
     }];
 }
 
+- (void)addTaskToMainQueue:(dispatch_block_t)block{
+    VAAssertComponentThread();
+    kBlockWeakSelf;
+    [VAThreadManager performOnComponentThreadWithBlock:^{
+        [weakSelf.componentController addTaskToMainQueueOnComponentThead:block];
+    }];
+
+}
+
 #pragma mark - getter
 
 - (NSMutableDictionary *)modules{
@@ -134,5 +144,10 @@
         }];
     }
 }
+
+- (void)dealloc{
+    
+}
+
 
 @end

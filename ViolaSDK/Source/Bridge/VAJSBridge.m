@@ -43,8 +43,10 @@
     [self.jsContext executeJavascript:script];
 
     if (self.jsContext.exception) {
-       NSString * errorInfo = [NSString stringWithFormat:@"script error: %@", self.jsContext.exception];
-       VAAssert(!self.jsContext.exception, errorInfo);
+    //   NSString * errorInfo = [NSString stringWithFormat:@"script error: %@", self.jsContext.exception];
+        VALogError(@"script error: %@",self.jsContext.exception);
+
+    //   VAAssert(!self.jsContext.exception, errorInfo);
     }else {
         self.executeJSScripted = YES;
         [self _performJSMethodQueueTaskIfNeed];
@@ -119,6 +121,7 @@
 - (void)_handleCallNativeCallbackWithID:(NSString *)instanceID tasks:(NSArray *)tasks{
     VAAssertBridgeThread();
     VAAssertReturn(instanceID && [tasks isKindOfClass:[NSArray class]],@"can't be nil");
+    
     
     ViolaInstance *instance = [VAInstanceManager getInstanceWithID:instanceID];
     VAAssertReturn(instance,@"can't be nil");

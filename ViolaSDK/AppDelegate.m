@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "ViolaSDK.h"
+#import "ViewController.h"
 
 @interface AppDelegate ()
 
@@ -23,7 +24,16 @@
     
     //local test
    
+    UIWindow * window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+   
+    ViewController * rootViewController = [[ViewController alloc] init];
     
+    UINavigationController * naVC = [[UINavigationController alloc] initWithRootViewController:rootViewController];
+    
+    window.rootViewController = naVC;
+    
+    self.window = window;
+    [self.window makeKeyAndVisible];
    // [[VABridgeManager shareManager] fireEventWithIntanceID:@"1" ref:@"div1" type:@"click" params:@{} domChanges:nil];
     
     return YES;

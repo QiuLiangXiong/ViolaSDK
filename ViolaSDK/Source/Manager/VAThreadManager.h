@@ -16,13 +16,19 @@
 + (BOOL)isBridgeThread;
 + (void)performOnBridgeThreadWithBlock:(void (^)(void))block;
 + (void)performOnBridgeThreadWithBlock:(void (^)(void))block waitUntilDone:(BOOL)wait;
-
++ (void)performOnBridgeThreadWithBlock:(void (^)(void))block afterDelay:(double)second;
 //是否为component线程
 + (BOOL)isComponentThread;
 + (void)performOnComponentThreadWithBlock:(void (^)(void))block;
 + (void)performOnComponentThreadWithBlock:(void (^)(void))block waitUntilDone:(BOOL)wait;
++ (void)performOnComponentThreadWithBlock:(void (^)(void))block afterDelay:(double)second;
+
 
 + (void)performOnMainThreadWithBlock:(void (^)(void))block;
 + (void)performOnMainThreadWithBlock:(void (^)(void))block waitUntilDone:(BOOL)wait;
+
++ (void)waitUntilViolaIntanceRenderFinish;
++ (void)violaIntanceRenderFinish;
+
 
 @end

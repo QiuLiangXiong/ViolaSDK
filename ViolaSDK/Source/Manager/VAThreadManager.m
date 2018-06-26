@@ -12,6 +12,9 @@
 #define VA_COMPONENT_THREAD_NAME @"com.tencent.viola.component"
 #import "UIKit/UIKit.h"
 
+@interface VAThreadManager()
+
+@end
 
 @implementation VAThreadManager
 
@@ -26,7 +29,17 @@ static dispatch_queue_t bridgeQueue = NULL;
     });
     return bridgeQueue;
 }
+static dispatch_semaphore_t va_signal;
++ (void)waitUntilViolaIntanceRenderFinish{
+    va_signal = dispatch_semaphore_create(0);
+    dispatch_semaphore_wait(va_signal, dispatch_time(DISPATCH_TIME_NOW, 2*1000*1000*1000));
+}
 
++ (void)violaIntanceRenderFinish{
+    if(va_signal){
+        dispatch_semaphore_signal(va_signal);
+    }
+}
 
 + (instancetype)getIntance{
     static VAThreadManager * instance ;
@@ -84,6 +97,24 @@ static dispatch_queue_t componentQueue = NULL;
 + (void)performOnMainThreadWithBlock:(void (^)(void))block{
     [self performOnMainThreadWithBlock:block waitUntilDone:false];
 }
+
+
++ (void)performOnComponentThreadWithBlock:(void (^)(void))block afterDelay:(double)second{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((second) * NSEC_PER_SEC)),[self getComponentQueue], ^{
+        if (block) {
+            block();
+        }
+    });
+}
+
++ (void)performOnBridgeThreadWithBlock:(void (^)(void))block afterDelay:(double)second{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((second) * NSEC_PER_SEC)),[self getBridgeQueue], ^{
+        if (block) {
+            block();
+        }
+    });
+}
+
 + (void)performOnMainThreadWithBlock:(void (^)(void))block waitUntilDone:(BOOL)wait{
     if (!block) {
         return ;
@@ -119,5 +150,6 @@ static dispatch_queue_t componentQueue = NULL;
         }
     }
 }
+
 
 @end

@@ -16,23 +16,12 @@
 - (void)createBody:(NSDictionary *)body{
     VALogDebug(@"%s_%@",__func__,body);
     VAAssertReturn(self.vaInstance, @"can't be nil");
-    body = @{@"ref":@"1",@"type":@"div",@"style":@{@"backgroundColor":@"blue",@"width":@"750px",@"height":@"2112px"},
-             @"children":@[
-                     @{@"ref":@"2",@"type":@"div",@"style":@{@"backgroundColor":@"red",@"height":@"250px",@"margin":@"5dp"}},
-                     @{@"ref":@"3",@"type":@"div",@"style":@{@"backgroundColor":@"yellow",@"width":@"250px",@"height":@"250px",@"margin":@"50dp"}},
-                     @{@"ref":@"4",@"type":@"div",@"style":@{@"backgroundColor":@"black",@"width":@"250px",@"height":@"250px",@"margin":@"50"}},
-                     ]
-             };
-             
     [self.vaInstance.componentController createBody:body];
 }
 
 
-- (void)test:(NSDictionary *)param0 callback:(VAModuleCallback)block{
-    if (block) {
-        block(param0);
-    }
-
+- (void)addComponent:(NSString *)parentRef componentData:(NSDictionary *)componentData atIndex:(NSInteger)index{
+   [self.vaInstance.componentController addComponent:componentData toSupercomponent:parentRef atIndex:index];
 }
 #pragma mark - VAModuelProtocol
 - (dispatch_queue_t)performOnQueue{

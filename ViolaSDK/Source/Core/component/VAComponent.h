@@ -27,6 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, readonly, strong) UIView *view;
 
 @property (nonatomic, readonly, weak, nullable) VAComponent *supercomponent;
+@property (nonatomic, assign) BOOL isRootComponent;
+
 
 - (UIView *)loadView;
 
@@ -51,6 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 //该组件的frame变化回调  此时view的frame还没有同步过来
 - (void)componentFrameDidChange;// 组件线程
+- (void)componentFrameWillChange;// 组件线程
 
 //更新相关
 //组件线程更新

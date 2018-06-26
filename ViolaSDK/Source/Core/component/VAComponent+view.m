@@ -10,10 +10,17 @@
 #import "VAComponent+private.h"
 #import "VADefine.h"
 #import "VAConvertUtl.h"
+#import "ViolaInstance.h"
 
 #pragma clang diagnostic ignored "-Wobjc-protocol-method-implementation"
 
+@interface VAComponent()
+
+
+@end
+
 @implementation VAComponent (view)
+
 
 #pragma mark - init
 
@@ -21,7 +28,7 @@
     styles = [styles isKindOfClass:[NSDictionary class]] ? styles : nil;
     _visibility = [VAConvertUtl convertToBOOLWithVisibilityValue:styles[@"visibility"] defaultValue:YES];
     _opacity = [VAConvertUtl convertToFloat:styles[@"opacity"] defaultValue:1.0f];
-    _clipToBounds =  [VAConvertUtl convertToBOOLWithClipValue:styles[@"overflow"] defaultValue:YES];
+    _clipToBounds =  [VAConvertUtl convertToBOOLWithClipValue:styles[@"overflow"] defaultValue:NO];
     _backgroundColor = [VAConvertUtl convertToColor:styles[@"backgroundColor"] defaultValue:[UIColor clearColor]];
     _positionType = [VAConvertUtl converToPosition:styles[@"position"] defaultValue:(VALayoutPositionRelative)];
     //    _transform = styles[@"transform"] || styles[@"transformOrigin"] ?//todo tomqiu  transform //这个一般和动画相关
@@ -91,9 +98,26 @@
     }
 }
 //component view 变化
+
+- (void)componentFrameWillChange{
+     if (!CGRectEqualToRect(_componentFrame, CGRectZero) ) {
+        _frameChangedWithAnimated = true;
+    }
+}
+
 - (void)componentFrameDidChange{
      //todo tomqiu
+    kBlockWeakSelf;
+    
+
+    
+    
+    [_vaInstance.componentController addTaskToMainQueueOnComponentThead:^{
+        [weakSelf _componentFrameDidChange];
+    } withAnimated:_frameChangedWithAnimated ];
 }
+
+
 
 
 #pragma mark Property
@@ -106,6 +130,8 @@
         VAAssertMainThread();
         
         [self viewWillLoad];
+        
+
         
         _view = [self loadView];
         _view.frame = _componentFrame;
@@ -136,7 +162,12 @@
 }
 
 
+#pragma mark - private
 
+- (void)_componentFrameDidChange{
+    self.view.frame = _componentFrame;
+    //圆角
+}
 
 
 

@@ -11,4 +11,8 @@
 @implementation VARootView
 
 
+- (void)dealloc{
+    
+}
+
 @end

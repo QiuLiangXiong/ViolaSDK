@@ -10,6 +10,7 @@
 #import "VAComponent+private.h"
 #import "VADefine.h"
 #import "VAConvertUtl.h"
+#import "ViolaInstance.h"
 
 @implementation VAComponent (layout)
 
@@ -39,7 +40,7 @@
 }
 
 
-- (void)_calculateComponentFrameWithDirtyComponents:(NSMutableSet<VAComponent *> *)dirtyComponents
+- (void)_syncCSSNodeLayoutWithDirtyComponents:(NSMutableArray *)dirtyComponents
 {
     VAAssertComponentThread();
     if (!_cssNode->layout.should_update) return ;//无需更新
@@ -48,15 +49,16 @@
     CGRect newFrame = CGRectMake(VARoundValue(_cssNode->layout.position[CSS_LEFT]),VARoundValue(_cssNode->layout.position[CSS_TOP]),
                                  VARoundValue(_cssNode->layout.dimensions[CSS_WIDTH]),VARoundValue(_cssNode->layout.dimensions[CSS_HEIGHT]));
     if (!CGRectEqualToRect(newFrame, _componentFrame)) {
+        [self componentFrameWillChange];
         _componentFrame = newFrame;
         [dirtyComponents addObject:self];
         [self componentFrameDidChange];//componentFrame 发生变化
     }
-    [self __resetCSSNodeFrame];
+    //[self __resetCSSNodeFrame];
     
     if(_subcomponents.count){
         for (VAComponent *subcomponent in _subcomponents) {
-            [subcomponent _calculateComponentFrameWithDirtyComponents:dirtyComponents];
+            [subcomponent _syncCSSNodeLayoutWithDirtyComponents:dirtyComponents];
         }
     }
 }
@@ -123,6 +125,9 @@ static css_dim_t cssNode_measure(void *context, float width, css_measure_mode_t 
     _isLayoutDirty = YES;
     if(supercomponent){
         [supercomponent setNeedsLayout];
+    }
+    if (self.isRootComponent) {
+        [_vaInstance.componentController setNeedsLayout];
     }
 }
 

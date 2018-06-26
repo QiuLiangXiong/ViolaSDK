@@ -52,6 +52,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)destroyInstance;
 
 
+//添加主线程任务
+- (void)addTaskToMainQueue:(dispatch_block_t)block;
+
 
 
 

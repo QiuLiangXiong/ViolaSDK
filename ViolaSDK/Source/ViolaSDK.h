@@ -13,6 +13,7 @@
 #import "VAComponent.h"
 #import <UIKit/UIKit.h>
 #import "VABridgeManager.h"
+#import "VAThreadManager.h"
 
 #define ViolaSDK_h
 

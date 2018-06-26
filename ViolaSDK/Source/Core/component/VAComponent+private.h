@@ -36,16 +36,34 @@
     UIView *_view;
     BOOL _visibility;
     CGFloat _opacity;
+    BOOL _frameChangedWithAnimated;
     
+    //border
+    UIColor *_borderTopColor;
+    UIColor *_borderRightColor;
+    UIColor *_borderLeftColor;
+    UIColor *_borderBottomColor;
     
+    CGFloat _borderTopWidth;
+    CGFloat _borderRightWidth;
+    CGFloat _borderLeftWidth;
+    CGFloat _borderBottomWidth;
     
+    CGFloat _borderTopLeftRadius;
+    CGFloat _borderTopRightRadius;
+    CGFloat _borderBottomLeftRadius;
+    CGFloat _borderBottomRightRadius;
     
+    VABorderStyle _borderTopStyle;
+    VABorderStyle _borderRightStyle;
+    VABorderStyle _borderBottomStyle;
+    VABorderStyle _borderLeftStyle;
 
 }
 //+layout
 - (void) _initLayoutWithStyles:(NSDictionary *)styles;
 - (void)_updateLayoutWithStyles:(NSDictionary *)styles;
-- (void)_calculateComponentFrameWithDirtyComponents:(NSMutableSet<VAComponent *> *)dirtyComponents;
+- (void)_syncCSSNodeLayoutWithDirtyComponents:(NSMutableArray *)dirtyComponents;
 //+view
 - (void)_initViewPropWithStyles:(NSDictionary *)styles;//on component thread
 - (void)_updateViewPropWithStyles:(NSDictionary *)styles;//on main thread
