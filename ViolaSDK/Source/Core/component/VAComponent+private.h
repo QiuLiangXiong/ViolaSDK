@@ -36,6 +36,7 @@
     UIView *_view;
     BOOL _visibility;
     CGFloat _opacity;
+    NSNumber * _touchEnable;
     
     //border
     UIColor *_borderTopColor;
@@ -57,6 +58,25 @@
     VABorderStyle _borderRightStyle;
     VABorderStyle _borderBottomStyle;
     VABorderStyle _borderLeftStyle;
+    
+    
+    //events
+    BOOL _singleClickEnable;
+    BOOL _doubleClickEnable;
+    BOOL _longPressEnable;
+    BOOL _panEnable;
+    BOOL _swipeLeftEnable;//swipe 有四个方向。。。
+    BOOL _swipeRightEnable;
+    BOOL _swipeTopEnable;
+    BOOL _swipeBottomEnable;
+    UITapGestureRecognizer *_tapGesture;
+    UITapGestureRecognizer *_doubleTapGesture;
+    UILongPressGestureRecognizer *_longPressGesture;
+    UIPanGestureRecognizer *_panGesture;
+    UISwipeGestureRecognizer *_swipeLeftGesture;
+    UISwipeGestureRecognizer *_swipeRightGesture;
+    UISwipeGestureRecognizer *_swipeTopGesture;
+    UISwipeGestureRecognizer *_swipeBottomGesture;
 
 }
 //+layout
@@ -68,6 +88,9 @@
 - (void)_updateViewPropWithStyles:(NSDictionary *)styles;//on main thread
 //event
 - (void)_initEvents:(NSMutableArray *)events;
+- (void)_updateEventsOnComponentThread:(NSArray *)events;
+- (void)_updateEventsOnMainThread:(NSArray *)events;
+- (void)_syncTouchEventsToView;
 
 //update
 - (void)_updateAttributesOnComponentThread:(NSDictionary *)attributes;

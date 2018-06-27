@@ -65,7 +65,12 @@
     //添加真元素
     [self addComponent:body toSupercomponent:_rootComponent.ref atIndex:0];
     
-    [VAThreadManager violaIntanceRenderFinish];
+    dispatch_async([VAThreadManager getComponentQueue], ^{
+       [VAThreadManager violaIntanceRenderFinish];
+    });
+
+    
+
     
 }
 
@@ -95,6 +100,10 @@
     VAAssertComponentThread();
     VAAssertReturn(componentData && parentRef, @"can't be nil");
     
+     BOOL animated = [VAConvertUtl convertToBOOL:componentData[@"animated"]];
+    if (animated) {
+        self.mainQueueSyncWithAnimated = animated;
+    }
     VAComponent *superComponent = [_allComponentsDic objectForKey:parentRef];
     VAAssertReturn(superComponent, @"dont't exisxt ref");
     [self _addComponent:componentData toSupercomponent:superComponent atIndex:index];
@@ -128,9 +137,12 @@
         }] ;
     }
   
-    if ([events isKindOfClass:[NSDictionary class]] && events.count) {
+    if ([events isKindOfClass:[NSArray class]] && events.count) {
         //todo tomqiu   event update
-        
+        [component _updateEventsOnComponentThread:events];
+        [self _addTaskToMainQueue:^{
+            [weakComponent _updateEventsOnMainThread:events];
+        }];
     }
 }
 
@@ -265,6 +277,16 @@
 }
 
 
+- (void)_notifyAllComponetBeforeMainQueueAnimation{
+    VAAssertMainThread();
+    NSEnumerator *enumerator = [_allComponentsDic objectEnumerator];
+    VAComponent *component;
+    while ((component = [enumerator nextObject])) {
+        [component mainQueueWillSyncBeforeAnimation];
+    }
+}
+
+
 - (void)_addTaskToMainQueue:(dispatch_block_t)block{
     if (!_mainQueueTasks) {
         _mainQueueTasks = [NSMutableArray new];
@@ -287,6 +309,10 @@
         _mainQueueSyncWithAnimated = false;
         dispatch_async(dispatch_get_main_queue(), ^{
             if (animated) {
+                [self _notifyAllComponetBeforeMainQueueAnimation];
+            
+                
+                
                 [UIView animateWithDuration:0.2 animations:^{
                     for(dispatch_block_t block in blocks) {
                         block();

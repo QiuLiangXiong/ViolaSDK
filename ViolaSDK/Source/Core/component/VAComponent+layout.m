@@ -54,7 +54,7 @@
         [dirtyComponents addObject:self];
         [self componentFrameDidChange];//componentFrame 发生变化
     }
-    //[self __resetCSSNodeFrame];
+    [self __resetCSSNodeFrame];
     
     if(_subcomponents.count){
         for (VAComponent *subcomponent in _subcomponents) {

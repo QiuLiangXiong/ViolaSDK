@@ -60,6 +60,10 @@ static int componentAllocCount;
     return _subcomponents;
 }
 
+- (UIColor *)backgroundColor{
+    return _backgroundColor;
+}
+
 
 - (void)viewWillLoad
 {
@@ -111,15 +115,12 @@ static int componentAllocCount;
     [self updateStylesOnMainThread:styles];
 }
 
-
-//todo tomqiu event
-//- (void)_addEventOnComponentThread:(NSString *)eventName{
-//    [_events addObject:eventName];
-//}
-//
-//- (void)_removeEventOnComponentThread:(NSString *)eventName{
-//    [_events removeObject:eventName];
-//}
+- (void)updateEventsOnComponentThread:(NSArray *)events{
+    VAAssertComponentThread();
+}
+- (void)updateEventsOnMainThread:(NSArray *)events{
+    VAAssertMainThread();
+}
 
 #pragma private
 
@@ -178,9 +179,21 @@ static int componentAllocCount;
     VAAssertMainThread();
 }
 
-
 - (void)dealloc{
     VALogDebug(@"%s_componentAllocCount:%d,ref:%@",__func__,--componentAllocCount,self.ref);
+}
+
+- (void)addEventOnComponentThread:(NSString *)event{
+    VAAssertComponentThread();
+}
+- (void)addEventOnMainThread:(NSString *)event{
+    VAAssertMainThread();
+}
+- (void)removeEventOnComponentThread:(NSString *)event{
+    VAAssertComponentThread();
+}
+- (void)removeEventOnMainThread:(NSString *)event{
+    VAAssertMainThread();
 }
 
 @end

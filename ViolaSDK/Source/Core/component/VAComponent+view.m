@@ -31,6 +31,11 @@
     _clipToBounds =  [VAConvertUtl convertToBOOLWithClipValue:styles[@"overflow"] defaultValue:NO];
     _backgroundColor = [VAConvertUtl convertToColor:styles[@"backgroundColor"] defaultValue:[UIColor clearColor]];
     _positionType = [VAConvertUtl converToPosition:styles[@"position"] defaultValue:(VALayoutPositionRelative)];
+    
+    if (styles[@"touchEnable"]) {
+        _touchEnable = @([VAConvertUtl convertToBOOLWithClipValue:styles[@"touchEnable"]]);
+    }
+    
     //    _transform = styles[@"transform"] || styles[@"transformOrigin"] ?//todo tomqiu  transform //这个一般和动画相关
      //todo tomqiu  transform and border
 }
@@ -58,6 +63,10 @@
     
     if (styles[@"position"]) {
         _positionType = [VAConvertUtl converToPosition:styles[@"position"]];
+    }
+    if (styles[@"touchEnable"]) {
+        _touchEnable = @([VAConvertUtl convertToBOOLWithClipValue:styles[@"touchEnable"]]);
+        _view.userInteractionEnabled = [_touchEnable boolValue];
     }
     //todo tomqiu  transform and border
 }
@@ -100,7 +109,16 @@
 //component view 变化
 
 - (void)componentFrameWillChange{
+    //组件线程
+    //
+}
+
+- (void)mainQueueWillSyncBeforeAnimation{
+    VAAssertMainThread();
     
+    if (![self isViewLoaded]) {
+        self.view.frame = CGRectMake(_componentFrame.origin.x, _componentFrame.origin.y, _componentFrame.size.width, 0);
+    }
 }
 
 - (void)componentFrameDidChange{
@@ -133,6 +151,10 @@
         _view.clipsToBounds = _clipToBounds;
         _view.backgroundColor = _backgroundColor;
         _view.alpha = _opacity;
+        if (_touchEnable) {
+            _view.userInteractionEnabled = [_touchEnable boolValue];
+        }
+        
 //        if (![self _needsDrawBorder]) {
 //            _layer.borderColor = _borderTopColor.CGColor;
 //            _layer.borderWidth = _borderTopWidth;
@@ -151,6 +173,7 @@
         
         _view.va_component = self;
         [self viewDidLoad];//viewdidload
+        [self _syncTouchEventsToView];
         return _view;
     }
 }

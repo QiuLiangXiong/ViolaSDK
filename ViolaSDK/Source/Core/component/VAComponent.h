@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly, weak, nullable) VAComponent *supercomponent;
 @property(nonatomic, readonly, strong) NSMutableArray  * subcomponents;
+@property(nonatomic, readonly, strong) UIColor  * backgroundColor;
 @property (nonatomic, assign) BOOL isRootComponent;
 
 
@@ -49,8 +50,10 @@ NS_ASSUME_NONNULL_BEGIN
 //计算大小
 - (nullable CGSize (^)(CGSize constrainedSize))calculateComponentSizeBlock;
 
+
 // 组件线程
 - (void)layoutDidEnd;
+- (void)mainQueueWillSyncBeforeAnimation;
 
 //该组件的frame变化回调  此时view的frame还没有同步过来
 - (void)componentFrameDidChange;// 组件线程
@@ -63,6 +66,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateAttributesOnComponentThread:(NSDictionary *)attributes;
 - (void)updateAttributesOnMainThread:(NSDictionary *)attributes;
 
+- (void)updateEventsOnComponentThread:(NSArray *)events;
+- (void)updateEventsOnMainThread:(NSArray *)events;
 
 - (void)insertSubview:(VAComponent *)subcomponent atIndex:(NSUInteger)index;
 

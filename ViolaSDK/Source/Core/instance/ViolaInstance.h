@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "VAComponentController.h"
+#import "VARootView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 @protocol VAModuleProtocol;

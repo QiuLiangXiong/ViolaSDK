@@ -20,7 +20,7 @@
     [self.vaInstance.componentController createBody:body];
 }
 //添加component
-- (void)addComponent:(NSString *)parentRef componentData:(NSDictionary *)componentData atIndex:(NSInteger)index{
+- (void)addComponent:(NSString *)parentRef componentData:(NSDictionary *)componentData atIndex:(NSInteger)index animated:(NSNumber *)animated{
    [self.vaInstance.componentController addComponent:componentData toSupercomponent:parentRef atIndex:index];
 }
 //删除component
@@ -32,7 +32,7 @@
     [self.vaInstance.componentController removeComponent:ref];
 }
 //更新component
--(void)updateComponent:(NSDictionary *)componentData{
+-(void)updateComponent:(NSDictionary *)componentData {
     [self.vaInstance.componentController updateComponentWithComponentData:componentData];
 }
 //移动component
