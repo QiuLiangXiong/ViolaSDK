@@ -430,8 +430,11 @@ callNative(1,[{module:'dom',method:'createBody',args:[ele]}])
 
 
 setTimeout(function(){
-         //  callNative(1,[{module:'dom',method:'createBody',args:[ele]}])
-           },2000);
+//           callNative(1,[{module:'dom',method:'updateComponent',args:[{animated:1 ,ref:'20',style:{height:'500px'}}]}]);
+           callNative(1,[{module:'dom',method:'removeComponent',args:['20',true] } ]);
+//           callNative(1,[{module:'dom',method:'removeComponent',args:['20',true] } ]);
+           
+           },500);
 
 
 function createInstance(instanceId,data){

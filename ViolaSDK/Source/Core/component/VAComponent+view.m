@@ -100,21 +100,15 @@
 //component view 变化
 
 - (void)componentFrameWillChange{
-     if (!CGRectEqualToRect(_componentFrame, CGRectZero) ) {
-        _frameChangedWithAnimated = true;
-    }
+    
 }
 
 - (void)componentFrameDidChange{
      //todo tomqiu
     kBlockWeakSelf;
-    
-
-    
-    
     [_vaInstance.componentController addTaskToMainQueueOnComponentThead:^{
         [weakSelf _componentFrameDidChange];
-    } withAnimated:_frameChangedWithAnimated ];
+    }];
 }
 
 

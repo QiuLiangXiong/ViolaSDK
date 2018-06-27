@@ -27,7 +27,7 @@
 @property (nullable, nonatomic, strong) NSMutableArray * mainQueueTasks;
 
 @property (nonatomic, assign) BOOL __setNeedSyncLayoutAndMainQuequeTasks;
-@property (nonatomic, assign) BOOL mainQueueSyncWithAnimated;
+
 @end
 
 @implementation VAComponentController
@@ -101,13 +101,80 @@
     [self _syncComponentsLayoutAndMainQueueTasks];
 }
 
+- (void)updateComponentWithComponentData:(NSDictionary *)componentData{
+    NSString *ref = [VAConvertUtl convertToString:componentData[@"ref"]] ;
+    NSDictionary *styles = componentData[@"style"];
+    NSDictionary *attributes = componentData[@"attr"];
+    NSArray *events = componentData[@"event"];
+    
+    BOOL animated = [VAConvertUtl convertToBOOL:componentData[@"animated"]];
+    
+    VAAssertReturn(ref, @"can't be nil");
+    VAComponent *component = [_allComponentsDic objectForKey:ref];
+    __weak typeof(&*component) weakComponent = component;
+    VAAssertReturn(component, @"not found");
+    if ([attributes isKindOfClass:[NSDictionary class]] && attributes.count) {
+        [component _updateAttributesOnComponentThread:attributes];
+        [self _addTaskToMainQueue:^{
+            [weakComponent _updateAttributesOnMainThread:attributes];
+        }];
+    }
+    
+    if ([styles isKindOfClass:[NSDictionary class]] && styles.count) {
+        self.mainQueueSyncWithAnimated = animated;
+        [component _updateStylesOnComponentThread:styles];
+        [self _addTaskToMainQueue:^{
+            [weakComponent _updateStylesOnMainThread:styles];
+        }] ;
+    }
+  
+    if ([events isKindOfClass:[NSDictionary class]] && events.count) {
+        //todo tomqiu   event update
+        
+    }
+}
+
+
+- (void)removeComponent:(NSString *)ref{
+    VAAssertComponentThread();
+    VAAssertReturn(ref, @"nil");
+    VAComponent *component = [_allComponentsDic objectForKey:ref];
+    VAAssertReturn(component, @"not found");
+    
+    [component _removeFromSupercomponent];
+    
+    [_allComponentsDic removeObjectForKey:ref];
+    [self _addTaskToMainQueue:^{
+        [component removeFromSuperview];
+    }];
+}
+
+
+- (void)moveComponentWithRef:(NSString *)ref toParent:(NSString *)parentRef atIndex:(NSInteger)index{
+    VAAssertComponentThread();
+    VAAssertReturn(ref && parentRef, @"nil");
+    VAComponent *component = [_allComponentsDic objectForKey:ref];
+    VAComponent * parentComponent = [_allComponentsDic objectForKey:parentRef];
+    VAAssertReturn(component && parentComponent, @"not found");
+    if (component.supercomponent == parentComponent && [parentComponent.subcomponents indexOfObject:component] < index) {
+        index--;
+    }
+    [component _moveToSupercomponent:parentComponent atIndex:index];
+    [self _addTaskToMainQueue:^{
+        [component moveToSuperview:parentComponent atIndex:index];
+    }];
+}
+
+
 - (void)addTaskToMainQueueOnComponentThead:(dispatch_block_t)block{
     VAAssertComponentThread();
     [self addTaskToMainQueueOnComponentThead:block withAnimated:false];
 }
 
 - (void)addTaskToMainQueueOnComponentThead:(dispatch_block_t)block withAnimated:(BOOL)animated{
-     _mainQueueSyncWithAnimated = animated;
+    if (!_mainQueueSyncWithAnimated) {
+       _mainQueueSyncWithAnimated = animated;
+    }
      [self _addTaskToMainQueue:block];
 }
 
@@ -230,8 +297,6 @@
                     block();
                 }
             }
-            
-
         });
     }
 }

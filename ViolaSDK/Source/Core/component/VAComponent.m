@@ -55,6 +55,12 @@ static int componentAllocCount;
     return _supercomponent;
 }
 
+- (NSMutableArray *)subcomponents
+{
+    return _subcomponents;
+}
+
+
 - (void)viewWillLoad
 {
     VAAssertMainThread();
@@ -174,7 +180,7 @@ static int componentAllocCount;
 
 
 - (void)dealloc{
-    VALogDebug(@"%s_componentAllocCount:%d",__func__,--componentAllocCount);
+    VALogDebug(@"%s_componentAllocCount:%d,ref:%@",__func__,--componentAllocCount,self.ref);
 }
 
 @end

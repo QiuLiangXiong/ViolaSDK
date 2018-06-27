@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, readonly, strong) UIView *view;
 
 @property (nonatomic, readonly, weak, nullable) VAComponent *supercomponent;
+@property(nonatomic, readonly, strong) NSMutableArray  * subcomponents;
 @property (nonatomic, assign) BOOL isRootComponent;
 
 

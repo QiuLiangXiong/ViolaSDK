@@ -36,7 +36,6 @@
     UIView *_view;
     BOOL _visibility;
     CGFloat _opacity;
-    BOOL _frameChangedWithAnimated;
     
     //border
     UIColor *_borderTopColor;
