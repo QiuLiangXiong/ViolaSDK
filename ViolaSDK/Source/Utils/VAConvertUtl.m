@@ -305,7 +305,9 @@ CGFloat VAFloorValue(CGFloat value)
                             @"whitesmoke": @"#f5f5f5",
                             @"yellow": @"#ffff00",
                             @"yellowgreen": @"#9acd32",
+                            @"red" : @"#dd4b39",
                             @"transparent": @"rgba(0,0,0,0)",
+                            
                             };
         });
         NSString *rgba = knownColors[value];
@@ -428,5 +430,16 @@ CGFloat VAFloorValue(CGFloat value)
 }
 
 
++ (VABorderStyle)converToBorderStyle:(id)value{
+    if([value isKindOfClass:[NSString class]]){
+        if ([value isEqualToString:@"dotted"]) {
+            return VABorderStyleDotted;
+        } else if ([value isEqualToString:@"dashed"]) {
+            return VABorderStyleDashed;
+        }
+    }
+    
+    return VABorderStyleSolid;
+}
 
 @end

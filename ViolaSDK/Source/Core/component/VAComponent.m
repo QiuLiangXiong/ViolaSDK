@@ -29,6 +29,7 @@ static int componentAllocCount;
         _events = [VAConvertUtl convertToMutableArray:events];
         _vaInstance = violaInstance;
         _subcomponents = [NSMutableArray array];
+        
         //layout
         [self _initLayoutWithStyles:_styles];
         //view
@@ -106,12 +107,13 @@ static int componentAllocCount;
     VAAssertComponentThread();
     [_styles addEntriesFromDictionary:styles];
     [self _updateLayoutWithStyles:styles];
+    [self _updateViewPropsOnComponentThreadWithStyles:styles];
     [self updateStylesOnComponentThread:styles];
 }
 
 - (void)_updateStylesOnMainThread:(NSDictionary *)styles{
     VAAssertMainThread();
-    [self _updateViewPropWithStyles:styles];
+    [self _updateViewPropOnMainTheadWithStyles:styles];
     [self updateStylesOnMainThread:styles];
 }
 
@@ -159,6 +161,8 @@ static int componentAllocCount;
     [self _removeFromSupercomponent];
     [newSupercomponent _insertSubcomponent:self atIndex:index];
 }
+
+
 
 
 

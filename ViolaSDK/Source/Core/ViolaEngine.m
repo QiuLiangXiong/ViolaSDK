@@ -10,6 +10,7 @@
 #import "VARegisterManager.h"
 #import "VADomModule.h"
 #import "VADivComponent.h"
+#import "VABridgeManager.h"
 
 @implementation ViolaEngine
 
@@ -24,7 +25,9 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         [self _registerDefaults];
-        
+        NSString *filePath = [[NSBundle bundleForClass:self] pathForResource:@"viola_main" ofType:@"js"];
+        NSString *script = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
+        [[VABridgeManager shareManager] executeJSScript:script];
     });
 }
 

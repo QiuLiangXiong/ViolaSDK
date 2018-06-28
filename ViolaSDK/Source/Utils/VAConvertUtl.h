@@ -18,10 +18,9 @@ typedef NS_ENUM(NSInteger, VALayoutPosition) {
 };
 
 typedef NS_ENUM(NSInteger, VABorderStyle) {
-    VABorderStyleNone = 0,
+    VABorderStyleSolid,
     VABorderStyleDotted,
     VABorderStyleDashed,
-    VABorderStyleSolid
 };
 
 @interface VAConvertUtl : NSObject
@@ -61,5 +60,6 @@ CGFloat VAFloorValue(CGFloat value);
 + (BOOL)convertToBOOLWithClipValue:(id)value;
 + (VALayoutPosition)converToPosition:(id)value defaultValue:(VALayoutPosition)defaultValue;
 + (VALayoutPosition)converToPosition:(id)value;
++ (VABorderStyle)converToBorderStyle:(id)value;
 @end
 

@@ -154,7 +154,7 @@ do {\
   if (value) {\
       typeof(_cssNode->style.prop) cValue = (typeof(_cssNode->style.prop))[VAConvertUtl converToType:value];\
       _cssNode->style.prop = cValue;\
-      [self setNeedsLayout];\
+      needLayout = true;\
   }\
 }while(0);
 
@@ -168,6 +168,7 @@ VA_LAYOUT_FILL_CSS_NODE(key, prop[CSS_BOTTOM], convertToFloatWithPixel);
 - (void)_fillCSSNodeWithStyles:(NSDictionary *)styles{
     VAAssertReturn([styles isKindOfClass:[NSDictionary class]], @"style type error");
 
+    BOOL needLayout = false;
     VA_LAYOUT_FILL_CSS_NODE(flex, flex, convertToFloatWithPixel)
     VA_LAYOUT_FILL_CSS_NODE(flexDirection, flex_direction, css_flex_direction_t)
     VA_LAYOUT_FILL_CSS_NODE(alignItems, align_items, css_align_t)
@@ -205,6 +206,9 @@ VA_LAYOUT_FILL_CSS_NODE(key, prop[CSS_BOTTOM], convertToFloatWithPixel);
     VA_LAYOUT_FILL_CSS_NODE(paddingLeft, padding[CSS_LEFT], convertToFloatWithPixel)
     VA_LAYOUT_FILL_CSS_NODE(paddingRight, padding[CSS_RIGHT], convertToFloatWithPixel)
     VA_LAYOUT_FILL_CSS_NODE(paddingBottom, padding[CSS_BOTTOM], convertToFloatWithPixel)
+    if(needLayout){
+        [self setNeedsLayout];
+    }
 }
 
 @end

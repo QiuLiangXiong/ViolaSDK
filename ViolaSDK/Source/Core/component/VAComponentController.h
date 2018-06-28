@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, strong ,readonly) VAComponent * rootComponent;
 @property (nonatomic, assign) BOOL isEnable;
 @property (nonatomic, assign) BOOL mainQueueSyncWithAnimated;
+@property (nonatomic, assign) BOOL isBodyLayoutFinish;
 
 
 - (void)createBody:(NSDictionary *)body;
@@ -29,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)unload;
 
 - (void)addComponent:(NSDictionary *)componentData toSupercomponent:(NSString *)parentRef atIndex:(NSInteger)index;
-- (void)updateComponentWithComponentData:(NSDictionary *)componentData;
+- (void)updateComponentWithRef:(NSString *)ref componentData:(NSDictionary *)componentData;
 - (void)removeComponent:(NSString *)ref;
 - (void)moveComponentWithRef:(NSString *)ref toParent:(NSString *)parentRef atIndex:(NSInteger)index;
 

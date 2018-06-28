@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FF17DDF920E3D4ED008F29B3 /* viola_main.js in Resources */ = {isa = PBXBuildFile; fileRef = FF17DDF820E3D4EC008F29B3 /* viola_main.js */; };
 		FF66078F20DBA1A300A99EE0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FF66078E20DBA1A300A99EE0 /* AppDelegate.m */; };
 		FF66079220DBA1A300A99EE0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF66079120DBA1A300A99EE0 /* ViewController.m */; };
 		FF66079520DBA1A300A99EE0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF66079320DBA1A300A99EE0 /* Main.storyboard */; };
@@ -60,6 +61,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FF17DDF820E3D4EC008F29B3 /* viola_main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = viola_main.js; sourceTree = "<group>"; };
 		FF66078A20DBA1A300A99EE0 /* ViolaSDK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ViolaSDK.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF66078D20DBA1A300A99EE0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FF66078E20DBA1A300A99EE0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -335,6 +337,7 @@
 		FF66080320DBA88E00A99EE0 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				FF17DDF820E3D4EC008F29B3 /* viola_main.js */,
 				FF66080420DBA8B000A99EE0 /* viola_test.js */,
 			);
 			path = Resource;
@@ -494,6 +497,7 @@
 				FF66079A20DBA1A300A99EE0 /* LaunchScreen.storyboard in Resources */,
 				FF66079720DBA1A300A99EE0 /* Assets.xcassets in Resources */,
 				FF66080520DBA8B000A99EE0 /* viola_test.js in Resources */,
+				FF17DDF920E3D4ED008F29B3 /* viola_main.js in Resources */,
 				FF66079520DBA1A300A99EE0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -30,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, readonly, strong) NSMutableArray  * subcomponents;
 @property(nonatomic, readonly, strong) UIColor  * backgroundColor;
 @property (nonatomic, assign) BOOL isRootComponent;
+@property (nonatomic, assign) BOOL animatedEnable;
 
 
 - (UIView *)loadView;

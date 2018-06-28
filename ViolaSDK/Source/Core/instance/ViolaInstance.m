@@ -67,13 +67,10 @@
             [weakSelf.delegate violaIntance:weakSelf didCreatedView:_rootView];
         }
     }];
-    [[VABridgeManager shareManager] executeJSScript:script];//tomqiu todo
+
 
     
-#if  DEBUG
-//    script = @"callNative('1', [{  module:'dom',method:'test',args:['','1'] }])";
-    script = @"";
-#endif
+
     [[VABridgeManager shareManager] createInstanceWithID:self.instanceId script:script data:realData];
 }
 

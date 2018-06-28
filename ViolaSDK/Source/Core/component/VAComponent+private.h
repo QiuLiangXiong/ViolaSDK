@@ -59,6 +59,13 @@
     VABorderStyle _borderBottomStyle;
     VABorderStyle _borderLeftStyle;
     
+    CAShapeLayer * _borderMaskLayer;
+    CAShapeLayer * _borderLayer;
+    CAShapeLayer * _borderTopLayer;
+    CAShapeLayer * _borderBottomLayer;
+    CAShapeLayer * _borderLeftLayer;
+    CAShapeLayer * _borderRightLayer;
+    
     
     //events
     BOOL _singleClickEnable;
@@ -85,7 +92,8 @@
 - (void)_syncCSSNodeLayoutWithDirtyComponents:(NSMutableArray *)dirtyComponents;
 //+view
 - (void)_initViewPropWithStyles:(NSDictionary *)styles;//on component thread
-- (void)_updateViewPropWithStyles:(NSDictionary *)styles;//on main thread
+- (void)_updateViewPropOnMainTheadWithStyles:(NSDictionary *)styles;//on main thread
+- (void)_updateViewPropsOnComponentThreadWithStyles:(NSDictionary *)styles;
 //event
 - (void)_initEvents:(NSMutableArray *)events;
 - (void)_updateEventsOnComponentThread:(NSArray *)events;

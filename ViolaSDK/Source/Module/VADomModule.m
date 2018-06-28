@@ -20,23 +20,23 @@
     [self.vaInstance.componentController createBody:body];
 }
 //添加component
-- (void)addComponent:(NSString *)parentRef componentData:(NSDictionary *)componentData atIndex:(NSInteger)index animated:(NSNumber *)animated{
-   [self.vaInstance.componentController addComponent:componentData toSupercomponent:parentRef atIndex:index];
+- (void)addElement:(NSString *)parentRef eleData:(NSDictionary *)eleData atIndex:(NSInteger)index {
+    VALogDebug(@"%s_ref:%@  eleData:%@ index:%ld",__func__,parentRef, eleData,(long)index);
+   [self.vaInstance.componentController addComponent:eleData toSupercomponent:parentRef atIndex:index];
 }
 //删除component
-- (void)removeComponent:(NSString *)ref animated:(NSNumber *)animated{
-    if (animated) {
-        BOOL isAnimated = [VAConvertUtl convertToBOOL:animated];
-        self.self.vaInstance.componentController.mainQueueSyncWithAnimated = isAnimated;
-    }
+- (void)removeElement:(NSString *)ref {
+    VALogDebug(@"%s_%@",__func__,ref);
     [self.vaInstance.componentController removeComponent:ref];
 }
 //更新component
--(void)updateComponent:(NSDictionary *)componentData {
-    [self.vaInstance.componentController updateComponentWithComponentData:componentData];
+-(void)updateElement:(NSString *)ref eleData:(NSDictionary *)eleData {
+    VALogDebug(@"%s_ref:%@   eleData:%@",__func__,ref,eleData);
+    [self.vaInstance.componentController updateComponentWithRef:ref componentData:eleData];
 }
 //移动component
-- (void)moveComponent:(NSString *)ref toParent:(NSString *)parentRef index:(NSInteger)index{
+- (void)moveElement:(NSString *)parentRef componentRef:(NSString *)ref index:(NSInteger)index{
+    VALogDebug(@"%s_ref:%@  componentRef:%@ index:%ld",__func__,parentRef, ref,(long)index);
     [self.vaInstance.componentController moveComponentWithRef:ref toParent:parentRef atIndex:index];
 }
 

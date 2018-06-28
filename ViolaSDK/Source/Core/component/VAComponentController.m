@@ -65,7 +65,9 @@
     //添加真元素
     [self addComponent:body toSupercomponent:_rootComponent.ref atIndex:0];
     
+
     dispatch_async([VAThreadManager getComponentQueue], ^{
+       weakSelf.isBodyLayoutFinish = true;
        [VAThreadManager violaIntanceRenderFinish];
     });
 
@@ -110,17 +112,21 @@
     [self _syncComponentsLayoutAndMainQueueTasks];
 }
 
-- (void)updateComponentWithComponentData:(NSDictionary *)componentData{
-    NSString *ref = [VAConvertUtl convertToString:componentData[@"ref"]] ;
+- (void)updateComponentWithRef:(NSString *)ref componentData:(NSDictionary *)componentData{
+    if(!ref){
+        ref = [VAConvertUtl convertToString:componentData[@"ref"]] ;
+    }
     NSDictionary *styles = componentData[@"style"];
     NSDictionary *attributes = componentData[@"attr"];
-    NSArray *events = componentData[@"event"];
+    NSArray *events = componentData[@"events"];
     
-    BOOL animated = [VAConvertUtl convertToBOOL:componentData[@"animated"]];
     
     VAAssertReturn(ref, @"can't be nil");
     VAComponent *component = [_allComponentsDic objectForKey:ref];
     __weak typeof(&*component) weakComponent = component;
+    if(component.animatedEnable){
+        self.mainQueueSyncWithAnimated = component.animatedEnable;
+    }
     VAAssertReturn(component, @"not found");
     if ([attributes isKindOfClass:[NSDictionary class]] && attributes.count) {
         [component _updateAttributesOnComponentThread:attributes];
@@ -130,15 +136,16 @@
     }
     
     if ([styles isKindOfClass:[NSDictionary class]] && styles.count) {
-        self.mainQueueSyncWithAnimated = animated;
         [component _updateStylesOnComponentThread:styles];
+        if(component.animatedEnable){
+            self.mainQueueSyncWithAnimated = component.animatedEnable;
+        }
         [self _addTaskToMainQueue:^{
             [weakComponent _updateStylesOnMainThread:styles];
         }] ;
     }
   
     if ([events isKindOfClass:[NSArray class]] && events.count) {
-        //todo tomqiu   event update
         [component _updateEventsOnComponentThread:events];
         [self _addTaskToMainQueue:^{
             [weakComponent _updateEventsOnMainThread:events];
@@ -152,7 +159,9 @@
     VAAssertReturn(ref, @"nil");
     VAComponent *component = [_allComponentsDic objectForKey:ref];
     VAAssertReturn(component, @"not found");
-    
+    if(component.animatedEnable){
+        self.mainQueueSyncWithAnimated = true;
+    }
     [component _removeFromSupercomponent];
     
     [_allComponentsDic removeObjectForKey:ref];
@@ -201,7 +210,7 @@
     NSString *type = [VAConvertUtl convertToString:ele[@"type"]];
     NSDictionary *styles = ele[@"style"];
     NSDictionary *attributes = ele[@"attr"];
-    NSArray *events = ele[@"event"];
+    NSArray *events = ele[@"events"];
     
     Class componentClass = [VARegisterManager classWithComponentType:type];
     VAAssert(componentClass, @"not register it");
@@ -232,6 +241,9 @@
     
     [parentComponent _insertSubcomponent:component atIndex:index];
 
+    if(component.animatedEnable){
+        self.mainQueueSyncWithAnimated = true;
+    }
     [self _addTaskToMainQueue:^{
         [parentComponent insertSubview:component atIndex:index];
     }];
@@ -307,8 +319,14 @@
         _mainQueueTasks = [NSMutableArray array];
         BOOL animated = _mainQueueSyncWithAnimated;
         _mainQueueSyncWithAnimated = false;
+        
+        if(!self.isBodyLayoutFinish){
+            animated = false;
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (animated) {
+            
+            
+            if (animated ) {
                 [self _notifyAllComponetBeforeMainQueueAnimation];
             
                 

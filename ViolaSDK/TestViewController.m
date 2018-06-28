@@ -33,7 +33,6 @@
 
   
     [intance renderViewWithScript:script data:@{@"os":@"iOS"}];
-    self.view.backgroundColor = [UIColor brownColor];
     
 }
 
@@ -48,6 +47,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewDidLayoutSubviews{
+    [super viewDidLayoutSubviews];
+    self.vaInstance.instanceFrame = self.view.frame;
+}
 
 #pragma mark - ViolaInstanceDelegate
 
