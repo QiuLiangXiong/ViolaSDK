@@ -33,48 +33,51 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL animatedEnable;
 
 
-- (UIView *)loadView;
+- (UIView *)loadView;//主线程
 
 - (BOOL)isViewLoaded;
 
-- (void)viewWillLoad;
+- (void)viewWillLoad;//主线程
 
-- (void)viewDidLoad;
+- (void)viewDidLoad;//主线程
 
-- (void)viewWillUnload;
+- (void)viewWillUnload;//主线程
 
-- (void)viewDidUnload;
+- (void)viewDidUnload;//主线程
 
-- (void)setNeedsLayout;
+- (void)setNeedsLayout;//组件线程
 
-- (BOOL)isNeedsLayout;
+- (BOOL)isNeedsLayout;//组件线程
 //计算大小
-- (nullable CGSize (^)(CGSize constrainedSize))calculateComponentSizeBlock;
+- (nullable CGSize (^)(CGSize constrainedSize))calculateComponentSizeBlock;//组件线程
 
 
 // 组件线程
 - (void)layoutDidEnd;
+//主线程
 - (void)mainQueueWillSyncBeforeAnimation;
 
 //该组件的frame变化回调  此时view的frame还没有同步过来
 - (void)componentFrameDidChange;// 组件线程
+- (void)componentFrameDidChangeOnMainQueue;// 主线程 此时view的frame已经同步过来
 - (void)componentFrameWillChange;// 组件线程
 
+
 //更新相关
-//组件线程更新
-- (void)updateStylesOnComponentThread:(NSDictionary *)styles;
+- (void)updateStylesOnComponentThread:(NSDictionary *)styles;//组件线程更新
 - (void)updateStylesOnMainThread:(NSDictionary *)styles;//主线程更新 该更新会比组件线程更新晚一步
-- (void)updateAttributesOnComponentThread:(NSDictionary *)attributes;
-- (void)updateAttributesOnMainThread:(NSDictionary *)attributes;
+- (void)updateAttributesOnComponentThread:(NSDictionary *)attributes;//组件线程更新
+- (void)updateAttributesOnMainThread:(NSDictionary *)attributes;//主线程更新
 
-- (void)updateEventsOnComponentThread:(NSArray *)events;
-- (void)updateEventsOnMainThread:(NSArray *)events;
+- (void)updateEventsOnComponentThread:(NSArray *)events;//组件线程更新
+- (void)updateEventsOnMainThread:(NSArray *)events;//主线程更新
 
-- (void)insertSubview:(VAComponent *)subcomponent atIndex:(NSUInteger)index;
+//组件增删改
+- (void)insertSubview:(VAComponent *)subcomponent atIndex:(NSUInteger)index;//主线程更新
 
-- (void)moveToSuperview:(VAComponent *)supercomponent atIndex:(NSUInteger)index;
+- (void)moveToSuperview:(VAComponent *)supercomponent atIndex:(NSUInteger)index;//主线程更新
 
-- (void)removeFromSuperview;
+- (void)removeFromSuperview;//主线程更新
 @end
 
 

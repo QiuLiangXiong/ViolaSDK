@@ -86,6 +86,9 @@ static int componentAllocCount;
     VAAssertMainThread();
 }
 
+- (void)componentFrameDidChangeOnMainQueue{
+    VAAssertMainThread();
+}
 
 
 #pragma mark update

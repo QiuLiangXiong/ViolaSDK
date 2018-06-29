@@ -180,8 +180,11 @@ if(styles[@#key]){\
     kBlockWeakSelf;
     [_vaInstance.componentController addTaskToMainQueueOnComponentThead:^{
         [weakSelf _componentFrameDidChange];
+        [weakSelf componentFrameDidChangeOnMainQueue];
     }];
 }
+
+
 
 
 
@@ -208,26 +211,18 @@ if(styles[@#key]){\
         if (_touchEnable) {
             _view.userInteractionEnabled = [_touchEnable boolValue];
         }
-        
-//        if (![self _needsDrawBorder]) {
-//            _layer.borderColor = _borderTopColor.CGColor;
-//            _layer.borderWidth = _borderTopWidth;
-//            [self _resetNativeBorderRadius];
-//            _layer.opacity = _opacity;
-//            _view.backgroundColor = _backgroundColor;
-//        }
     
-//        if (_transform) {
-//            [_transform applyTransformForView:_view];
+//        if (_transform) {//todo tomqiu
+
 //        }
         
-//        if (_boxShadow) {
-//            [self configBoxShadow:_boxShadow];
-//        }
         
         _view.va_component = self;
-        [self viewDidLoad];//viewdidload
         [self _syncTouchEventsToView];
+        
+        
+        [self viewDidLoad];//viewdidload
+
     //    [self _syncBorderDraw];
 //        [self _createShapeLayer];
         
@@ -242,6 +237,7 @@ if(styles[@#key]){\
     self.view.frame = _componentFrame;
     //圆角
     [self _syncBorderRadiusAndDraw];
+    //
 }
 
 
@@ -309,129 +305,7 @@ if(styles[@#key]){\
 
 }
 
-    
-    
-//    CGMutablePathRef path = CGPathCreateMutable();
-//    CGPathAddArc(path, NULL, leftUpCornerRadius, leftUpCornerRadius, leftUpCornerRadius, -M_PI_4 * 3, -M_PI_2, NO);
-//    CGPathMoveToPoint(path, NULL, leftUpCornerRadius, 0);
-//    CGPathAddLineToPoint(path, NULL, size.width - rightUpCornerRadius, 0);
-//    CGPathAddArc(path, NULL, size.width - rightUpCornerRadius, rightUpCornerRadius, rightUpCornerRadius, -M_PI_2, -M_PI_4, NO);
-    
-    //
-    //    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
-    //    shapeLayer.frame = self.view.bounds;
-    //    shapeLayer.path = path;
-    //    shapeLayer.lineWidth = 10;
-    //    shapeLayer.fillColor = [UIColor clearColor].CGColor;
-    //    shapeLayer.strokeColor = [UIColor greenColor].CGColor;
-    //    CGPathRelease(path);
-    //
-    //    UIBezierPath * padfd = [UIBezierPath bezierPath];
-    //
-    
-    
 
-
-
-//- (BOOL)_isEqualWithRadius0:(CGFloat)radius0 radius1:(CGFloat)radius1 radius2:(CGFloat)radius2 radius3:(CGFloat)radius3{
-//    CGFloat radius = fmax(radius3, fmax(radius2, fmax(radius0, radius1)));
-//    if(radius0 && radius0 != radius){
-//        return false;
-//    }
-//    if(radius1 && radius1 != radius){
-//        return false;
-//    }
-//    if(radius2 && radius2 != radius){
-//        return false;
-//    }
-//    if(radius3 && radius3 != radius){
-//        return false;
-//    }
-//    return true;
-//}
-
-    
-    
-//    CGFloat leftUpCornerRadius = 10;
-//    CGFloat rightUpCornerRadius = 30;
-//    CGFloat leftDownCornerRadius = 20;
-//    CGFloat rightDownCornerRadius = 40;
-//    CGSize size = self.view.bounds.size;
-//
-//    CGMutablePathRef path = CGPathCreateMutable();
-//    CGPathAddArc(path, NULL, leftUpCornerRadius, leftUpCornerRadius, leftUpCornerRadius, -M_PI_4 * 3, -M_PI_2, NO);
-//    CGPathMoveToPoint(path, NULL, leftUpCornerRadius, 0);
-//    CGPathAddLineToPoint(path, NULL, size.width - rightUpCornerRadius, 0);
-//    CGPathAddArc(path, NULL, size.width - rightUpCornerRadius, rightUpCornerRadius, rightUpCornerRadius, -M_PI_2, -M_PI_4, NO);
-//
-//    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
-//    shapeLayer.frame = self.view.bounds;
-//    shapeLayer.path = path;
-//    shapeLayer.lineWidth = 10;
-//    shapeLayer.fillColor = [UIColor clearColor].CGColor;
-//    shapeLayer.strokeColor = [UIColor greenColor].CGColor;
-//    CGPathRelease(path);
-//
-//    UIBezierPath * padfd = [UIBezierPath bezierPath];
-//
-//
-//    [_view.layer addSublayer:shapeLayer];
-//
-//
-//    CGMutablePathRef path2 = CGPathCreateMutable();
-//    CGPathAddArc(path2, NULL, size.width - rightUpCornerRadius, rightUpCornerRadius, rightUpCornerRadius, -M_PI_4, 0, NO);
-//    CGPathMoveToPoint(path2, NULL, size.width, rightUpCornerRadius);
-//    CGPathAddLineToPoint(path2, NULL, size.width, size.height - rightDownCornerRadius);
-//    CGPathAddArc(path2, NULL, size.width - rightDownCornerRadius, size.height - rightDownCornerRadius, rightDownCornerRadius, 0, M_PI_4, NO);
-//
-//    CAShapeLayer *shapeLayer2 = [CAShapeLayer layer];
-//    shapeLayer2.frame = self.view.bounds;
-//    shapeLayer2.path = path2;
-//    shapeLayer2.lineWidth = 10;
-//    shapeLayer2.fillColor = [UIColor clearColor].CGColor;
-//    shapeLayer2.strokeColor = [UIColor redColor].CGColor;
-//    CGPathRelease(path2);
-//
-//    [_view.layer addSublayer:shapeLayer2];
-//
-//
-//
-//
-//    CGMutablePathRef path3 = CGPathCreateMutable();
-//    CGPathAddArc(path3, NULL, size.width - rightDownCornerRadius, size.height - rightDownCornerRadius, rightDownCornerRadius, M_PI_4, M_PI_2, NO);
-//    CGPathMoveToPoint(path3, NULL, size.width - rightDownCornerRadius, size.height);
-//    CGPathAddLineToPoint(path3, NULL, leftDownCornerRadius, size.height);
-//    CGPathAddArc(path3, NULL, leftDownCornerRadius, size.height - leftDownCornerRadius, leftDownCornerRadius, M_PI_2, M_PI_4 * 3, NO);
-//
-//    CAShapeLayer *shapeLayer3 = [CAShapeLayer layer];
-//    shapeLayer3.frame = self.view.bounds;
-//    shapeLayer3.path = path3;
-//    shapeLayer3.lineWidth = 10;
-//    shapeLayer3.fillColor = [UIColor clearColor].CGColor;
-//    shapeLayer3.strokeColor = [UIColor blueColor].CGColor;
-//    CGPathRelease(path3);
-//
-//    [_view.layer addSublayer:shapeLayer3];
-//
-//
-//
-//    CGMutablePathRef path4 = CGPathCreateMutable();
-//    CGPathAddArc(path4, NULL, leftDownCornerRadius, size.height - leftDownCornerRadius, leftDownCornerRadius, M_PI_4 * 3, M_PI, NO);
-//    CGPathMoveToPoint(path4, NULL, 0, size.height - leftDownCornerRadius);
-//    CGPathAddLineToPoint(path4, NULL, 0, leftUpCornerRadius);
-//    CGPathAddArc(path4, NULL, leftUpCornerRadius, leftUpCornerRadius, leftUpCornerRadius, M_PI, -M_PI_4 * 3, NO);
-//
-//    CAShapeLayer *shapeLayer4 = [CAShapeLayer layer];
-//    shapeLayer4.frame = self.view.bounds;
-//    shapeLayer4.path = path4;
-//    shapeLayer4.lineWidth = 10;
-//    shapeLayer4.fillColor = [UIColor clearColor].CGColor;
-//    shapeLayer4.strokeColor = [UIColor grayColor].CGColor;
-//    CGPathRelease(path4);
-//
-//    [_view.layer addSublayer:shapeLayer4];
-//
-//    return shapeLayer;
 
 
 - (void)_syncBorderDraw{
