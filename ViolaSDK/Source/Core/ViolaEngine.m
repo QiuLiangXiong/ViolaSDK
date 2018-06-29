@@ -50,6 +50,7 @@
     //component
     
     [self registerComponent:@"div" withClass:[VADivComponent class]];
+    [self registerComponent:@"text" withClass:NSClassFromString(@"VATextComponent")];
     
 }
 

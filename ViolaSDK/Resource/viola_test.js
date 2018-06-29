@@ -1,29 +1,87 @@
+
+
 var container = document.createElement('div', {
                                        attr: { id: 'container' }
                                        })
 
-var div = document.createElement('div', {
+var textContainer = document.createElement('div', {
+     style: {
+           flexDirection: 'row',
+//           flexWrap: 'wrap',
+           borderColor:'rgba(255,255,255,0.3)',
+           backgroundColor:'green',
+           margin:'20dp',
+           borderWidth:'10dp',
+           padding:'15dp',
+           animated: true,
+    }
+})
+
+var div = document.createElement('text', {
                                  attr: {
-                                 id: 'div1'
+                                 id: 'div1',
+                                 value:'我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子',
                                  },
                                  style: {
-                                    flexDirection: 'row',
-                                 flexWrap: 'wrap',
-                                     minWidth: 600,
-                                     minHeight: 200,
+//                                    flexDirection: 'row',
+//                                 flexWrap: 'wrap',
+                                 borderColor:'rgba(255,255,255,0.3)',
                                      backgroundColor:'red',
-                                     margin:'20dp',
-                                 animated: true
+
+                                 borderWidth:'10dp',
+//                                 borderRadius:'1000dp',
+//                                 padding:'40dp',
+                                 animated: true,
                                     }
                                  })
 
 // window.div = div.ref
+var div2 = document.createElement('div', {
+                                 attr: {
+                                 id: 'div1',
+                                 value:'我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子',
+                                 },
+                                 style: {
+                                 //                                    flexDirection: 'row',
+                                 //                                 flexWrap: 'wrap',
+                                 borderColor:'rgba(255,255,255,0.3)',
+                                 backgroundColor:'red',
 
+                                  marginLeft:'5dp',
+                                  marginRight:'20dp',
+                                 borderWidth:'30dp',
+                                 //                                 borderRadius:'1000dp',
+                                 //                                 padding:'40dp',
+                                 animated: true,
+                                 }
+                                 })
+
+var index = 0;
 div.on('click', function (e) {
-       this.removeChild(this.children[0])
-       })
+       var value = [
+                    '我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子',
+                    '短一点短一点短一点短一点短一点短一点短一点一点短一点短一一点短一点短一短一点短一点短一点短一点短一点短一点短一点一点短一点短一一点短一点短一点短一点短一点短一点短一点短一点一点短一点短一一点短一点短一点短一点短一点短一点短一点短一点一点短一点短一一点短一点短一点短一点短一点短一点短一点短一点一点短一点短一一点短一点短一点短一点短一点短一点短一点短一点一点短一点短一一点短一点短一点短一点短一点短一点短一点短一点一点短一点短一一点',
+                    '短一点'
+                    ]
+        this.setAttr('value', value[parseInt(++index%3)])
+       this.setStyle({
 
-container.appendChild(div)
+                     color:'white',
+                     fontWeight:'bold',
+                     maxWidth:'400dp',
+                     textDecoration:'line-through',
+
+                     
+                     
+       })
+})
+
+textContainer.appendChild(div)
+textContainer.appendChild(div2)
+
+container.appendChild(textContainer)
+
+//container.appendChild(div)
 
 var div2 = document.createElement('div')
 
@@ -170,6 +228,8 @@ container.appendChild(btnGroup)
 document.body.setStyle({
                        backgroundColor: 'grey'
 })
+
+document.body.type = 'div'
 
 document.body.appendChild(container)
 document.render()

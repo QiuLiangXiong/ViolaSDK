@@ -151,6 +151,10 @@
             [weakComponent _updateEventsOnMainThread:events];
         }];
     }
+    [component updateComponentOnComponentThreadWithAttributes:attributes styles:styles events:events];
+    [self _addTaskToMainQueue:^{
+        [weakComponent updateComponentOnMainThreadWithAttributes:attributes styles:styles events:events];
+    }];
 }
 
 

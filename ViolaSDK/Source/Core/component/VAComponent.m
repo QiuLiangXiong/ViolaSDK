@@ -65,6 +65,20 @@ static int componentAllocCount;
     return _backgroundColor;
 }
 
+- (ViolaInstance *)violaInstance{
+    return _vaInstance;
+}
+
+- (CGRect)componentFrame{
+    return _componentFrame;
+}
+
+
+- (UIEdgeInsets)contentEdge{
+    return _contentEdge;
+}
+
+
 
 - (void)viewWillLoad
 {
@@ -90,6 +104,13 @@ static int componentAllocCount;
     VAAssertMainThread();
 }
 
+- (void)updateComponentOnComponentThreadWithAttributes:(NSDictionary *)attributes styles:(NSDictionary *)styles events:(NSArray *)events{
+    VAAssertComponentThread();
+}
+
+- (void)updateComponentOnMainThreadWithAttributes:(NSDictionary *)attributes styles:(NSDictionary *)styles events:(NSArray *)events{
+    VAAssertMainThread();
+}
 
 #pragma mark update
 

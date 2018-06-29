@@ -54,8 +54,7 @@
         [dirtyComponents addObject:self];
         [self componentFrameDidChange];//componentFrame 发生变化
     }
-    [self __resetCSSNodeFrame];
-    
+    resetNodeLayout(_cssNode);
     if(_subcomponents.count){
         for (VAComponent *subcomponent in _subcomponents) {
             [subcomponent _syncCSSNodeLayoutWithDirtyComponents:dirtyComponents];
@@ -64,13 +63,6 @@
 }
 
 #pragma mark - private
-
-- (void)__resetCSSNodeFrame{
-    _cssNode->layout.dimensions[CSS_WIDTH] = CSS_UNDEFINED;
-    _cssNode->layout.dimensions[CSS_HEIGHT] = CSS_UNDEFINED;
-    _cssNode->layout.position[CSS_LEFT] = 0;
-    _cssNode->layout.position[CSS_TOP] = 0;
-}
 
 
 #pragma mark cssNode callback
@@ -206,7 +198,12 @@ VA_LAYOUT_FILL_CSS_NODE(key, prop[CSS_BOTTOM], convertToFloatWithPixel);
     VA_LAYOUT_FILL_CSS_NODE(paddingLeft, padding[CSS_LEFT], convertToFloatWithPixel)
     VA_LAYOUT_FILL_CSS_NODE(paddingRight, padding[CSS_RIGHT], convertToFloatWithPixel)
     VA_LAYOUT_FILL_CSS_NODE(paddingBottom, padding[CSS_BOTTOM], convertToFloatWithPixel)
+    
     if(needLayout){
+        _contentEdge = UIEdgeInsetsMake(_cssNode->style.padding[CSS_TOP] + _cssNode->style.border[CSS_TOP],
+                                        _cssNode->style.padding[CSS_LEFT] + _cssNode->style.border[CSS_LEFT],
+                                        _cssNode->style.padding[CSS_BOTTOM] + _cssNode->style.border[CSS_BOTTOM],
+                                        _cssNode->style.padding[CSS_RIGHT] + _cssNode->style.border[CSS_RIGHT]);
         [self setNeedsLayout];
     }
 }

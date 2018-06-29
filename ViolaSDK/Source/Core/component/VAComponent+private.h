@@ -38,6 +38,9 @@
     CGFloat _opacity;
     NSNumber * _touchEnable;
     
+    UIEdgeInsets _contentEdge;//内容边距  包括padding 和 borderWidth
+    
+    
     //border
     UIColor *_borderTopColor;
     UIColor *_borderRightColor;

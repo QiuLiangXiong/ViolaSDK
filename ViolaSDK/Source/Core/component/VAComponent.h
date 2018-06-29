@@ -29,6 +29,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, weak, nullable) VAComponent *supercomponent;
 @property(nonatomic, readonly, strong) NSMutableArray  * subcomponents;
 @property(nonatomic, readonly, strong) UIColor  * backgroundColor;
+@property(nonatomic, readonly, strong) ViolaInstance  * violaInstance;
+@property(nonatomic, readonly, assign) CGRect  componentFrame ;
+@property(nonatomic, readonly, assign) UIEdgeInsets  contentEdge;
 @property (nonatomic, assign) BOOL isRootComponent;
 @property (nonatomic, assign) BOOL animatedEnable;
 
@@ -39,9 +42,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)viewWillLoad;//主线程
 
+//子类一般会在这里做很多view相关的事情，比如手势，比如atts
+
 - (void)viewDidLoad;//主线程
 
-- (void)viewWillUnload;//主线程
+- (void)viewWillUnload;//主线程  
 
 - (void)viewDidUnload;//主线程
 
@@ -69,6 +74,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateAttributesOnComponentThread:(NSDictionary *)attributes;//组件线程更新
 - (void)updateAttributesOnMainThread:(NSDictionary *)attributes;//主线程更新
 
+- (void)updateComponentOnComponentThreadWithAttributes:(NSDictionary *)attributes styles:(NSDictionary *)styles events:(NSArray *)events;//组件线程更新
+- (void)updateComponentOnMainThreadWithAttributes:(NSDictionary *)attributes styles:(NSDictionary *)styles events:(NSArray *)events;//主线程更新
+
+
 - (void)updateEventsOnComponentThread:(NSArray *)events;//组件线程更新
 - (void)updateEventsOnMainThread:(NSArray *)events;//主线程更新
 
@@ -78,6 +87,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)moveToSuperview:(VAComponent *)supercomponent atIndex:(NSUInteger)index;//主线程更新
 
 - (void)removeFromSuperview;//主线程更新
+- (void)willMoveToSuperview:(nullable UIView *)newSuperview;
+- (void)didMoveToSuperview;
 @end
 
 

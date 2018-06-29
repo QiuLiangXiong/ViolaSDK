@@ -23,6 +23,19 @@ typedef NS_ENUM(NSInteger, VABorderStyle) {
     VABorderStyleDashed,
 };
 
+typedef NS_ENUM(NSInteger, VATextStyle) {
+    VATextStyleNormal,
+    VATextStyleItalic,//斜体
+};
+
+typedef NS_ENUM(NSInteger, VATextDecoration) {
+    VATextDecorationNone,
+    VATextDecorationUnderline,
+    VATextDecorationLineThrough
+};
+
+
+
 @interface VAConvertUtl : NSObject
 
 + (CGFloat)convertToFloatWithPixel:(id)value;
@@ -61,5 +74,10 @@ CGFloat VAFloorValue(CGFloat value);
 + (VALayoutPosition)converToPosition:(id)value defaultValue:(VALayoutPosition)defaultValue;
 + (VALayoutPosition)converToPosition:(id)value;
 + (VABorderStyle)converToBorderStyle:(id)value;
++ (CGFloat)converToTextWeight:(id)value;
++ (VATextStyle)convertToTextStyle:(id)value;
++ (NSTextAlignment)convertToTextAlignment:(id)value;
++ (VATextDecoration)convertToTextDecoration:(id)value;
++ (NSLineBreakMode)convertToTextOverflow:(id)value;
 @end
 

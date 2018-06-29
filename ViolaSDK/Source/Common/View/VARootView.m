@@ -11,6 +11,13 @@
 @implementation VARootView
 
 
+- (instancetype)initWithFrame:(CGRect)frame{
+    if(self = [super initWithFrame:frame]){
+        self.clipsToBounds = true;
+    }
+    return self;
+}
+
 - (void)dealloc{
     
 }

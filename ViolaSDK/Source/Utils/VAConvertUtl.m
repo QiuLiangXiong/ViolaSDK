@@ -442,4 +442,76 @@ CGFloat VAFloorValue(CGFloat value)
     return VABorderStyleSolid;
 }
 
+
+#define VA_TEXT_WEIGHT_RETURN(key,value0,value1)\
+if([string isEqualToString:@#key]){\
+   if (@available(iOS 8.2, *)) {\
+        return value1;\
+   }else {\
+     return value0;\
+   }\
+}
+
++ (CGFloat)converToTextWeight:(id)value{
+    NSString *string = [[self class] convertToString:value];
+    
+    VA_TEXT_WEIGHT_RETURN(normal, 0, UIFontWeightRegular);
+    VA_TEXT_WEIGHT_RETURN(bold, 0.4, UIFontWeightBold);
+    VA_TEXT_WEIGHT_RETURN(100, -0.8, UIFontWeightUltraLight);
+    VA_TEXT_WEIGHT_RETURN(200, -0.6, UIFontWeightThin);
+    VA_TEXT_WEIGHT_RETURN(300, -0.4, UIFontWeightLight);
+    VA_TEXT_WEIGHT_RETURN(400, 0, UIFontWeightRegular);
+    VA_TEXT_WEIGHT_RETURN(500, 0.23, UIFontWeightMedium);
+    VA_TEXT_WEIGHT_RETURN(600, 0.3, UIFontWeightSemibold);
+    VA_TEXT_WEIGHT_RETURN(700, 0.4, UIFontWeightBold);
+    VA_TEXT_WEIGHT_RETURN(800, 0.56, UIFontWeightHeavy);
+    VA_TEXT_WEIGHT_RETURN(900, 0.62, UIFontWeightBlack);
+    
+    if(@available(iOS 8.2, *)){
+        return UIFontWeightRegular;
+    }else {
+        return 0;
+    }
+}
+
++ (VATextStyle)convertToTextStyle:(id)value{
+    if([value isKindOfClass:[NSString class]]){
+        NSString *string = [[self class] convertToString:value];
+        if ([string isEqualToString:@"normal"])
+        return VATextStyleNormal;
+        else if ([string isEqualToString:@"italic"])
+        return VATextStyleItalic;
+    }
+    return VATextStyleNormal;
+}
+
++ (NSTextAlignment)convertToTextAlignment:(id)value{
+    NSString *string = [[self class] convertToString:value];
+    if ([string isEqualToString:@"left"])     return NSTextAlignmentLeft;
+
+    else if ([string isEqualToString:@"center"])     return NSTextAlignmentCenter;
+
+    else if ([string isEqualToString:@"right"])     return NSTextAlignmentRight;
+
+    return NSTextAlignmentLeft;
+}
+
+
++ (VATextDecoration)convertToTextDecoration:(id)value{
+    NSString *string = [[self class] convertToString:value];
+    if ([string isEqualToString:@"underline"]) return VATextDecorationUnderline;
+    else if ([string isEqualToString:@"line-through"])    return VATextDecorationLineThrough;
+    return VATextDecorationNone;
+}
+
++ (NSLineBreakMode)convertToTextOverflow:(id)value{
+    NSString *string = [[self class] convertToString:value];
+    if ([string isEqualToString:@"ellipsis"]) return NSLineBreakByTruncatingTail;
+    else if ([string isEqualToString:@"clip"])    return NSLineBreakByClipping;
+    else if ([string isEqualToString:@"ellipsis-middel"])    return NSLineBreakByTruncatingMiddle;
+    else if ([string isEqualToString:@"ellipsis-head"])    return NSLineBreakByTruncatingHead;
+    return NSLineBreakByTruncatingTail;
+}
+
+//convertToTextDecoration
 @end

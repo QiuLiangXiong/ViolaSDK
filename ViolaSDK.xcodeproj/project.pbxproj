@@ -41,6 +41,8 @@
 		FFB278CA20E0FD14009FD859 /* VAWeakObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB278C920E0FD14009FD859 /* VAWeakObject.m */; };
 		FFB278CD20E12822009FD859 /* VAComponent+event.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB278CC20E12822009FD859 /* VAComponent+event.m */; };
 		FFB2793820E206AB009FD859 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB2793720E206AB009FD859 /* TestViewController.m */; };
+		FFBC38D420E5FA2100D3D806 /* RIJAsyncLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBC38D220E5FA2100D3D806 /* RIJAsyncLabel.m */; };
+		FFBC38D720E5FAE300D3D806 /* VATextComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBC38D620E5FAE300D3D806 /* VATextComponent.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,6 +134,10 @@
 		FFB278CC20E12822009FD859 /* VAComponent+event.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "VAComponent+event.m"; sourceTree = "<group>"; };
 		FFB2793620E206AB009FD859 /* TestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
 		FFB2793720E206AB009FD859 /* TestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
+		FFBC38D220E5FA2100D3D806 /* RIJAsyncLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIJAsyncLabel.m; sourceTree = "<group>"; };
+		FFBC38D320E5FA2100D3D806 /* RIJAsyncLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIJAsyncLabel.h; sourceTree = "<group>"; };
+		FFBC38D520E5FAE300D3D806 /* VATextComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VATextComponent.h; sourceTree = "<group>"; };
+		FFBC38D620E5FAE300D3D806 /* VATextComponent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VATextComponent.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -348,6 +354,8 @@
 			children = (
 				FFB278B320DE463C009FD859 /* VADivComponent.h */,
 				FFB278B420DE463C009FD859 /* VADivComponent.m */,
+				FFBC38D520E5FAE300D3D806 /* VATextComponent.h */,
+				FFBC38D620E5FAE300D3D806 /* VATextComponent.m */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -382,10 +390,20 @@
 		FFB278B920DE9A82009FD859 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				FFBC38D120E5FA2100D3D806 /* RIJAsyncLabel */,
 				FFB278BB20DE9AED009FD859 /* Layout.c */,
 				FFB278BA20DE9AED009FD859 /* Layout.h */,
 			);
 			path = Vendor;
+			sourceTree = "<group>";
+		};
+		FFBC38D120E5FA2100D3D806 /* RIJAsyncLabel */ = {
+			isa = PBXGroup;
+			children = (
+				FFBC38D220E5FA2100D3D806 /* RIJAsyncLabel.m */,
+				FFBC38D320E5FA2100D3D806 /* RIJAsyncLabel.h */,
+			);
+			path = RIJAsyncLabel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -532,6 +550,7 @@
 				FF6607F420DBA23B00A99EE0 /* VAJSBridge.m in Sources */,
 				FF6607FF20DBA23B00A99EE0 /* VARootView.m in Sources */,
 				FF6607FB20DBA23B00A99EE0 /* VARegisterManager.m in Sources */,
+				FFBC38D720E5FAE300D3D806 /* VATextComponent.m in Sources */,
 				FF6607FE20DBA23B00A99EE0 /* VAInstanceManager.m in Sources */,
 				FF6607FA20DBA23B00A99EE0 /* VAUtil.m in Sources */,
 				FF6607FD20DBA23B00A99EE0 /* VABridgeManager.m in Sources */,
@@ -540,6 +559,7 @@
 				FF6607F820DBA23B00A99EE0 /* VAConvertUtl.m in Sources */,
 				FF6607FC20DBA23B00A99EE0 /* VAThreadManager.m in Sources */,
 				FF66079D20DBA1A300A99EE0 /* main.m in Sources */,
+				FFBC38D420E5FA2100D3D806 /* RIJAsyncLabel.m in Sources */,
 				FF6607F020DBA23B00A99EE0 /* VAComponentController.m in Sources */,
 				FF66078F20DBA1A300A99EE0 /* AppDelegate.m in Sources */,
 				FFB278CD20E12822009FD859 /* VAComponent+event.m in Sources */,

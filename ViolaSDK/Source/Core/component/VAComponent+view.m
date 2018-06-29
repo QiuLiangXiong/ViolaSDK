@@ -144,13 +144,16 @@ if(styles[@#key]){\
     if(subcomponent.view.superview){
       [subcomponent.view removeFromSuperview];//有父亲先删除
     }
+    [subcomponent willMoveToSuperview:self.view];
     [self.view insertSubview:subcomponent.view atIndex:index];
+    [subcomponent didMoveToSuperview];
     
 }
 
 - (void)moveToSuperview:(VAComponent *)supercomponent atIndex:(NSUInteger)index{
     VAAssertMainThread();
     [self removeFromSuperview];
+    [self.view didMoveToSuperview];
     [supercomponent insertSubview:self atIndex:index];
 }
 
@@ -159,6 +162,13 @@ if(styles[@#key]){\
     if ([self isViewLoaded]) {
         [self.view removeFromSuperview];
     }
+}
+
+- (void)willMoveToSuperview:(nullable UIView *)newSuperview{
+    VAAssertMainThread();
+}
+- (void)didMoveToSuperview{
+    VAAssertMainThread();
 }
 //component view 变化
 
@@ -243,15 +253,19 @@ if(styles[@#key]){\
 
 
 - (void)_syncBorderRadiusAndDraw{
+    CGFloat borderTopLeftRadius = 0;
+    CGFloat borderTopRightRadius = 0;
+    CGFloat borderBottomLeftRadius = 0;
+    CGFloat borderBottomRightRadius = 0;
     //开始切圆角
     if(_borderTopLeftRadius || _borderTopRightRadius || _borderBottomLeftRadius || _borderBottomRightRadius){
         //圆角
         CGSize size = _view.bounds.size;
         CGFloat maxLength = fmin(size.width, size.height);//最短边作为最大长度
-        CGFloat borderTopLeftRadius = fmin(_borderTopLeftRadius, maxLength);
-        CGFloat borderTopRightRadius = fmin(_borderTopRightRadius, maxLength);
-        CGFloat borderBottomLeftRadius = fmin(_borderBottomLeftRadius, maxLength);
-        CGFloat borderBottomRightRadius = fmin(_borderBottomRightRadius, maxLength);
+        borderTopLeftRadius = fmin(_borderTopLeftRadius, maxLength);
+        borderTopRightRadius = fmin(_borderTopRightRadius, maxLength);
+        borderBottomLeftRadius = fmin(_borderBottomLeftRadius, maxLength);
+        borderBottomRightRadius = fmin(_borderBottomRightRadius, maxLength);
         
         if(borderTopLeftRadius + borderBottomLeftRadius > size.height){
             borderTopLeftRadius = size.height * (_borderTopLeftRadius / (_borderTopLeftRadius + _borderBottomLeftRadius));
@@ -269,10 +283,6 @@ if(styles[@#key]){\
             borderBottomLeftRadius = maxLength * (_borderBottomLeftRadius / (_borderBottomLeftRadius + _borderBottomRightRadius));
             borderBottomRightRadius = maxLength - borderBottomLeftRadius;
         }
-        _borderTopLeftRadius = borderTopLeftRadius;
-        _borderTopRightRadius = borderTopRightRadius;
-        _borderBottomLeftRadius = borderBottomLeftRadius;
-        _borderBottomRightRadius = borderBottomRightRadius;
         UIBezierPath * path = [UIBezierPath bezierPath];
         CGFloat radius = borderTopLeftRadius;
         [path addArcWithCenter:CGPointMake(radius, radius) radius:radius startAngle:M_PI endAngle:M_PI * (3/2.0f) clockwise:true];
@@ -301,14 +311,14 @@ if(styles[@#key]){\
         _borderMaskLayer = nil;
     }
 
-    [self _syncBorderDraw];
+    [self _syncBorderDrawWithTopLeft:borderTopLeftRadius topRight:borderTopRightRadius bottomLeft:borderBottomLeftRadius bottomTop:borderBottomRightRadius];
 
 }
 
 
 
 
-- (void)_syncBorderDraw{
+- (void)_syncBorderDrawWithTopLeft:(CGFloat)topLeft topRight:(CGFloat)topRight bottomLeft:(CGFloat)bottomLeft bottomTop:(CGFloat)bottomRight{
     _borderLayer.hidden = true;
     _borderTopLayer.hidden = true;
     _borderBottomLayer.hidden = true;
@@ -323,15 +333,15 @@ if(styles[@#key]){\
         _borderLayer.frame = _view.bounds;
         _borderLayer.hidden = false;
         UIBezierPath * path = [UIBezierPath bezierPath];
-        CGFloat radius = _borderTopLeftRadius;
+        CGFloat radius = topLeft;
         [path addArcWithCenter:CGPointMake(radius, radius) radius:radius startAngle:M_PI endAngle:M_PI * (3/2.0f) clockwise:true];
-        radius = _borderTopRightRadius;
+        radius = topRight;
         [path addLineToPoint:CGPointMake(size.width - radius, 0)];
         [path addArcWithCenter:CGPointMake(size.width - radius, radius) radius:radius startAngle:M_PI * (3/2.0f) endAngle:2 * M_PI clockwise:true];
-        radius = _borderBottomRightRadius;
+        radius = bottomRight;
         [path addLineToPoint:CGPointMake(size.width, size.height - radius)];
         [path addArcWithCenter:CGPointMake(size.width - radius, size.height - radius) radius:radius startAngle:2 * M_PI endAngle:M_PI_2 clockwise:YES];
-        radius = _borderBottomLeftRadius;
+        radius = bottomLeft;
         [path addLineToPoint:CGPointMake(radius, size.height)];
         [path addArcWithCenter:CGPointMake(radius, size.height - radius) radius:radius startAngle:M_PI_2 endAngle:M_PI clockwise:YES];
         [path closePath];
@@ -448,6 +458,12 @@ if(styles[@#key]){\
         
         
         
+    }
+    
+    if( (_borderLayer && !_borderLayer.hidden ) || (_borderTopLayer && !_borderTopLayer.hidden ) || (_borderLeftLayer && !_borderLeftLayer.hidden ) || (_borderRightLayer && !_borderRightLayer.hidden ) || (_borderBottomLayer && !_borderBottomLayer.hidden )){
+        if(!_borderMaskLayer){
+            _view.clipsToBounds = true;
+        }
     }
 }
 
