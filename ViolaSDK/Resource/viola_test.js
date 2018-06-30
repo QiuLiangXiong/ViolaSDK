@@ -28,7 +28,9 @@ var div = document.createElement('text', {
                                  borderColor:'rgba(255,255,255,0.3)',
                                      backgroundColor:'red',
 
+//                                 maxWidth:'200dp',
                                  borderWidth:'10dp',
+                                 
 //                                 borderRadius:'1000dp',
 //                                 padding:'40dp',
                                  animated: true,
@@ -68,7 +70,7 @@ div.on('click', function (e) {
 
                      color:'white',
                      fontWeight:'bold',
-                     maxWidth:'400dp',
+//                     maxWidth:'400dp',
                      textDecoration:'line-through',
 
                      

@@ -229,7 +229,7 @@ prop = defaultValue;\
 //计算内容大小
 - (CGSize)_calculateComponentWithSize:(CGSize)constrainedSize{
     kBlockWeakSelf;
-    if (isnan(constrainedSize.width) && isnan(constrainedSize.height)) {
+    if (isnan(constrainedSize.width) && isnan(constrainedSize.height)) { //scroller && 横向布局 就不必做特殊处理 todo tomqiu
         CGFloat maxWidth = self.violaInstance.rootView.frame.size.width;
         VAComponent * supercomponent = weakSelf.supercomponent;
         NSMutableArray * parents = [NSMutableArray arrayWithObject:self];
@@ -256,8 +256,23 @@ prop = defaultValue;\
     CGFloat width = isnan(constrainedSize.width) ? CGFLOAT_MAX  : constrainedSize.width;
     CGFloat height = isnan(constrainedSize.height) ? CGFLOAT_MAX  : constrainedSize.height;
     
+    if (!isnan(_cssNode->style.minDimensions[CSS_WIDTH])) {
+        width = MAX(width, _cssNode->style.minDimensions[CSS_WIDTH]);
+    }
     
+    if (!isnan(_cssNode->style.maxDimensions[CSS_WIDTH])) {
+        width = MIN(width, _cssNode->style.maxDimensions[CSS_WIDTH]);
+    }
     
+    if (!isnan(_cssNode->style.minDimensions[CSS_HEIGHT])) {
+        height = MAX(height, _cssNode->style.minDimensions[CSS_HEIGHT]);
+    }
+    
+    if (!isnan(_cssNode->style.maxDimensions[CSS_HEIGHT])) {
+        height = MIN(height, _cssNode->style.maxDimensions[CSS_HEIGHT]);
+    }
+    
+
     CGSize res = CGSizeZero;
     
     if(_textAttributedString.string.length == 0){
@@ -281,9 +296,7 @@ prop = defaultValue;\
     if (!isnan(_cssNode->style.maxDimensions[CSS_HEIGHT])) {
         res.height = MIN(res.height, _cssNode->style.maxDimensions[CSS_HEIGHT]);
     }
-  
     return res;
-    
 }
 
 //在屏幕中的同步渲染 在屏幕外的异步渲染
