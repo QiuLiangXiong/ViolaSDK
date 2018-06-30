@@ -1,3 +1,37 @@
+//
+//new Vue({
+//        el: 'test',
+//        data: {
+//            attr: {
+//                id: 'viola-id',
+//                more: 'about'
+//            },
+//            text: '我们都是好孩子',
+//            style: {
+//                backgroundColor: 'red',
+//                flex: 1
+//            }
+//        },
+//        methods: {
+//        handlerClick: function (e) {
+//            console.log(e)
+//            this.text = 'hhhhhhhhh'
+//        }
+//        },
+//        render: function (h) {
+//            return h('div', {
+//                     style: this.style,
+//                     attrs: this.attr,
+//                     on: {
+//                     click: this.handlerClick
+//                     }
+//             }, [this.text])
+//        }
+//})
+//
+//
+//
+//return;
 
 
 var container = document.createElement('div', {
@@ -31,10 +65,16 @@ var div = document.createElement('text', {
 
 //                                 maxWidth:'200dp',
                                  borderWidth:'10dp',
+
                                  
 //                                 borderRadius:'1000dp',
 //                                 padding:'40dp',
                                  animated: true,
+                                 lines:3,
+//                                 lineHeight:'20dp',
+                                 lineSpacing:'10dp',
+
+
 //                                 lineHeight:'30dp',
 //                                 lineSpacing:'-20dp',
                                     }
@@ -67,8 +107,8 @@ div.on('click', function (e) {
        console.log(e);
 
        var value = [
-                    '我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们',
-                    '长一点长一点长一点长一点长一点长一点长一点长一点长一点',
+                    '我们都是好',
+                    '长一点长一',
                     '短一点',
                     '不短了不短了不短了',
                     ]

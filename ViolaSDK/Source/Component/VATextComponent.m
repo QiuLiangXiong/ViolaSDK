@@ -47,6 +47,9 @@ prop = defaultValue;\
     CGFloat _lineHeight;
     CGFloat _letterSpacing;
     
+    CGFloat _headIndent;
+    CGFloat _trailIndent;
+    
 
     RIJAsyncLabel * _label;
     NSMutableAttributedString * _textAttributedString;
@@ -167,7 +170,7 @@ prop = defaultValue;\
 
 //填充styles
 - (BOOL)_fillTextComponentStyles:(NSDictionary *)styles isInit:(BOOL)isInit{
-    if(![styles isKindOfClass:[NSDictionary class]] || styles.count == 0) return false;
+    if(![styles isKindOfClass:[NSDictionary class]]) return false;
     id value = nil;
     BOOL needUpdate = NO;
     
@@ -187,13 +190,16 @@ prop = defaultValue;\
     VA_FILL_TEXT_STYLE(lineHeight, _lineHeight, convertToFloatWithPixel,0);
     VA_FILL_TEXT_STYLE(letterSpacing, _letterSpacing, convertToFloatWithPixel,0);
     VA_FILL_TEXT_STYLE(lineSpacing, _lineSpacing, convertToFloatWithPixel,MAXFLOAT);
+    VA_FILL_TEXT_STYLE(headIndent, _headIndent, convertToFloatWithPixel,0);
+    VA_FILL_TEXT_STYLE(trailIndent, _trailIndent, convertToFloatWithPixel,0);
+    
     
     return needUpdate;
 }
 
 //填充属性
 - (BOOL)_fillTextComponentAttr:(NSDictionary *)attrs{
-    if(![attrs isKindOfClass:[NSDictionary class]] || attrs.count == 0) return false;
+    if(![attrs isKindOfClass:[NSDictionary class]] ) return false;
     BOOL needUpdate = NO;
     id value = attrs[@"value"];
     if(value){
@@ -238,19 +244,22 @@ prop = defaultValue;\
             NSTextAlignment textAlign = [VAConvertUtl convertToTextAlignment:VA_TEXT_STYLE_VALUE(textAlign, text-align)] ? : _textAlign;
             CGFloat lineHeight = [VAConvertUtl convertToFloatWithPixel:VA_TEXT_STYLE_VALUE(lineHeight, line-height)] ? : _lineHeight;
             CGFloat lineSpacing = [VAConvertUtl convertToFloatWithPixel:VA_TEXT_STYLE_VALUE(lineSpacing, line-spacing)] ? : _lineSpacing;
+            CGFloat headIndent = [VAConvertUtl convertToFloatWithPixel:VA_TEXT_STYLE_VALUE(headIndent, head-indent)] ? : _headIndent;
+            CGFloat trailIndent = [VAConvertUtl convertToFloatWithPixel:VA_TEXT_STYLE_VALUE(trailIndent, trail-indent)] ? : _trailIndent;
+            
             
             if(lineHeight && lineHeight > fontSize && isFirstLineHeight){
                 isFirstLineHeight = false;
                  _lineHeightOffset = -(lineHeight - fontSize) / 2;
             }
-            NSMutableAttributedString * textAtt = [self _getAttributedStringWith:text fontSize:fontSize fontWeight:fontWeight fontFamily:fontFamily fontStyle:fontStyle color:color letterSpacing:letterSpacing textDecoration:textDecoration textAlign:textAlign lineHeight:lineHeight lineSpacing:lineSpacing != MAXFLOAT ? lineSpacing : 5];
+            NSMutableAttributedString * textAtt = [self _getAttributedStringWith:text fontSize:fontSize fontWeight:fontWeight fontFamily:fontFamily fontStyle:fontStyle color:color letterSpacing:letterSpacing textDecoration:textDecoration textAlign:textAlign lineHeight:lineHeight lineSpacing:lineSpacing != MAXFLOAT ? lineSpacing : 5 headIndent:headIndent trailIndent:trailIndent];
             if(textAtt){
                [res appendAttributedString:textAtt];
             }
 
         }
     }else {
-        res = [self _getAttributedStringWith:_text fontSize:_fontSize fontWeight:_fontWeight fontFamily:_fontFamily fontStyle:_fontStyle color:_color letterSpacing:_letterSpacing textDecoration:_textDecoration textAlign:_textAlign lineHeight:_lineHeight lineSpacing:_lineSpacing != MAXFLOAT ? _lineSpacing : 5];
+        res = [self _getAttributedStringWith:_text fontSize:_fontSize fontWeight:_fontWeight fontFamily:_fontFamily fontStyle:_fontStyle color:_color letterSpacing:_letterSpacing textDecoration:_textDecoration textAlign:_textAlign lineHeight:_lineHeight lineSpacing:_lineSpacing != MAXFLOAT ? _lineSpacing : 5 headIndent:_headIndent trailIndent:_trailIndent];
             _lineHeightOffset = 0;
             if(_lineHeight && _lineHeight > _fontSize){
                  _lineHeightOffset = -(_lineHeight - _fontSize) / 2;//fix
@@ -259,7 +268,7 @@ prop = defaultValue;\
     return res;
 }
 
-- (nullable NSMutableAttributedString *)_getAttributedStringWith:(NSString *)text fontSize:(CGFloat)fontSize fontWeight:(CGFloat)fontWeight fontFamily:(NSString *)fontFamily fontStyle:(VATextStyle)fontStyle color:(UIColor *)color letterSpacing:(CGFloat)letterSpacing textDecoration:(VATextDecoration)textDecoration textAlign:(NSTextAlignment)textAliment lineHeight:(CGFloat)lineHeight lineSpacing:(CGFloat)lineSpacing{
+- (nullable NSMutableAttributedString *)_getAttributedStringWith:(NSString *)text fontSize:(CGFloat)fontSize fontWeight:(CGFloat)fontWeight fontFamily:(NSString *)fontFamily fontStyle:(VATextStyle)fontStyle color:(UIColor *)color letterSpacing:(CGFloat)letterSpacing textDecoration:(VATextDecoration)textDecoration textAlign:(NSTextAlignment)textAliment lineHeight:(CGFloat)lineHeight lineSpacing:(CGFloat)lineSpacing headIndent:(CGFloat)headIndent trailIndent:(CGFloat)trailIndent{
     if(text.length <= 0) return nil;
     
     NSRange range = NSMakeRange(0, text.length);
@@ -284,6 +293,7 @@ prop = defaultValue;\
         style.maximumLineHeight = _lineHeight;
     }
     style.lineSpacing = lineSpacing;
+    style.firstLineHeadIndent = headIndent;
     [attributedString addAttribute:NSParagraphStyleAttributeName value:style range:range];
     return attributedString;
 }
@@ -292,7 +302,7 @@ prop = defaultValue;\
 - (CGSize)_calculateComponentWithSize:(CGSize)constrainedSize{
     kBlockWeakSelf;
     if (isnan(constrainedSize.width) && isnan(constrainedSize.height)) { //scroller && 横向布局 就不必做特殊处理 todo tomqiu
-        CGFloat maxWidth = self.violaInstance.rootView.frame.size.width;
+        CGFloat maxWidth = self.violaInstance.instanceFrame.size.width;
         VAComponent * supercomponent = weakSelf.supercomponent;
         NSMutableArray * parents = [NSMutableArray arrayWithObject:self];
         VAComponent * rootComponent = self.violaInstance.componentController.rootComponent;

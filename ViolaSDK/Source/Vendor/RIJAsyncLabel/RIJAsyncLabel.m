@@ -107,6 +107,8 @@
     _attributedText = attributedText;
     if (attributedText.rij_textRender) {
         self.textRender = attributedText.rij_textRender;
+        self.numberOfLines = self.textRender.textContainer.maximumNumberOfLines;//fix
+        self.lineBreakMode = self.textRender.textContainer.lineBreakMode;//fix
     }else {
         _textStorageOnRender = [[NSTextStorage alloc] initWithAttributedString:attributedText];
         [self contentChanged];
@@ -209,6 +211,8 @@
     NSInteger numberOfLines = _numberOfLines;
     NSLineBreakMode lineBreakMode = _lineBreakMode;
     RIJTextAsyncLayerDisplayTask * task = [RIJTextAsyncLayerDisplayTask new];
+    
+    CGSize attributedTextSize  = _attributedText.rij_size;
     task.willDisplay = ^(CALayer * _Nonnull layer) {
         _textRenderOnDisplay = nil;
     };
@@ -222,6 +226,11 @@
         }
         textRender.maximumNumberOfLines = numberOfLines;
         textRender.lineBreakMode = lineBreakMode;
+        
+        if (CGSizeEqualToSize(attributedTextSize, size) && numberOfLines ) {
+            size = CGSizeMake(size.width, size.height + 50);//fix
+        }
+        
         textRender.size = size;
         if (isCancelled()) return ;
         [textRender drawTextAtPoint:self.drawAtPoint isCanceled:isCancelled];
@@ -358,26 +367,26 @@
     return CGSizeMake(ceil(textSize.width), ceil(textSize.height));
 }
 #pragma mark -  draw text
-- (CGRect)textRectForGlyphRange:(NSRange)glyphRange atPiont:(CGPoint)point{
-    if (glyphRange.length == 0)  return CGRectZero;
-    CGPoint textOffset = point;
-    CGRect textBound = _textBound;
-    textBound = [self boundingRectForGlyphRange:glyphRange];
-    CGSize textSize = CGSizeMake(ceil(textBound.size.width), ceil(textBound.size.height));
-    textOffset.y = point.y;
-    textBound.origin = textOffset;
-    textBound.size = textSize;
-    return textBound;
-}
+
+//- (CGRect)textRectForGlyphRange:(NSRange)glyphRange atPiont:(CGPoint)point{
+//    if (glyphRange.length == 0)  return CGRectZero;
+//    CGPoint textOffset = point;
+//    CGRect textBound = _textBound;
+//    textBound = [self boundingRectForGlyphRange:glyphRange];
+//    CGSize textSize = CGSizeMake(ceil(textBound.size.width), ceil(textBound.size.height));
+//    textOffset.y = point.y;
+//    textBound.origin = textOffset;
+//    textBound.size = textSize;
+//    return textBound;
+//}
 
 - (void)drawTextAtPoint:(CGPoint)point isCanceled:(BOOL (^)(void))isCanceled{
     NSRange glyphRange = [_layoutManager glyphRangeForTextContainer:_textContainer];
-    CGRect textRect = [self textRectForGlyphRange:glyphRange atPiont:point];
     // drawing text
     [_layoutManager enumerateLineFragmentsForGlyphRange:glyphRange usingBlock:^(CGRect rect, CGRect usedRect, NSTextContainer * _Nonnull textContainer, NSRange glyphRange, BOOL * _Nonnull stop) {
-        [_layoutManager drawBackgroundForGlyphRange:glyphRange atPoint:textRect.origin];
+        [_layoutManager drawBackgroundForGlyphRange:glyphRange atPoint:point];
         if (isCanceled && isCanceled()) {*stop = YES; return ;};
-        [_layoutManager drawGlyphsForGlyphRange:glyphRange atPoint:textRect.origin];
+        [_layoutManager drawGlyphsForGlyphRange:glyphRange atPoint:point];
         if (isCanceled && isCanceled()) {*stop = YES; return ;};
     }];
 }
@@ -396,7 +405,7 @@ static dispatch_queue_t RIJTextAsyncLayerGetDisplayQueue() {
         if ([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
             for (NSUInteger i = 0; i < queueCount; i++) {
                 dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INITIATED, 0);
-                queues[i] = dispatch_queue_create("com.ibireme.text.render", attr);
+                queues[i] = dispatch_queue_create("com.tencent.text.render", attr);
             }
         } else {
             for (NSUInteger i = 0; i < queueCount; i++) {

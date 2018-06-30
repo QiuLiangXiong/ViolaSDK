@@ -890,11 +890,12 @@ var Viola = this;
  for (var name in methods) loop( name );
  }
  
+ function VueScopeUp (exports, document) {
  var emptyObject = Object.freeze({});
- function isUndef$1 (v) {
+ function isUndef (v) {
  return v === undefined || v === null
  }
- function isDef$1 (v) {
+ function isDef (v) {
  return v !== undefined && v !== null
  }
  function isTrue (v) {
@@ -911,7 +912,7 @@ var Viola = this;
          typeof value === 'boolean'
          )
  }
- function isObject$1 (obj) {
+ function isObject (obj) {
  return obj !== null && typeof obj === 'object'
  }
  var _toString = Object.prototype.toString;
@@ -928,7 +929,7 @@ var Viola = this;
  var n = parseFloat(String(val));
  return n >= 0 && Math.floor(n) === n && isFinite(val)
  }
- function toString$1 (val) {
+ function toString (val) {
  return val == null
  ? ''
  : typeof val === 'object'
@@ -954,7 +955,7 @@ var Viola = this;
  }
  var isBuiltInTag = makeMap('slot,component', true);
  var isReservedAttribute = makeMap('key,ref,slot,slot-scope,is');
- function remove$1 (arr, item) {
+ function remove (arr, item) {
  if (arr.length) {
  var index = arr.indexOf(item);
  if (index > -1) {
@@ -1031,8 +1032,8 @@ var Viola = this;
  var identity = function (_) { return _; };
  function looseEqual (a, b) {
  if (a === b) { return true }
- var isObjectA = isObject$1(a);
- var isObjectB = isObject$1(b);
+ var isObjectA = isObject(a);
+ var isObjectB = isObject(b);
  if (isObjectA && isObjectB) {
  try {
  var isArrayA = Array.isArray(a);
@@ -1096,8 +1097,8 @@ var Viola = this;
  var config = ({
                optionMergeStrategies: Object.create(null),
                silent: false,
-               productionTip: "development" !== 'production',
-               devtools: "development" !== 'production',
+               productionTip: "production" !== 'production',
+               devtools: "production" !== 'production',
                performance: false,
                errorHandler: null,
                warnHandler: null,
@@ -1198,88 +1199,6 @@ var Viola = this;
          }());
  }
  var warn = noop;
- var tip = noop;
- var generateComponentTrace = (noop);
- var formatComponentName = (noop);
- {
- var hasConsole = typeof console !== 'undefined';
- var classifyRE = /(?:^|[-_])(\w)/g;
- var classify = function (str) { return str
- .replace(classifyRE, function (c) { return c.toUpperCase(); })
- .replace(/[-_]/g, ''); };
- warn = function (msg, vm) {
- var trace = vm ? generateComponentTrace(vm) : '';
- if (config.warnHandler) {
- config.warnHandler.call(null, msg, vm, trace);
- } else if (hasConsole && (!config.silent)) {
- console.error(("[Vue warn]: " + msg + trace));
- }
- };
- tip = function (msg, vm) {
- if (hasConsole && (!config.silent)) {
- console.warn("[Vue tip]: " + msg + (
-                                     vm ? generateComponentTrace(vm) : ''
-                                     ));
- }
- };
- formatComponentName = function (vm, includeFile) {
- if (vm.$root === vm) {
- return '<Root>'
- }
- var options = typeof vm === 'function' && vm.cid != null
- ? vm.options
- : vm._isVue
- ? vm.$options || vm.constructor.options
- : vm || {};
- var name = options.name || options._componentTag;
- var file = options.__file;
- if (!name && file) {
- var match = file.match(/([^/\\]+)\.vue$/);
- name = match && match[1];
- }
- return (
-         (name ? ("<" + (classify(name)) + ">") : "<Anonymous>") +
-         (file && includeFile !== false ? (" at " + file) : '')
-         )
- };
- var repeat = function (str, n) {
- var res = '';
- while (n) {
- if (n % 2 === 1) { res += str; }
- if (n > 1) { str += str; }
- n >>= 1;
- }
- return res
- };
- generateComponentTrace = function (vm) {
- if (vm._isVue && vm.$parent) {
- var tree = [];
- var currentRecursiveSequence = 0;
- while (vm) {
- if (tree.length > 0) {
- var last = tree[tree.length - 1];
- if (last.constructor === vm.constructor) {
- currentRecursiveSequence++;
- vm = vm.$parent;
- continue
- } else if (currentRecursiveSequence > 0) {
- tree[tree.length - 1] = [last, currentRecursiveSequence];
- currentRecursiveSequence = 0;
- }
- }
- tree.push(vm);
- vm = vm.$parent;
- }
- return '\n\nfound in\n\n' + tree
- .map(function (vm, i) { return ("" + (i === 0 ? '---> ' : repeat(' ', 5 + i * 2)) + (Array.isArray(vm)
-                                                                                      ? ((formatComponentName(vm[0])) + "... (" + (vm[1]) + " recursive calls)")
-                                                                                      : formatComponentName(vm))); })
- .join('\n')
- } else {
- return ("\n\n(found in " + (formatComponentName(vm)) + ")")
- }
- };
- }
  var uid = 0;
  var Dep = function Dep () {
  this.id = uid++;
@@ -1289,7 +1208,7 @@ var Viola = this;
  this.subs.push(sub);
  };
  Dep.prototype.removeSub = function removeSub (sub) {
- remove$1(this.subs, sub);
+ remove(this.subs, sub);
  };
  Dep.prototype.depend = function depend () {
  if (Dep.target) {
@@ -1456,7 +1375,7 @@ var Viola = this;
  }
  }
  function observe (value, asRootData) {
- if (!isObject$1(value) || value instanceof VNode) {
+ if (!isObject(value) || value instanceof VNode) {
  return
  }
  var ob;
@@ -1515,9 +1434,6 @@ var Viola = this;
                        if (newVal === value || (newVal !== newVal && value !== value)) {
                        return
                        }
-                       if (customSetter) {
-                       customSetter();
-                       }
                        if (setter) {
                        setter.call(obj, newVal);
                        } else {
@@ -1529,10 +1445,6 @@ var Viola = this;
                        });
  }
  function set (target, key, val) {
- if (isUndef$1(target) || isPrimitive(target)
-     ) {
- warn(("Cannot set reactive property on undefined, null, or primitive value: " + ((target))));
- }
  if (Array.isArray(target) && isValidArrayIndex(key)) {
  target.length = Math.max(target.length, key);
  target.splice(key, 1, val);
@@ -1544,10 +1456,6 @@ var Viola = this;
  }
  var ob = (target).__ob__;
  if (target._isVue || (ob && ob.vmCount)) {
- warn(
-      'Avoid adding reactive properties to a Vue instance or its root $data ' +
-      'at runtime - declare it upfront in the data option.'
-      );
  return val
  }
  if (!ob) {
@@ -1559,20 +1467,12 @@ var Viola = this;
  return val
  }
  function del (target, key) {
- if (isUndef$1(target) || isPrimitive(target)
-     ) {
- warn(("Cannot delete reactive property on undefined, null, or primitive value: " + ((target))));
- }
  if (Array.isArray(target) && isValidArrayIndex(key)) {
  target.splice(key, 1);
  return
  }
  var ob = (target).__ob__;
  if (target._isVue || (ob && ob.vmCount)) {
- warn(
-      'Avoid deleting properties on a Vue instance or its root $data ' +
-      '- just set it to null.'
-      );
  return
  }
  if (!hasOwn(target, key)) {
@@ -1594,17 +1494,6 @@ var Viola = this;
  }
  }
  var strats = config.optionMergeStrategies;
- {
- strats.el = strats.propsData = function (parent, child, vm, key) {
- if (!vm) {
- warn(
-      "option \"" + key + "\" can only be used during instance " +
-      'creation with the `new` keyword.'
-      );
- }
- return defaultStrat(parent, child)
- };
- }
  function mergeData (to, from) {
  if (!from) { return to }
  var key, toVal, fromVal;
@@ -1662,12 +1551,6 @@ var Viola = this;
                          ) {
  if (!vm) {
  if (childVal && typeof childVal !== 'function') {
- warn(
-      'The "data" option should be a function ' +
-      'that returns a per-instance value in component ' +
-      'definitions.',
-      vm
-      );
  return parentVal
  }
  return mergeDataOrFn(parentVal, childVal)
@@ -1697,7 +1580,6 @@ var Viola = this;
                        ) {
  var res = Object.create(parentVal || null);
  if (childVal) {
- assertObjectType(key, childVal, vm);
  return extend(res, childVal)
  } else {
  return res
@@ -1715,9 +1597,6 @@ var Viola = this;
  if (parentVal === nativeWatch) { parentVal = undefined; }
  if (childVal === nativeWatch) { childVal = undefined; }
  if (!childVal) { return Object.create(parentVal || null) }
- {
- assertObjectType(key, childVal, vm);
- }
  if (!parentVal) { return childVal }
  var ret = {};
  extend(ret, parentVal);
@@ -1742,7 +1621,7 @@ var Viola = this;
                              vm,
                              key
                              ) {
- if (childVal && "development" !== 'production') {
+ if (childVal && "production" !== 'production') {
  assertObjectType(key, childVal, vm);
  }
  if (!parentVal) { return childVal }
@@ -1757,26 +1636,6 @@ var Viola = this;
  ? parentVal
  : childVal
  };
- function checkComponents (options) {
- for (var key in options.components) {
- validateComponentName(key);
- }
- }
- function validateComponentName (name) {
- if (!/^[a-zA-Z][\w-]*$/.test(name)) {
- warn(
-      'Invalid component name: "' + name + '". Component names ' +
-      'can only contain alphanumeric characters and the hyphen, ' +
-      'and must start with a letter.'
-      );
- }
- if (isBuiltInTag(name) || config.isReservedTag(name)) {
- warn(
-      'Do not use built-in or reserved HTML elements as component ' +
-      'id: ' + name
-      );
- }
- }
  function normalizeProps (options, vm) {
  var props = options.props;
  if (!props) { return }
@@ -1789,8 +1648,6 @@ var Viola = this;
  if (typeof val === 'string') {
  name = camelize(val);
  res[name] = { type: null };
- } else {
- warn('props must be strings when using array syntax.');
  }
  }
  } else if (isPlainObject(props)) {
@@ -1801,12 +1658,6 @@ var Viola = this;
  ? val
  : { type: val };
  }
- } else {
- warn(
-      "Invalid value for option \"props\": expected an Array or an Object, " +
-      "but got " + (toRawType(props)) + ".",
-      vm
-      );
  }
  options.props = res;
  }
@@ -1825,12 +1676,6 @@ var Viola = this;
  ? extend({ from: key }, val)
  : { from: val };
  }
- } else {
- warn(
-      "Invalid value for option \"inject\": expected an Array or an Object, " +
-      "but got " + (toRawType(inject)) + ".",
-      vm
-      );
  }
  }
  function normalizeDirectives (options) {
@@ -1858,9 +1703,6 @@ var Viola = this;
                         child,
                         vm
                         ) {
- {
- checkComponents(child);
- }
  if (typeof child === 'function') {
  child = child.options;
  }
@@ -1908,12 +1750,6 @@ var Viola = this;
  var PascalCaseId = capitalize(camelizedId);
  if (hasOwn(assets, PascalCaseId)) { return assets[PascalCaseId] }
  var res = assets[id] || assets[camelizedId] || assets[PascalCaseId];
- if (warnMissing && !res) {
- warn(
-      'Failed to resolve ' + type.slice(0, -1) + ': ' + id,
-      options
-      );
- }
  return res
  }
  function validateProp (
@@ -1943,9 +1779,6 @@ var Viola = this;
  observe(value);
  toggleObserving(prevShouldObserve);
  }
- {
- assertProp(prop, key, value, vm, absent);
- }
  return value
  }
  function getPropDefaultValue (vm, prop, key) {
@@ -1953,101 +1786,22 @@ var Viola = this;
  return undefined
  }
  var def = prop.default;
- if (isObject$1(def)) {
- warn(
-      'Invalid default value for prop "' + key + '": ' +
-      'Props with type Object/Array must use a factory function ' +
-      'to return the default value.',
-      vm
-      );
- }
  if (vm && vm.$options.propsData &&
      vm.$options.propsData[key] === undefined &&
      vm._props[key] !== undefined
      ) {
  return vm._props[key]
  }
- return typeof def === 'function' && getType$1(prop.type) !== 'Function'
+ return typeof def === 'function' && getType(prop.type) !== 'Function'
  ? def.call(vm)
  : def
  }
- function assertProp (
-                      prop,
-                      name,
-                      value,
-                      vm,
-                      absent
-                      ) {
- if (prop.required && absent) {
- warn(
-      'Missing required prop: "' + name + '"',
-      vm
-      );
- return
- }
- if (value == null && !prop.required) {
- return
- }
- var type = prop.type;
- var valid = !type || type === true;
- var expectedTypes = [];
- if (type) {
- if (!Array.isArray(type)) {
- type = [type];
- }
- for (var i = 0; i < type.length && !valid; i++) {
- var assertedType = assertType(value, type[i]);
- expectedTypes.push(assertedType.expectedType || '');
- valid = assertedType.valid;
- }
- }
- if (!valid) {
- warn(
-      "Invalid prop: type check failed for prop \"" + name + "\"." +
-      " Expected " + (expectedTypes.map(capitalize).join(', ')) +
-      ", got " + (toRawType(value)) + ".",
-      vm
-      );
- return
- }
- var validator = prop.validator;
- if (validator) {
- if (!validator(value)) {
- warn(
-      'Invalid prop: custom validator check failed for prop "' + name + '".',
-      vm
-      );
- }
- }
- }
- var simpleCheckRE = /^(String|Number|Boolean|Function|Symbol)$/;
- function assertType (value, type) {
- var valid;
- var expectedType = getType$1(type);
- if (simpleCheckRE.test(expectedType)) {
- var t = typeof value;
- valid = t === expectedType.toLowerCase();
- if (!valid && t === 'object') {
- valid = value instanceof type;
- }
- } else if (expectedType === 'Object') {
- valid = isPlainObject(value);
- } else if (expectedType === 'Array') {
- valid = Array.isArray(value);
- } else {
- valid = value instanceof type;
- }
- return {
- valid: valid,
- expectedType: expectedType
- }
- }
- function getType$1 (fn) {
+ function getType (fn) {
  var match = fn && fn.toString().match(/^\s*function (\w+)/);
  return match ? match[1] : ''
  }
  function isSameType (a, b) {
- return getType$1(a) === getType$1(b)
+ return getType(a) === getType(b)
  }
  function getTypeIndex (type, expectedTypes) {
  if (!Array.isArray(expectedTypes)) {
@@ -2090,9 +1844,6 @@ var Viola = this;
  logError(err, vm, info);
  }
  function logError (err, vm, info) {
- {
- warn(("Error in " + info + ": \"" + (err.toString()) + "\""), vm);
- }
  if ((inBrowser || inWeex) && typeof console !== 'undefined') {
  console.error(err);
  } else {
@@ -2167,70 +1918,6 @@ var Viola = this;
                     })
  }
  }
- var initProxy;
- {
- var allowedGlobals = makeMap(
-                              'Infinity,undefined,NaN,isFinite,isNaN,' +
-                              'parseFloat,parseInt,decodeURI,decodeURIComponent,encodeURI,encodeURIComponent,' +
-                              'Math,Number,Date,Array,Object,Boolean,String,RegExp,Map,Set,JSON,Intl,' +
-                              'require'
-                              );
- var warnNonPresent = function (target, key) {
- warn(
-      "Property or method \"" + key + "\" is not defined on the instance but " +
-      'referenced during render. Make sure that this property is reactive, ' +
-      'either in the data option, or for class-based components, by ' +
-      'initializing the property. ' +
-      'See: https://vuejs.org/v2/guide/reactivity.html#Declaring-Reactive-Properties.',
-      target
-      );
- };
- var hasProxy =
- typeof Proxy !== 'undefined' && isNative(Proxy);
- if (hasProxy) {
- var isBuiltInModifier = makeMap('stop,prevent,self,ctrl,shift,alt,meta,exact');
- config.keyCodes = new Proxy(config.keyCodes, {
-                             set: function set (target, key, value) {
-                             if (isBuiltInModifier(key)) {
-                             warn(("Avoid overwriting built-in modifier in config.keyCodes: ." + key));
-                             return false
-                             } else {
-                             target[key] = value;
-                             return true
-                             }
-                             }
-                             });
- }
- var hasHandler = {
- has: function has (target, key) {
- var has = key in target;
- var isAllowed = allowedGlobals(key) || (typeof key === 'string' && key.charAt(0) === '_');
- if (!has && !isAllowed) {
- warnNonPresent(target, key);
- }
- return has || !isAllowed
- }
- };
- var getHandler = {
- get: function get (target, key) {
- if (typeof key === 'string' && !(key in target)) {
- warnNonPresent(target, key);
- }
- return target[key]
- }
- };
- initProxy = function initProxy (vm) {
- if (hasProxy) {
- var options = vm.$options;
- var handlers = options.render && options.render._withStripped
- ? getHandler
- : hasHandler;
- vm._renderProxy = new Proxy(vm, handlers);
- } else {
- vm._renderProxy = vm;
- }
- };
- }
  var seenObjects = new _Set();
  function traverse (val) {
  _traverse(val, seenObjects);
@@ -2239,7 +1926,7 @@ var Viola = this;
  function _traverse (val, seen) {
  var i, keys;
  var isA = Array.isArray(val);
- if ((!isA && !isObject$1(val)) || Object.isFrozen(val) || val instanceof VNode) {
+ if ((!isA && !isObject(val)) || Object.isFrozen(val) || val instanceof VNode) {
  return
  }
  if (val.__ob__) {
@@ -2256,26 +1943,6 @@ var Viola = this;
  keys = Object.keys(val);
  i = keys.length;
  while (i--) { _traverse(val[keys[i]], seen); }
- }
- }
- var mark;
- var measure;
- {
- var perf = inBrowser && window.performance;
- if (
-     perf &&
-     perf.mark &&
-     perf.measure &&
-     perf.clearMarks &&
-     perf.clearMeasures
-     ) {
- mark = function (tag) { return perf.mark(tag); };
- measure = function (name, startTag, endTag) {
- perf.measure(name, startTag, endTag);
- perf.clearMarks(startTag);
- perf.clearMarks(endTag);
- perf.clearMeasures(name);
- };
  }
  }
  var normalizeEvent = cached(function (name) {
@@ -2320,13 +1987,8 @@ var Viola = this;
  def = cur = on[name];
  old = oldOn[name];
  event = normalizeEvent(name);
- if (isUndef$1(cur)) {
- warn(
-      "Invalid handler for event \"" + (event.name) + "\": got " + String(cur),
-      vm
-      );
- } else if (isUndef$1(old)) {
- if (isUndef$1(cur.fns)) {
+ if (isUndef(cur)) ; else if (isUndef(old)) {
+ if (isUndef(cur.fns)) {
  cur = on[name] = createFnInvoker(cur);
  }
  add(event.name, cur, event.once, event.capture, event.passive, event.params);
@@ -2336,7 +1998,7 @@ var Viola = this;
  }
  }
  for (name in oldOn) {
- if (isUndef$1(on[name])) {
+ if (isUndef(on[name])) {
  event = normalizeEvent(name);
  remove$$1(event.name, oldOn[name], event.capture);
  }
@@ -2350,12 +2012,12 @@ var Viola = this;
  var oldHook = def[hookKey];
  function wrappedHook () {
  hook.apply(this, arguments);
- remove$1(invoker.fns, wrappedHook);
+ remove(invoker.fns, wrappedHook);
  }
- if (isUndef$1(oldHook)) {
+ if (isUndef(oldHook)) {
  invoker = createFnInvoker([wrappedHook]);
  } else {
- if (isDef$1(oldHook.fns) && isTrue(oldHook.merged)) {
+ if (isDef(oldHook.fns) && isTrue(oldHook.merged)) {
  invoker = oldHook;
  invoker.fns.push(wrappedHook);
  } else {
@@ -2371,31 +2033,15 @@ var Viola = this;
                                      tag
                                      ) {
  var propOptions = Ctor.options.props;
- if (isUndef$1(propOptions)) {
+ if (isUndef(propOptions)) {
  return
  }
  var res = {};
  var attrs = data.attrs;
  var props = data.props;
- if (isDef$1(attrs) || isDef$1(props)) {
+ if (isDef(attrs) || isDef(props)) {
  for (var key in propOptions) {
  var altKey = hyphenate(key);
- {
- var keyInLowerCase = key.toLowerCase();
- if (
-     key !== keyInLowerCase &&
-     attrs && hasOwn(attrs, keyInLowerCase)
-     ) {
- tip(
-     "Prop \"" + keyInLowerCase + "\" is passed to component " +
-     (formatComponentName(tag || Ctor)) + ", but the declared prop name is" +
-     " \"" + key + "\". " +
-     "Note that HTML attributes are case-insensitive and camelCased " +
-     "props need to use their kebab-case equivalents when using in-DOM " +
-     "templates. You should probably use \"" + altKey + "\" instead of \"" + key + "\"."
-     );
- }
- }
  checkProp(res, props, key, altKey, true) ||
  checkProp(res, attrs, key, altKey, false);
  }
@@ -2409,7 +2055,7 @@ var Viola = this;
                      altKey,
                      preserve
                      ) {
- if (isDef$1(hash)) {
+ if (isDef(hash)) {
  if (hasOwn(hash, key)) {
  res[key] = hash[key];
  if (!preserve) {
@@ -2442,14 +2088,14 @@ var Viola = this;
  : undefined
  }
  function isTextNode (node) {
- return isDef$1(node) && isDef$1(node.text) && isFalse(node.isComment)
+ return isDef(node) && isDef(node.text) && isFalse(node.isComment)
  }
  function normalizeArrayChildren (children, nestedIndex) {
  var res = [];
  var i, c, lastIndex, last;
  for (i = 0; i < children.length; i++) {
  c = children[i];
- if (isUndef$1(c) || typeof c === 'boolean') { continue }
+ if (isUndef(c) || typeof c === 'boolean') { continue }
  lastIndex = res.length - 1;
  last = res[lastIndex];
  if (Array.isArray(c)) {
@@ -2472,9 +2118,9 @@ var Viola = this;
  res[lastIndex] = createTextVNode(last.text + c.text);
  } else {
  if (isTrue(children._isVList) &&
-     isDef$1(c.tag) &&
-     isUndef$1(c.key) &&
-     isDef$1(nestedIndex)) {
+     isDef(c.tag) &&
+     isUndef(c.key) &&
+     isDef(nestedIndex)) {
  c.key = "__vlist" + nestedIndex + "_" + i + "__";
  }
  res.push(c);
@@ -2490,7 +2136,7 @@ var Viola = this;
      ) {
  comp = comp.default;
  }
- return isObject$1(comp)
+ return isObject(comp)
  ? base.extend(comp)
  : comp
  }
@@ -2511,16 +2157,16 @@ var Viola = this;
                                  baseCtor,
                                  context
                                  ) {
- if (isTrue(factory.error) && isDef$1(factory.errorComp)) {
+ if (isTrue(factory.error) && isDef(factory.errorComp)) {
  return factory.errorComp
  }
- if (isDef$1(factory.resolved)) {
+ if (isDef(factory.resolved)) {
  return factory.resolved
  }
- if (isTrue(factory.loading) && isDef$1(factory.loadingComp)) {
+ if (isTrue(factory.loading) && isDef(factory.loadingComp)) {
  return factory.loadingComp
  }
- if (isDef$1(factory.contexts)) {
+ if (isDef(factory.contexts)) {
  factory.contexts.push(context);
  } else {
  var contexts = factory.contexts = [context];
@@ -2537,44 +2183,40 @@ var Viola = this;
                     }
                     });
  var reject = once(function (reason) {
-                   warn(
-                        "Failed to resolve async component: " + (String(factory)) +
-                        (reason ? ("\nReason: " + reason) : '')
-                        );
-                   if (isDef$1(factory.errorComp)) {
+                   if (isDef(factory.errorComp)) {
                    factory.error = true;
                    forceRender();
                    }
                    });
  var res = factory(resolve, reject);
- if (isObject$1(res)) {
+ if (isObject(res)) {
  if (typeof res.then === 'function') {
- if (isUndef$1(factory.resolved)) {
+ if (isUndef(factory.resolved)) {
  res.then(resolve, reject);
  }
- } else if (isDef$1(res.component) && typeof res.component.then === 'function') {
+ } else if (isDef(res.component) && typeof res.component.then === 'function') {
  res.component.then(resolve, reject);
- if (isDef$1(res.error)) {
+ if (isDef(res.error)) {
  factory.errorComp = ensureCtor(res.error, baseCtor);
  }
- if (isDef$1(res.loading)) {
+ if (isDef(res.loading)) {
  factory.loadingComp = ensureCtor(res.loading, baseCtor);
  if (res.delay === 0) {
  factory.loading = true;
  } else {
  setTimeout(function () {
-            if (isUndef$1(factory.resolved) && isUndef$1(factory.error)) {
+            if (isUndef(factory.resolved) && isUndef(factory.error)) {
             factory.loading = true;
             forceRender();
             }
             }, res.delay || 200);
  }
  }
- if (isDef$1(res.timeout)) {
+ if (isDef(res.timeout)) {
  setTimeout(function () {
-            if (isUndef$1(factory.resolved)) {
+            if (isUndef(factory.resolved)) {
             reject(
-                   "timeout (" + (res.timeout) + "ms)"
+                   null
                    );
             }
             }, res.timeout);
@@ -2594,7 +2236,7 @@ var Viola = this;
  if (Array.isArray(children)) {
  for (var i = 0; i < children.length; i++) {
  var c = children[i];
- if (isDef$1(c) && (isDef$1(c.componentOptions) || isAsyncPlaceholder(c))) {
+ if (isDef(c) && (isDef(c.componentOptions) || isAsyncPlaceholder(c))) {
  return c
  }
  }
@@ -2616,7 +2258,7 @@ var Viola = this;
  target.$on(event, fn);
  }
  }
- function remove$1$1 (event, fn) {
+ function remove$1 (event, fn) {
  target.$off(event, fn);
  }
  function updateComponentListeners (
@@ -2625,7 +2267,7 @@ var Viola = this;
                                     oldListeners
                                     ) {
  target = vm;
- updateListeners(listeners, oldListeners || {}, add, remove$1$1, vm);
+ updateListeners(listeners, oldListeners || {}, add, remove$1, vm);
  target = undefined;
  }
  function eventsMixin (Vue) {
@@ -2691,18 +2333,6 @@ var Viola = this;
  };
  Vue.prototype.$emit = function (event) {
  var vm = this;
- {
- var lowerCaseEvent = event.toLowerCase();
- if (lowerCaseEvent !== event && vm._events[lowerCaseEvent]) {
- tip(
-     "Event \"" + lowerCaseEvent + "\" is emitted in component " +
-     (formatComponentName(vm)) + " but the handler is registered for \"" + event + "\". " +
-     "Note that HTML attributes are case-insensitive and you cannot use " +
-     "v-on to listen to camelCase events when using in-DOM templates. " +
-     "You should probably use \"" + (hyphenate(event)) + "\" instead of \"" + event + "\"."
-     );
- }
- }
  var cbs = vm._events[event];
  if (cbs) {
  cbs = cbs.length > 1 ? toArray(cbs) : cbs;
@@ -2771,7 +2401,6 @@ var Viola = this;
  return res
  }
  var activeInstance = null;
- var isUpdatingChildComponent = false;
  function initLifecycle (vm) {
  var options = vm.$options;
  var parent = options.parent;
@@ -2831,7 +2460,7 @@ var Viola = this;
  vm._isBeingDestroyed = true;
  var parent = vm.$parent;
  if (parent && !parent._isBeingDestroyed && !vm.$options.abstract) {
- remove$1(parent.$children, vm);
+ remove(parent.$children, vm);
  }
  if (vm._watcher) {
  vm._watcher.teardown();
@@ -2863,41 +2492,10 @@ var Viola = this;
  vm.$el = el;
  if (!vm.$options.render) {
  vm.$options.render = createEmptyVNode;
- {
- if ((vm.$options.template && vm.$options.template.charAt(0) !== '#') ||
-     vm.$options.el || el) {
- warn(
-      'You are using the runtime-only build of Vue where the template ' +
-      'compiler is not available. Either pre-compile the templates into ' +
-      'render functions, or use the compiler-included build.',
-      vm
-      );
- } else {
- warn(
-      'Failed to mount component: template or render function not defined.',
-      vm
-      );
- }
- }
  }
  callHook(vm, 'beforeMount');
  var updateComponent;
- if (config.performance && mark) {
- updateComponent = function () {
- var name = vm._name;
- var id = vm._uid;
- var startTag = "vue-perf-start:" + id;
- var endTag = "vue-perf-end:" + id;
- mark(startTag);
- var vnode = vm._render();
- mark(endTag);
- measure(("vue " + name + " render"), startTag, endTag);
- mark(startTag);
- vm._update(vnode, hydrating);
- mark(endTag);
- measure(("vue " + name + " patch"), startTag, endTag);
- };
- } else {
+ {
  updateComponent = function () {
  vm._update(vm._render(), hydrating);
  };
@@ -2923,9 +2521,6 @@ var Viola = this;
                                 parentVnode,
                                 renderChildren
                                 ) {
- {
- isUpdatingChildComponent = true;
- }
  var hasChildren = !!(
                       renderChildren ||
                       vm.$options._renderChildren ||
@@ -2959,9 +2554,6 @@ var Viola = this;
  if (hasChildren) {
  vm.$slots = resolveSlots(renderChildren, parentVnode.context);
  vm.$forceUpdate();
- }
- {
- isUpdatingChildComponent = false;
  }
  }
  function isInInactiveTree (vm) {
@@ -3019,20 +2611,15 @@ var Viola = this;
  }
  popTarget();
  }
- var MAX_UPDATE_COUNT = 100;
  var queue = [];
  var activatedChildren = [];
- var has$1 = {};
- var circular = {};
+ var has = {};
  var waiting = false;
  var flushing = false;
  var index = 0;
  function resetSchedulerState () {
  index = queue.length = activatedChildren.length = 0;
- has$1 = {};
- {
- circular = {};
- }
+ has = {};
  waiting = flushing = false;
  }
  function flushSchedulerQueue () {
@@ -3045,22 +2632,8 @@ var Viola = this;
  watcher.before();
  }
  id = watcher.id;
- has$1[id] = null;
+ has[id] = null;
  watcher.run();
- if (has$1[id] != null) {
- circular[id] = (circular[id] || 0) + 1;
- if (circular[id] > MAX_UPDATE_COUNT) {
- warn(
-      'You may have an infinite update loop ' + (
-                                                 watcher.user
-                                                 ? ("in watcher with expression \"" + (watcher.expression) + "\"")
-                                                 : "in a component render function."
-                                                 ),
-      watcher.vm
-      );
- break
- }
- }
  }
  var activatedQueue = activatedChildren.slice();
  var updatedQueue = queue.slice();
@@ -3093,8 +2666,8 @@ var Viola = this;
  }
  function queueWatcher (watcher) {
  var id = watcher.id;
- if (has$1[id] == null) {
- has$1[id] = true;
+ if (has[id] == null) {
+ has[id] = true;
  if (!flushing) {
  queue.push(watcher);
  } else {
@@ -3140,19 +2713,13 @@ var Viola = this;
  this.newDeps = [];
  this.depIds = new _Set();
  this.newDepIds = new _Set();
- this.expression = expOrFn.toString();
+ this.expression = '';
  if (typeof expOrFn === 'function') {
  this.getter = expOrFn;
  } else {
  this.getter = parsePath(expOrFn);
  if (!this.getter) {
  this.getter = function () {};
- warn(
-      "Failed watching path: \"" + expOrFn + "\" " +
-      'Watcher only accepts simple dot-delimited paths. ' +
-      'For full control, use a function instead.',
-      vm
-      );
  }
  }
  if (this.computed) {
@@ -3236,7 +2803,7 @@ var Viola = this;
  var value = this.get();
  if (
      value !== this.value ||
-     isObject$1(value) ||
+     isObject(value) ||
      this.deep
      ) {
  var oldValue = this.value;
@@ -3269,7 +2836,7 @@ var Viola = this;
  var this$1 = this;
  if (this.active) {
  if (!this.vm._isBeingDestroyed) {
- remove$1(this.vm._watchers, this);
+ remove(this.vm._watchers, this);
  }
  var i = this.deps.length;
  while (i--) {
@@ -3320,25 +2887,7 @@ var Viola = this;
  keys.push(key);
  var value = validateProp(key, propsOptions, propsData, vm);
  {
- var hyphenatedKey = hyphenate(key);
- if (isReservedAttribute(hyphenatedKey) ||
-     config.isReservedAttr(hyphenatedKey)) {
- warn(
-      ("\"" + hyphenatedKey + "\" is a reserved attribute and cannot be used as component prop."),
-      vm
-      );
- }
- defineReactive(props, key, value, function () {
-                if (vm.$parent && !isUpdatingChildComponent) {
-                warn(
-                     "Avoid mutating a prop directly since the value will be " +
-                     "overwritten whenever the parent component re-renders. " +
-                     "Instead, use a data or computed property based on the prop's " +
-                     "value. Prop being mutated: \"" + key + "\"",
-                     vm
-                     );
-                }
-                });
+ defineReactive(props, key, value);
  }
  if (!(key in vm)) {
  proxy(vm, "_props", key);
@@ -3354,11 +2903,6 @@ var Viola = this;
  : data || {};
  if (!isPlainObject(data)) {
  data = {};
- warn(
-      'data functions should return an object:\n' +
-      'https://vuejs.org/v2/guide/components.html#data-Must-Be-a-Function',
-      vm
-      );
  }
  var keys = Object.keys(data);
  var props = vm.$options.props;
@@ -3366,21 +2910,7 @@ var Viola = this;
  var i = keys.length;
  while (i--) {
  var key = keys[i];
- {
- if (methods && hasOwn(methods, key)) {
- warn(
-      ("Method \"" + key + "\" has already been defined as a data property."),
-      vm
-      );
- }
- }
- if (props && hasOwn(props, key)) {
- warn(
-      "The data property \"" + key + "\" is already declared as a prop. " +
-      "Use prop default value instead.",
-      vm
-      );
- } else if (!isReserved(key)) {
+ if (props && hasOwn(props, key)) ; else if (!isReserved(key)) {
  proxy(vm, "_data", key);
  }
  }
@@ -3404,12 +2934,6 @@ var Viola = this;
  for (var key in computed) {
  var userDef = computed[key];
  var getter = typeof userDef === 'function' ? userDef : userDef.get;
- if (getter == null) {
- warn(
-      ("Getter is missing for computed property \"" + key + "\"."),
-      vm
-      );
- }
  if (!isSSR) {
  watchers[key] = new Watcher(
                              vm,
@@ -3420,12 +2944,6 @@ var Viola = this;
  }
  if (!(key in vm)) {
  defineComputed(vm, key, userDef);
- } else {
- if (key in vm.$data) {
- warn(("The computed property \"" + key + "\" is already defined in data."), vm);
- } else if (vm.$options.props && key in vm.$options.props) {
- warn(("The computed property \"" + key + "\" is already defined as a prop."), vm);
- }
  }
  }
  }
@@ -3450,14 +2968,6 @@ var Viola = this;
  ? userDef.set
  : noop;
  }
- if (sharedPropertyDefinition.set === noop) {
- sharedPropertyDefinition.set = function () {
- warn(
-      ("Computed property \"" + key + "\" was assigned to but it has no setter."),
-      this
-      );
- };
- }
  Object.defineProperty(target, key, sharedPropertyDefinition);
  }
  function createComputedGetter (key) {
@@ -3472,27 +2982,6 @@ var Viola = this;
  function initMethods (vm, methods) {
  var props = vm.$options.props;
  for (var key in methods) {
- {
- if (methods[key] == null) {
- warn(
-      "Method \"" + key + "\" has an undefined value in the component definition. " +
-      "Did you reference the function correctly?",
-      vm
-      );
- }
- if (props && hasOwn(props, key)) {
- warn(
-      ("Method \"" + key + "\" has already been defined as a prop."),
-      vm
-      );
- }
- if ((key in vm) && isReserved(key)) {
- warn(
-      "Method \"" + key + "\" conflicts with an existing Vue instance method. " +
-      "Avoid defining component methods that start with _ or $."
-      );
- }
- }
  vm[key] = methods[key] == null ? noop : bind(methods[key], vm);
  }
  }
@@ -3528,18 +3017,6 @@ var Viola = this;
  dataDef.get = function () { return this._data };
  var propsDef = {};
  propsDef.get = function () { return this._props };
- {
- dataDef.set = function (newData) {
- warn(
-      'Avoid replacing instance root $data. ' +
-      'Use nested data properties instead.',
-      this
-      );
- };
- propsDef.set = function () {
- warn("$props is readonly.", this);
- };
- }
  Object.defineProperty(Vue.prototype, '$data', dataDef);
  Object.defineProperty(Vue.prototype, '$props', propsDef);
  Vue.prototype.$set = set;
@@ -3572,20 +3049,13 @@ var Viola = this;
  : provide;
  }
  }
- function initInjections$1 (vm) {
+ function initInjections (vm) {
  var result = resolveInject(vm.$options.inject, vm);
  if (result) {
  toggleObserving(false);
  Object.keys(result).forEach(function (key) {
                              {
-                             defineReactive(vm, key, result[key], function () {
-                                            warn(
-                                                 "Avoid mutating an injected value directly since the changes will be " +
-                                                 "overwritten whenever the provided component re-renders. " +
-                                                 "injection being mutated: \"" + key + "\"",
-                                                 vm
-                                                 );
-                                            });
+                             defineReactive(vm, key, result[key]);
                              }
                              });
  toggleObserving(true);
@@ -3616,8 +3086,6 @@ var Viola = this;
  result[key] = typeof provideDefault === 'function'
  ? provideDefault.call(vm)
  : provideDefault;
- } else {
- warn(("Injection \"" + key + "\" not found"), vm);
  }
  }
  }
@@ -3639,7 +3107,7 @@ var Viola = this;
  for (i = 0; i < val; i++) {
  ret[i] = render(i + 1, i);
  }
- } else if (isObject$1(val)) {
+ } else if (isObject(val)) {
  keys = Object.keys(val);
  ret = new Array(keys.length);
  for (i = 0, l = keys.length; i < l; i++) {
@@ -3647,7 +3115,7 @@ var Viola = this;
  ret[i] = render(val[key], key, i);
  }
  }
- if (isDef$1(ret)) {
+ if (isDef(ret)) {
  (ret)._isVList = true;
  }
  return ret
@@ -3663,25 +3131,12 @@ var Viola = this;
  if (scopedSlotFn) {
  props = props || {};
  if (bindObject) {
- if (!isObject$1(bindObject)) {
- warn(
-      'slot v-bind without argument expects an Object',
-      this
-      );
- }
  props = extend(extend({}, bindObject), props);
  }
  nodes = scopedSlotFn(props) || fallback;
  } else {
  var slotNodes = this.$slots[name];
  if (slotNodes) {
- if (slotNodes._rendered) {
- warn(
-      "Duplicate presence of slot \"" + name + "\" found in the same render tree " +
-      "- this will likely cause render errors.",
-      this
-      );
- }
  slotNodes._rendered = true;
  }
  nodes = slotNodes || fallback;
@@ -3727,12 +3182,7 @@ var Viola = this;
                            isSync
                            ) {
  if (value) {
- if (!isObject$1(value)) {
- warn(
-      'v-bind without argument expects an Object or Array value',
-      this
-      );
- } else {
+ if (!isObject(value)) ; else {
  if (Array.isArray(value)) {
  value = toObject(value);
  }
@@ -3812,12 +3262,7 @@ var Viola = this;
  }
  function bindObjectListeners (data, value) {
  if (value) {
- if (!isPlainObject(value)) {
- warn(
-      'v-on without argument expects an Object value',
-      this
-      );
- } else {
+ if (!isPlainObject(value)) ; else {
  var on = data.on = data.on ? extend({}, data.on) : {};
  for (var key in value) {
  var existing = on[key];
@@ -3831,7 +3276,7 @@ var Viola = this;
  function installRenderHelpers (target) {
  target._o = markOnce;
  target._n = toNumber;
- target._s = toString$1;
+ target._s = toString;
  target._l = renderList;
  target._t = renderSlot;
  target._q = looseEqual;
@@ -3899,13 +3344,13 @@ var Viola = this;
  var options = Ctor.options;
  var props = {};
  var propOptions = options.props;
- if (isDef$1(propOptions)) {
+ if (isDef(propOptions)) {
  for (var key in propOptions) {
  props[key] = validateProp(key, propOptions, propsData || emptyObject);
  }
  } else {
- if (isDef$1(data.attrs)) { mergeProps(props, data.attrs); }
- if (isDef$1(data.props)) { mergeProps(props, data.props); }
+ if (isDef(data.attrs)) { mergeProps(props, data.attrs); }
+ if (isDef(data.props)) { mergeProps(props, data.props); }
  }
  var renderContext = new FunctionalRenderContext(
                                                  data,
@@ -4002,21 +3447,18 @@ var Viola = this;
                            children,
                            tag
                            ) {
- if (isUndef$1(Ctor)) {
+ if (isUndef(Ctor)) {
  return
  }
  var baseCtor = context.$options._base;
- if (isObject$1(Ctor)) {
+ if (isObject(Ctor)) {
  Ctor = baseCtor.extend(Ctor);
  }
  if (typeof Ctor !== 'function') {
- {
- warn(("Invalid Component definition: " + (String(Ctor))), context);
- }
  return
  }
  var asyncFactory;
- if (isUndef$1(Ctor.cid)) {
+ if (isUndef(Ctor.cid)) {
  asyncFactory = Ctor;
  Ctor = resolveAsyncComponent(asyncFactory, baseCtor, context);
  if (Ctor === undefined) {
@@ -4031,7 +3473,7 @@ var Viola = this;
  }
  data = data || {};
  resolveConstructorOptions(Ctor);
- if (isDef$1(data.model)) {
+ if (isDef(data.model)) {
  transformModel(Ctor.options, data);
  }
  var propsData = extractPropsFromVNodeData(data, Ctor, tag);
@@ -4064,10 +3506,10 @@ var Viola = this;
  var options = {
  _isComponent: true,
  _parentVnode: vnode,
- parent: parent,
+ parent: parent
  };
  var inlineTemplate = vnode.data.inlineTemplate;
- if (isDef$1(inlineTemplate)) {
+ if (isDef(inlineTemplate)) {
  options.render = inlineTemplate.render;
  options.staticRenderFns = inlineTemplate.staticRenderFns;
  }
@@ -4096,7 +3538,7 @@ var Viola = this;
  var prop = (options.model && options.model.prop) || 'value';
  var event = (options.model && options.model.event) || 'input';(data.props || (data.props = {}))[prop] = data.model.value;
  var on = data.on || (data.on = {});
- if (isDef$1(on[event])) {
+ if (isDef(on[event])) {
  on[event] = [data.model.callback].concat(on[event]);
  } else {
  on[event] = data.model.callback;
@@ -4129,29 +3571,14 @@ var Viola = this;
                           children,
                           normalizationType
                           ) {
- if (isDef$1(data) && isDef$1((data).__ob__)) {
- warn(
-      "Avoid using observed data object as vnode data: " + (JSON.stringify(data)) + "\n" +
-      'Always create fresh vnode data objects in each render!',
-      context
-      );
+ if (isDef(data) && isDef((data).__ob__)) {
  return createEmptyVNode()
  }
- if (isDef$1(data) && isDef$1(data.is)) {
+ if (isDef(data) && isDef(data.is)) {
  tag = data.is;
  }
  if (!tag) {
  return createEmptyVNode()
- }
- if (isDef$1(data) && isDef$1(data.key) && !isPrimitive(data.key)
-     ) {
- {
- warn(
-      'Avoid using non-primitive value as key, ' +
-      'use string/number value instead.',
-      context
-      );
- }
  }
  if (Array.isArray(children) &&
      typeof children[0] === 'function'
@@ -4174,7 +3601,7 @@ var Viola = this;
                    config.parsePlatformTagName(tag), data, children,
                    undefined, undefined, context
                    );
- } else if (isDef$1(Ctor = resolveAsset(context.$options, 'components', tag))) {
+ } else if (isDef(Ctor = resolveAsset(context.$options, 'components', tag))) {
  vnode = createComponent(Ctor, data, context, children, tag);
  } else {
  vnode = new VNode(
@@ -4187,9 +3614,9 @@ var Viola = this;
  }
  if (Array.isArray(vnode)) {
  return vnode
- } else if (isDef$1(vnode)) {
- if (isDef$1(ns)) { applyNS(vnode, ns); }
- if (isDef$1(data)) { registerDeepBindings(data); }
+ } else if (isDef(vnode)) {
+ if (isDef(ns)) { applyNS(vnode, ns); }
+ if (isDef(data)) { registerDeepBindings(data); }
  return vnode
  } else {
  return createEmptyVNode()
@@ -4201,21 +3628,21 @@ var Viola = this;
  ns = undefined;
  force = true;
  }
- if (isDef$1(vnode.children)) {
+ if (isDef(vnode.children)) {
  for (var i = 0, l = vnode.children.length; i < l; i++) {
  var child = vnode.children[i];
- if (isDef$1(child.tag) && (
-                            isUndef$1(child.ns) || (isTrue(force) && child.tag !== 'svg'))) {
+ if (isDef(child.tag) && (
+                          isUndef(child.ns) || (isTrue(force) && child.tag !== 'svg'))) {
  applyNS(child, ns, force);
  }
  }
  }
  }
  function registerDeepBindings (data) {
- if (isObject$1(data.style)) {
+ if (isObject(data.style)) {
  traverse(data.style);
  }
- if (isObject$1(data.class)) {
+ if (isObject(data.class)) {
  traverse(data.class);
  }
  }
@@ -4231,12 +3658,8 @@ var Viola = this;
  vm.$createElement = function (a, b, c, d) { return createElement(vm, a, b, c, d, true); };
  var parentData = parentVnode && parentVnode.data;
  {
- defineReactive(vm, '$attrs', parentData && parentData.attrs || emptyObject, function () {
-                !isUpdatingChildComponent && warn("$attrs is readonly.", vm);
-                }, true);
- defineReactive(vm, '$listeners', options._parentListeners || emptyObject, function () {
-                !isUpdatingChildComponent && warn("$listeners is readonly.", vm);
-                }, true);
+ defineReactive(vm, '$attrs', parentData && parentData.attrs || emptyObject, null, true);
+ defineReactive(vm, '$listeners', options._parentListeners || emptyObject, null, true);
  }
  }
  function renderMixin (Vue) {
@@ -4249,11 +3672,6 @@ var Viola = this;
  var ref = vm.$options;
  var render = ref.render;
  var _parentVnode = ref._parentVnode;
- {
- for (var key in vm.$slots) {
- vm.$slots[key]._rendered = false;
- }
- }
  if (_parentVnode) {
  vm.$scopedSlots = _parentVnode.data.scopedSlots || emptyObject;
  }
@@ -4264,26 +3682,10 @@ var Viola = this;
  } catch (e) {
  handleError(e, vm, "render");
  {
- if (vm.$options.renderError) {
- try {
- vnode = vm.$options.renderError.call(vm._renderProxy, vm.$createElement, e);
- } catch (e) {
- handleError(e, vm, "renderError");
  vnode = vm._vnode;
- }
- } else {
- vnode = vm._vnode;
- }
  }
  }
  if (!(vnode instanceof VNode)) {
- if (Array.isArray(vnode)) {
- warn(
-      'Multiple root nodes returned from render function. Render function ' +
-      'should return a single root node.',
-      vm
-      );
- }
  vnode = createEmptyVNode();
  }
  vnode.parent = _parentVnode;
@@ -4295,12 +3697,6 @@ var Viola = this;
  Vue.prototype._init = function (options) {
  var vm = this;
  vm._uid = uid$3++;
- var startTag, endTag;
- if (config.performance && mark) {
- startTag = "vue-perf-start:" + (vm._uid);
- endTag = "vue-perf-end:" + (vm._uid);
- mark(startTag);
- }
  vm._isVue = true;
  if (options && options._isComponent) {
  initInternalComponent(vm, options);
@@ -4312,22 +3708,17 @@ var Viola = this;
                             );
  }
  {
- initProxy(vm);
+ vm._renderProxy = vm;
  }
  vm._self = vm;
  initLifecycle(vm);
  initEvents(vm);
  initRender(vm);
  callHook(vm, 'beforeCreate');
- initInjections$1(vm);
+ initInjections(vm);
  initState(vm);
  initProvide(vm);
  callHook(vm, 'created');
- if (config.performance && mark) {
- vm._name = formatComponentName(vm, false);
- mark(endTag);
- measure(("vue " + (vm._name) + " init"), startTag, endTag);
- }
  if (vm.$options.el) {
  vm.$mount(vm.$options.el);
  }
@@ -4396,10 +3787,6 @@ var Viola = this;
  }
  }
  function Vue (options) {
- if (!(this instanceof Vue)
-     ) {
- warn('Vue is a constructor and should be called with the `new` keyword');
- }
  this._init(options);
  }
  initMixin(Vue);
@@ -4442,9 +3829,6 @@ var Viola = this;
  return cachedCtors[SuperId]
  }
  var name = extendOptions.name || Super.options.name;
- if (name) {
- validateComponentName(name);
- }
  var Sub = function VueComponent (options) {
  this._init(options);
  };
@@ -4499,9 +3883,6 @@ var Viola = this;
                      if (!definition) {
                      return this.options[type + 's'][id]
                      } else {
-                     if (type === 'component') {
-                     validateComponentName(id);
-                     }
                      if (type === 'component' && isPlainObject(definition)) {
                      definition.name = definition.name || id;
                      definition = this.options._base.extend(definition);
@@ -4553,7 +3934,7 @@ var Viola = this;
  cached$$1.componentInstance.$destroy();
  }
  cache[key] = null;
- remove$1(keys, key);
+ remove(keys, key);
  }
  var patternTypes = [String, RegExp, Array];
  var KeepAlive = {
@@ -4606,7 +3987,7 @@ var Viola = this;
  : vnode.key;
  if (cache[key]) {
  vnode.componentInstance = cache[key].componentInstance;
- remove$1(keys, key);
+ remove(keys, key);
  keys.push(key);
  } else {
  cache[key] = vnode;
@@ -4626,13 +4007,6 @@ var Viola = this;
  function initGlobalAPI (Vue) {
  var configDef = {};
  configDef.get = function () { return config; };
- {
- configDef.set = function () {
- warn(
-      'Do not replace the Vue.config object, set individual fields instead.'
-      );
- };
- }
  Object.defineProperty(Vue, 'config', configDef);
  Vue.util = {
  warn: warn,
@@ -4668,23 +4042,23 @@ var Viola = this;
                        });
  Vue.version = '2.5.17-beta.0';
  var namespaceMap = {};
- function createElement$1 (tagName) {
- return doc.createElement(tagName)
+ function createElement$1 (tagName, vnode) {
+ return document.createElement(tagName)
  }
- function createElementNS (namespace, tagName) {
- return doc.createElement(namespace + ':' + tagName)
+ function createElementNS(namespace, tagName, vnode) {
+ return document.createElement(namespace + ':' + tagName)
  }
- function createTextNode (text) {
- return doc.createTextNode(text)
+ function createTextNode(text, vnode) {
+ return document.createTextNode(text)
  }
- function createComment (text) {
- return doc.createComment(text)
+ function createComment(text, vnode) {
+ return document.createComment(text)
  }
- function insertBefore$1 (
-                          node,
-                          target,
-                          beforeMount
-                          ) {
+ function insertBefore (
+                        node,
+                        target,
+                        beforeMount
+                        ) {
  node.insertBefore(target, before);
  }
  function removeChild (node, child) {
@@ -4718,7 +4092,7 @@ var Viola = this;
  node.setAttr(key, val);
  }
  function setStyleScope (node, scopeId) {
- node.setAttr('@styleScope', scopeId);
+ node['_styleScope'] = scopeId;
  }
  var nodeOps = Object.freeze({
                              namespaceMap: namespaceMap,
@@ -4726,7 +4100,7 @@ var Viola = this;
                              createElementNS: createElementNS,
                              createTextNode: createTextNode,
                              createComment: createComment,
-                             insertBefore: insertBefore$1,
+                             insertBefore: insertBefore,
                              removeChild: removeChild,
                              appendChild: appendChild,
                              parentNode: parentNode,
@@ -4752,13 +4126,13 @@ var Viola = this;
  };
  function registerRef (vnode, isRemoval) {
  var key = vnode.data.ref;
- if (!isDef$1(key)) { return }
+ if (!isDef(key)) { return }
  var vm = vnode.context;
  var ref = vnode.componentInstance || vnode.elm;
  var refs = vm.$refs;
  if (isRemoval) {
  if (Array.isArray(refs[key])) {
- remove$1(refs[key], ref);
+ remove(refs[key], ref);
  } else if (refs[key] === ref) {
  refs[key] = undefined;
  }
@@ -4802,12 +4176,12 @@ var Viola = this;
                              (
                               a.tag === b.tag &&
                               a.isComment === b.isComment &&
-                              isDef$1(a.data) === isDef$1(b.data) &&
+                              isDef(a.data) === isDef(b.data) &&
                               sameInputType(a, b)
                               ) || (
                                     isTrue(a.isAsyncPlaceholder) &&
                                     a.asyncFactory === b.asyncFactory &&
-                                    isUndef$1(b.asyncFactory.error)
+                                    isUndef(b.asyncFactory.error)
                                     )
                              )
          )
@@ -4815,8 +4189,8 @@ var Viola = this;
  function sameInputType (a, b) {
  if (a.tag !== 'input') { return true }
  var i;
- var typeA = isDef$1(i = a.data) && isDef$1(i = i.attrs) && i.type;
- var typeB = isDef$1(i = b.data) && isDef$1(i = i.attrs) && i.type;
+ var typeA = isDef(i = a.data) && isDef(i = i.attrs) && i.type;
+ var typeB = isDef(i = b.data) && isDef(i = i.attrs) && i.type;
  return typeA === typeB || isTextInputType(typeA) && isTextInputType(typeB)
  }
  function createKeyToOldIdx (children, beginIdx, endIdx) {
@@ -4824,7 +4198,7 @@ var Viola = this;
  var map = {};
  for (i = beginIdx; i <= endIdx; ++i) {
  key = children[i].key;
- if (isDef$1(key)) { map[key] = i; }
+ if (isDef(key)) { map[key] = i; }
  }
  return map
  }
@@ -4836,7 +4210,7 @@ var Viola = this;
  for (i = 0; i < hooks.length; ++i) {
  cbs[hooks[i]] = [];
  for (j = 0; j < modules.length; ++j) {
- if (isDef$1(modules[j][hooks[i]])) {
+ if (isDef(modules[j][hooks[i]])) {
  cbs[hooks[i]].push(modules[j][hooks[i]]);
  }
  }
@@ -4855,26 +4229,10 @@ var Viola = this;
  }
  function removeNode (el) {
  var parent = nodeOps.parentNode(el);
- if (isDef$1(parent)) {
+ if (isDef(parent)) {
  nodeOps.removeChild(parent, el);
  }
  }
- function isUnknownElement$$1 (vnode, inVPre) {
- return (
-         !inVPre &&
-         !vnode.ns &&
-         !(
-           config.ignoredElements.length &&
-           config.ignoredElements.some(function (ignore) {
-                                       return isRegExp(ignore)
-                                       ? ignore.test(vnode.tag)
-                                       : ignore === vnode.tag
-                                       })
-           ) &&
-         config.isUnknownElement(vnode.tag)
-         )
- }
- var creatingElmInVPre = 0;
  function createElm (
                      vnode,
                      insertedVnodeQueue,
@@ -4884,7 +4242,7 @@ var Viola = this;
                      ownerArray,
                      index
                      ) {
- if (isDef$1(vnode.elm) && isDef$1(ownerArray)) {
+ if (isDef(vnode.elm) && isDef(ownerArray)) {
  vnode = ownerArray[index] = cloneVNode(vnode);
  }
  vnode.isRootInsert = !nested;
@@ -4894,33 +4252,17 @@ var Viola = this;
  var data = vnode.data;
  var children = vnode.children;
  var tag = vnode.tag;
- if (isDef$1(tag)) {
- {
- if (data && data.pre) {
- creatingElmInVPre++;
- }
- if (isUnknownElement$$1(vnode, creatingElmInVPre)) {
- warn(
-      'Unknown custom element: <' + tag + '> - did you ' +
-      'register the component correctly? For recursive components, ' +
-      'make sure to provide the "name" option.',
-      vnode.context
-      );
- }
- }
+ if (isDef(tag)) {
  vnode.elm = vnode.ns
  ? nodeOps.createElementNS(vnode.ns, tag)
  : nodeOps.createElement(tag, vnode);
  setScope(vnode);
  {
  createChildren(vnode, children, insertedVnodeQueue);
- if (isDef$1(data)) {
+ if (isDef(data)) {
  invokeCreateHooks(vnode, insertedVnodeQueue);
  }
  insert(parentElm, vnode.elm, refElm);
- }
- if (data && data.pre) {
- creatingElmInVPre--;
  }
  } else if (isTrue(vnode.isComment)) {
  vnode.elm = nodeOps.createComment(vnode.text);
@@ -4932,12 +4274,12 @@ var Viola = this;
  }
  function createComponent (vnode, insertedVnodeQueue, parentElm, refElm) {
  var i = vnode.data;
- if (isDef$1(i)) {
- var isReactivated = isDef$1(vnode.componentInstance) && i.keepAlive;
- if (isDef$1(i = i.hook) && isDef$1(i = i.init)) {
+ if (isDef(i)) {
+ var isReactivated = isDef(vnode.componentInstance) && i.keepAlive;
+ if (isDef(i = i.hook) && isDef(i = i.init)) {
  i(vnode, false                );
  }
- if (isDef$1(vnode.componentInstance)) {
+ if (isDef(vnode.componentInstance)) {
  initComponent(vnode, insertedVnodeQueue);
  insert(parentElm, vnode.elm, refElm);
  if (isTrue(isReactivated)) {
@@ -4948,7 +4290,7 @@ var Viola = this;
  }
  }
  function initComponent (vnode, insertedVnodeQueue) {
- if (isDef$1(vnode.data.pendingInsert)) {
+ if (isDef(vnode.data.pendingInsert)) {
  insertedVnodeQueue.push.apply(insertedVnodeQueue, vnode.data.pendingInsert);
  vnode.data.pendingInsert = null;
  }
@@ -4966,7 +4308,7 @@ var Viola = this;
  var innerNode = vnode;
  while (innerNode.componentInstance) {
  innerNode = innerNode.componentInstance._vnode;
- if (isDef$1(i = innerNode.data) && isDef$1(i = i.transition)) {
+ if (isDef(i = innerNode.data) && isDef(i = i.transition)) {
  for (i = 0; i < cbs.activate.length; ++i) {
  cbs.activate[i](emptyNode, innerNode);
  }
@@ -4977,8 +4319,8 @@ var Viola = this;
  insert(parentElm, vnode.elm, refElm);
  }
  function insert (parent, elm, ref$$1) {
- if (isDef$1(parent)) {
- if (isDef$1(ref$$1)) {
+ if (isDef(parent)) {
+ if (isDef(ref$$1)) {
  if (ref$$1.parentNode === parent) {
  nodeOps.insertBefore(parent, elm, ref$$1);
  }
@@ -4989,9 +4331,6 @@ var Viola = this;
  }
  function createChildren (vnode, children, insertedVnodeQueue) {
  if (Array.isArray(children)) {
- {
- checkDuplicateKeys(children);
- }
  for (var i = 0; i < children.length; ++i) {
  createElm(children[i], insertedVnodeQueue, vnode.elm, null, true, children, i);
  }
@@ -5003,35 +4342,35 @@ var Viola = this;
  while (vnode.componentInstance) {
  vnode = vnode.componentInstance._vnode;
  }
- return isDef$1(vnode.tag)
+ return isDef(vnode.tag)
  }
  function invokeCreateHooks (vnode, insertedVnodeQueue) {
  for (var i$1 = 0; i$1 < cbs.create.length; ++i$1) {
  cbs.create[i$1](emptyNode, vnode);
  }
  i = vnode.data.hook;
- if (isDef$1(i)) {
- if (isDef$1(i.create)) { i.create(emptyNode, vnode); }
- if (isDef$1(i.insert)) { insertedVnodeQueue.push(vnode); }
+ if (isDef(i)) {
+ if (isDef(i.create)) { i.create(emptyNode, vnode); }
+ if (isDef(i.insert)) { insertedVnodeQueue.push(vnode); }
  }
  }
  function setScope (vnode) {
  var i;
- if (isDef$1(i = vnode.fnScopeId)) {
+ if (isDef(i = vnode.fnScopeId)) {
  nodeOps.setStyleScope(vnode.elm, i);
  } else {
  var ancestor = vnode;
  while (ancestor) {
- if (isDef$1(i = ancestor.context) && isDef$1(i = i.$options._scopeId)) {
+ if (isDef(i = ancestor.context) && isDef(i = i.$options._scopeId)) {
  nodeOps.setStyleScope(vnode.elm, i);
  }
  ancestor = ancestor.parent;
  }
  }
- if (isDef$1(i = activeInstance) &&
+ if (isDef(i = activeInstance) &&
      i !== vnode.context &&
      i !== vnode.fnContext &&
-     isDef$1(i = i.$options._scopeId)
+     isDef(i = i.$options._scopeId)
      ) {
  nodeOps.setStyleScope(vnode.elm, i);
  }
@@ -5044,11 +4383,11 @@ var Viola = this;
  function invokeDestroyHook (vnode) {
  var i, j;
  var data = vnode.data;
- if (isDef$1(data)) {
- if (isDef$1(i = data.hook) && isDef$1(i = i.destroy)) { i(vnode); }
+ if (isDef(data)) {
+ if (isDef(i = data.hook) && isDef(i = i.destroy)) { i(vnode); }
  for (i = 0; i < cbs.destroy.length; ++i) { cbs.destroy[i](vnode); }
  }
- if (isDef$1(i = vnode.children)) {
+ if (isDef(i = vnode.children)) {
  for (j = 0; j < vnode.children.length; ++j) {
  invokeDestroyHook(vnode.children[j]);
  }
@@ -5057,8 +4396,8 @@ var Viola = this;
  function removeVnodes (parentElm, vnodes, startIdx, endIdx) {
  for (; startIdx <= endIdx; ++startIdx) {
  var ch = vnodes[startIdx];
- if (isDef$1(ch)) {
- if (isDef$1(ch.tag)) {
+ if (isDef(ch)) {
+ if (isDef(ch.tag)) {
  removeAndInvokeRemoveHook(ch);
  invokeDestroyHook(ch);
  } else {
@@ -5068,21 +4407,21 @@ var Viola = this;
  }
  }
  function removeAndInvokeRemoveHook (vnode, rm) {
- if (isDef$1(rm) || isDef$1(vnode.data)) {
+ if (isDef(rm) || isDef(vnode.data)) {
  var i;
  var listeners = cbs.remove.length + 1;
- if (isDef$1(rm)) {
+ if (isDef(rm)) {
  rm.listeners += listeners;
  } else {
  rm = createRmCb(vnode.elm, listeners);
  }
- if (isDef$1(i = vnode.componentInstance) && isDef$1(i = i._vnode) && isDef$1(i.data)) {
+ if (isDef(i = vnode.componentInstance) && isDef(i = i._vnode) && isDef(i.data)) {
  removeAndInvokeRemoveHook(i, rm);
  }
  for (i = 0; i < cbs.remove.length; ++i) {
  cbs.remove[i](vnode, rm);
  }
- if (isDef$1(i = vnode.data.hook) && isDef$1(i = i.remove)) {
+ if (isDef(i = vnode.data.hook) && isDef(i = i.remove)) {
  i(vnode, rm);
  } else {
  rm();
@@ -5102,13 +4441,10 @@ var Viola = this;
  var newEndVnode = newCh[newEndIdx];
  var oldKeyToIdx, idxInOld, vnodeToMove, refElm;
  var canMove = !removeOnly;
- {
- checkDuplicateKeys(newCh);
- }
  while (oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx) {
- if (isUndef$1(oldStartVnode)) {
+ if (isUndef(oldStartVnode)) {
  oldStartVnode = oldCh[++oldStartIdx];
- } else if (isUndef$1(oldEndVnode)) {
+ } else if (isUndef(oldEndVnode)) {
  oldEndVnode = oldCh[--oldEndIdx];
  } else if (sameVnode(oldStartVnode, newStartVnode)) {
  patchVnode(oldStartVnode, newStartVnode, insertedVnodeQueue);
@@ -5129,11 +4465,11 @@ var Viola = this;
  oldEndVnode = oldCh[--oldEndIdx];
  newStartVnode = newCh[++newStartIdx];
  } else {
- if (isUndef$1(oldKeyToIdx)) { oldKeyToIdx = createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx); }
- idxInOld = isDef$1(newStartVnode.key)
+ if (isUndef(oldKeyToIdx)) { oldKeyToIdx = createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx); }
+ idxInOld = isDef(newStartVnode.key)
  ? oldKeyToIdx[newStartVnode.key]
  : findIdxInOld(newStartVnode, oldCh, oldStartIdx/ldEndIdx);
- if (isUndef$1(idxInOld)) {
+ if (isUndef(idxInOld)) {
  createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm, false, newCh, newStartIdx);
  } else {
  vnodeToMove = oldCh[idxInOld];
@@ -5149,43 +4485,25 @@ var Viola = this;
  }
  }
  if (oldStartIdx > oldEndIdx) {
- refElm = isUndef$1(newCh[newEndIdx + 1]) ? null : newCh[newEndIdx + 1].elm;
+ refElm = isUndef(newCh[newEndIdx + 1]) ? null : newCh[newEndIdx + 1].elm;
  addVnodes(parentElm, refElm, newCh, newStartIdx, newEndIdx, insertedVnodeQueue);
  } else if (newStartIdx > newEndIdx) {
  removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx);
  }
  }
- function checkDuplicateKeys (children) {
- var seenKeys = {};
- for (var i = 0; i < children.length; i++) {
- var vnode = children[i];
- var key = vnode.key;
- if (isDef$1(key)) {
- if (seenKeys[key]) {
- warn(
-      ("Duplicate keys detected: '" + key + "'. This may cause an update error."),
-      vnode.context
-      );
- } else {
- seenKeys[key] = true;
- }
- }
- }
- }
  function findIdxInOld (node, oldCh, start, end) {
  for (var i = start; i < end; i++) {
  var c = oldCh[i];
- if (isDef$1(c) && sameVnode(node, c)) { return i }
+ if (isDef(c) && sameVnode(node, c)) { return i }
  }
  }
  function patchVnode (oldVnode, vnode, insertedVnodeQueue, removeOnly) {
  if (oldVnode === vnode) {
  return
  }
- console.log('start patch Node', oldVnode, vnode);
  var elm = vnode.elm = oldVnode.elm;
  if (isTrue(oldVnode.isAsyncPlaceholder)) {
- if (isDef$1(vnode.asyncFactory.resolved)) {
+ if (isDef(vnode.asyncFactory.resolved)) {
  hydrate(oldVnode.elm, vnode, insertedVnodeQueue);
  } else {
  vnode.isAsyncPlaceholder = true;
@@ -5202,35 +4520,35 @@ var Viola = this;
  }
  var i;
  var data = vnode.data;
- if (isDef$1(data) && isDef$1(i = data.hook) && isDef$1(i = i.prepatch)) {
+ if (isDef(data) && isDef(i = data.hook) && isDef(i = i.prepatch)) {
  i(oldVnode, vnode);
  }
  var oldCh = oldVnode.children;
  var ch = vnode.children;
- if (isDef$1(data) && isPatchable(vnode)) {
+ if (isDef(data) && isPatchable(vnode)) {
  for (i = 0; i < cbs.update.length; ++i) { cbs.update[i](oldVnode, vnode); }
- if (isDef$1(i = data.hook) && isDef$1(i = i.update)) { i(oldVnode, vnode); }
+ if (isDef(i = data.hook) && isDef(i = i.update)) { i(oldVnode, vnode); }
  }
- if (isUndef$1(vnode.text)) {
- if (isDef$1(oldCh) && isDef$1(ch)) {
+ if (isUndef(vnode.text)) {
+ if (isDef(oldCh) && isDef(ch)) {
  if (oldCh !== ch) { updateChildren(elm, oldCh, ch, insertedVnodeQueue, removeOnly); }
- } else if (isDef$1(ch)) {
- if (isDef$1(oldVnode.text)) { nodeOps.setTextContent(elm, ''); }
+ } else if (isDef(ch)) {
+ if (isDef(oldVnode.text)) { nodeOps.setTextContent(elm, ''); }
  addVnodes(elm, null, ch, 0, ch.length - 1, insertedVnodeQueue);
- } else if (isDef$1(oldCh)) {
+ } else if (isDef(oldCh)) {
  removeVnodes(elm, oldCh, 0, oldCh.length - 1);
- } else if (isDef$1(oldVnode.text)) {
+ } else if (isDef(oldVnode.text)) {
  nodeOps.setTextContent(elm, '');
  }
  } else if (oldVnode.text !== vnode.text) {
  nodeOps.setTextContent(elm, vnode.text);
  }
- if (isDef$1(data)) {
- if (isDef$1(i = data.hook) && isDef$1(i = i.postpatch)) { i(oldVnode, vnode); }
+ if (isDef(data)) {
+ if (isDef(i = data.hook) && isDef(i = i.postpatch)) { i(oldVnode, vnode); }
  }
  }
  function invokeInsertHook (vnode, queue, initial) {
- if (isTrue(initial) && isDef$1(vnode.parent)) {
+ if (isTrue(initial) && isDef(vnode.parent)) {
  vnode.parent.data.pendingInsert = queue;
  } else {
  for (var i = 0; i < queue.length; ++i) {
@@ -5238,7 +4556,6 @@ var Viola = this;
  }
  }
  }
- var hydrationBailed = false;
  var isRenderedModule = makeMap('attrs,class,staticClass,staticStyle,key');
  function hydrate (elm, vnode, insertedVnodeQueue, inVPre) {
  var i;
@@ -5247,37 +4564,24 @@ var Viola = this;
  var children = vnode.children;
  inVPre = inVPre || (data && data.pre);
  vnode.elm = elm;
- if (isTrue(vnode.isComment) && isDef$1(vnode.asyncFactory)) {
+ if (isTrue(vnode.isComment) && isDef(vnode.asyncFactory)) {
  vnode.isAsyncPlaceholder = true;
  return true
  }
- {
- if (!assertNodeMatch(elm, vnode, inVPre)) {
- return false
- }
- }
- if (isDef$1(data)) {
- if (isDef$1(i = data.hook) && isDef$1(i = i.init)) { i(vnode, true                ); }
- if (isDef$1(i = vnode.componentInstance)) {
+ if (isDef(data)) {
+ if (isDef(i = data.hook) && isDef(i = i.init)) { i(vnode, true                ); }
+ if (isDef(i = vnode.componentInstance)) {
  initComponent(vnode, insertedVnodeQueue);
  return true
  }
  }
- if (isDef$1(tag)) {
- if (isDef$1(children)) {
+ if (isDef(tag)) {
+ if (isDef(children)) {
  if (!elm.hasChildNodes()) {
  createChildren(vnode, children, insertedVnodeQueue);
  } else {
- if (isDef$1(i = data) && isDef$1(i = i.domProps) && isDef$1(i = i.innerHTML)) {
+ if (isDef(i = data) && isDef(i = i.domProps) && isDef(i = i.innerHTML)) {
  if (i !== elm.innerHTML) {
- if (typeof console !== 'undefined' &&
-     !hydrationBailed
-     ) {
- hydrationBailed = true;
- console.warn('Parent: ', elm);
- console.warn('server innerHTML: ', i);
- console.warn('client innerHTML: ', elm.innerHTML);
- }
  return false
  }
  } else {
@@ -5291,19 +4595,12 @@ var Viola = this;
  childNode = childNode.nextSibling;
  }
  if (!childrenMatch || childNode) {
- if (typeof console !== 'undefined' &&
-     !hydrationBailed
-     ) {
- hydrationBailed = true;
- console.warn('Parent: ', elm);
- console.warn('Mismatching childNodes vs. VNodes: ', elm.childNodes, children);
- }
  return false
  }
  }
  }
  }
- if (isDef$1(data)) {
+ if (isDef(data)) {
  var fullInvoke = false;
  for (var key in data) {
  if (!isRenderedModule(key)) {
@@ -5321,28 +4618,18 @@ var Viola = this;
  }
  return true
  }
- function assertNodeMatch (node, vnode, inVPre) {
- if (isDef$1(vnode.tag)) {
- return vnode.tag.indexOf('vue-component') === 0 || (
-                                                     !isUnknownElement$$1(vnode, inVPre) &&
-                                                     vnode.tag.toLowerCase() === (node.tagName && node.tagName.toLowerCase())
-                                                     )
- } else {
- return node.nodeType === (vnode.isComment ? 8 : 3)
- }
- }
  return function patch (oldVnode, vnode, hydrating, removeOnly) {
- if (isUndef$1(vnode)) {
- if (isDef$1(oldVnode)) { invokeDestroyHook(oldVnode); }
+ if (isUndef(vnode)) {
+ if (isDef(oldVnode)) { invokeDestroyHook(oldVnode); }
  return
  }
  var isInitialPatch = false;
  var insertedVnodeQueue = [];
- if (isUndef$1(oldVnode)) {
+ if (isUndef(oldVnode)) {
  isInitialPatch = true;
  createElm(vnode, insertedVnodeQueue);
  } else {
- var isRealElement = isDef$1(oldVnode.nodeType);
+ var isRealElement = isDef(oldVnode.nodeType);
  if (!isRealElement && sameVnode(oldVnode, vnode)) {
  patchVnode(oldVnode, vnode, insertedVnodeQueue, removeOnly);
  } else {
@@ -5355,14 +4642,6 @@ var Viola = this;
  if (hydrate(oldVnode, vnode, insertedVnodeQueue)) {
  invokeInsertHook(vnode, insertedVnodeQueue, true);
  return oldVnode
- } else {
- warn(
-      'The client-side rendered virtual DOM tree is not matching ' +
-      'server-rendered content. This is likely caused by incorrect ' +
-      'HTML markup, for example nesting block-level elements inside ' +
-      '<p>, or missing <tbody>. Bailing hydration and performing ' +
-      'full client-side render.'
-      );
  }
  }
  oldVnode = emptyNodeAt(oldVnode);
@@ -5375,7 +4654,7 @@ var Viola = this;
            oldElm._leaveCb ? null : parentElm,
            nodeOps.nextSibling(oldElm)
            );
- if (isDef$1(vnode.parent)) {
+ if (isDef(vnode.parent)) {
  var ancestor = vnode.parent;
  var patchable = isPatchable(vnode);
  while (ancestor) {
@@ -5399,9 +4678,9 @@ var Viola = this;
  ancestor = ancestor.parent;
  }
  }
- if (isDef$1(parentElm)) {
+ if (isDef(parentElm)) {
  removeVnodes(parentElm, [oldVnode], 0, 0);
- } else if (isDef$1(oldVnode.tag)) {
+ } else if (isDef(oldVnode.tag)) {
  invokeDestroyHook(oldVnode);
  }
  }
@@ -5510,31 +4789,42 @@ var Viola = this;
                     ref,
                     directives
                     ];
- var getOwnProp = Object.getOwnPropertyNames;
+ function diffObject(oldObj, obj) {
+ var mutations = {};
+ var copyOld = extend({}, oldObj);
+ for (var key in obj) {
+ var attr = obj[key];
+ var isAdd = isUndef(copyOld[key]);
+ if (attr !== copyOld[key]) {
+ mutations[key] = attr;
+ }
+ !isAdd && (delete copyOld[key]);
+ }
+ for (var key$1 in copyOld) {
+ mutations[key$1] = '';
+ }
+ return mutations
+ }
+ function isEmptyObj (obj) {
+ for (var key in obj) {
+ return false
+ }
+ return true
+ }
  function updateAttrs (oldVnode, vnode) {
  if (!oldVnode.data.attrs && !vnode.data.attrs) {
  return
  }
- var hasDifference = false;
+ var mutations = {};
  var elm = vnode.elm;
  var oldAttrs = oldVnode.data.attrs || {};
  var attrs = vnode.data.attrs || {};
  if (attrs.__ob__) {
  attrs = vnode.data.attrs = extend({}, attrs);
  }
- hasDifference =
- getOwnProp(attrs).length === getOwnProp(oldAttrs).length
- ? false
- : true;
- for (var key$1 in attrs) {
- var attr = attrs[key$1];
- if (isUndef$1(oldAttrs[key$1]) || attr !== oldAttrs[key$1]) {
- hasDifference = true;
- break
- }
- }
- if (hasDifference) {
- elm.setAttrs(attrs, true);
+ mutations = diffObject(oldAttrs, attrs);
+ if (!isEmptyObj(mutations)) {
+ elm.setAttrs(mutations, true);
  }
  }
  var attrs = {
@@ -5556,13 +4846,13 @@ var Viola = this;
  var data = vnode.data;
  var parentNode = vnode;
  var childNode = vnode;
- while (isDef$1(childNode.componentInstance)) {
+ while (isDef(childNode.componentInstance)) {
  childNode = childNode.componentInstance._vnode;
  if (childNode && childNode.data) {
  data = mergeClassData(childNode.data, data);
  }
  }
- while (isDef$1(parentNode = parentNode.parent)) {
+ while (isDef(parentNode = parentNode.parent)) {
  if (parentNode && parentNode.data) {
  data = mergeClassData(data, parentNode.data);
  }
@@ -5572,7 +4862,7 @@ var Viola = this;
  function mergeClassData (child, parent) {
  return {
  staticClass: concat(child.staticClass, parent.staticClass),
- class: isDef$1(child.class)
+ class: isDef(child.class)
  ? [child.class, parent.class]
  : parent.class
  }
@@ -5581,7 +4871,7 @@ var Viola = this;
                        staticClass,
                        dynamicClass
                        ) {
- if (isDef$1(staticClass) || isDef$1(dynamicClass)) {
+ if (isDef(staticClass) || isDef(dynamicClass)) {
  return concat(staticClass, stringifyClass(dynamicClass))
  }
  return ''
@@ -5593,7 +4883,7 @@ var Viola = this;
  if (Array.isArray(value)) {
  return stringifyArray(value)
  }
- if (isObject$1(value)) {
+ if (isObject(value)) {
  return stringifyObject(value)
  }
  if (typeof value === 'string') {
@@ -5605,7 +4895,7 @@ var Viola = this;
  var res = '';
  var stringified;
  for (var i = 0, l = value.length; i < l; i++) {
- if (isDef$1(stringified = stringifyClass(value[i])) && stringified !== '') {
+ if (isDef(stringified = stringifyClass(value[i])) && stringified !== '') {
  if (res) { res += ' '; }
  res += stringified;
  }
@@ -5634,7 +4924,42 @@ var Viola = this;
  return
  }
  var cls = genClassForVnode(vnode);
- el.setAttr({'class': cls});
+ var oldCls = genClassForVnode(oldVnode);
+ if (cls == oldCls) { return }
+ var classList = cls.split(' ');
+ var classStyle = getStyle(classList, vnode);
+ el.setStyle(classStyle);
+ el.setAttrs({ 'class': cls });
+ }
+ function getStyle (classList, vnode) {
+ var res = {},
+ stylesheet = vnode.context.$options._stylesheet;
+ classList.reduce(function (res, className) {
+                  var styleDescriptor = stylesheet[className];
+                  if (styleDescriptor) {
+                  extend(res, styleDescriptor.style);
+                  if (styleDescriptor.attrs) {
+                  var attrStyle = styleDescriptor.attrs,
+                  vnodeAttr = vnode.data.attrs;
+                  if (isEmptyObj$1(vnodeAttr)) { return }
+                  for (var k in attrStyle) {
+                  var vnodeAttrVal = vnodeAttr[k];
+                  if (isDef(vnodeAttrVal)) {
+                  var attrStyleVal = attrStyle[k];
+                  var attrStyleObj = vnodeAttrVal === '' ? attrStyleVal : attrStyleVal[vnodeAttrVal];
+                  extend(res, attrStyleObj);
+                  }
+                  }
+                  }
+                  }
+                  }, res);
+ return res
+ }
+ function isEmptyObj$1 (obj) {
+ for (var key in obj) {
+ return false
+ }
+ return true
  }
  var klass = {
  create: updateClass,
@@ -5684,7 +5009,7 @@ var Viola = this;
  }
  var elm = vnode.elm;
  elm.setStyle(vnode.data.staticStyle);
- updateStyle(oldVnode, vnode);
+ return updateStyle(oldVnode, vnode)
  }
  function updateStyle (oldVnode, vnode) {
  if (!oldVnode.data.style && !vnode.data.style) {
@@ -5693,15 +5018,16 @@ var Viola = this;
  var elm = vnode.elm;
  var oldStyle = oldVnode.data.style || {};
  var style = vnode.data.style || {};
- var needClone = style.__ob__;
  if (Array.isArray(style)) {
  style = vnode.data.style = toObject$1(style);
  }
- if (needClone) {
+ if (style.__ob__) {
  style = vnode.data.style = extend({}, style);
  }
- var mergedStyle = Object.assign({}, oldStyle, style);
- elm.setStyle(mergedStyle);
+ var mutations = diffObject(oldStyle, style);
+ if (!isEmptyObj(mutations)) {
+ elm.setStyle(mutations);
+ }
  }
  function toObject$1 (arr) {
  var res = {};
@@ -5869,21 +5195,7 @@ var Viola = this;
  if (!children.length) {
  return
  }
- if (children.length > 1) {
- warn(
-      '<transition> can only be used on a single element. Use ' +
-      '<transition-group> for lists.',
-      this.$parent
-      );
- }
  var mode = this.mode;
- if (mode && mode !== 'in-out' && mode !== 'out-in'
-     ) {
- warn(
-      'invalid <transition> mode: ' + mode,
-      this.$parent
-      );
- }
  var rawChild = children[0];
  if (hasParentTransition(this.$vnode)) {
  return rawChild
@@ -5975,12 +5287,6 @@ var Viola = this;
  children.push(c);
  map[c.key] = c
  ;(c.data || (c.data = {})).transition = transitionData;
- } else {
- var opts = c.componentOptions;
- var name = opts
- ? (opts.Ctor.options.name || opts.tag)
- : c.tag;
- warn(("<transition-group> children must be keyed: <" + name + ">"));
  }
  }
  }
@@ -6056,13 +5362,13 @@ var Viola = this;
  function isUnknownElement$1 (tag) {
  return false
  }
- function query$1 (el, document) {
+ function query$1 (el) {
  var p = {
  hasAttribute: function hasAttribute() { return false },
  removeAttribute: function removeAttribute() { return false }
  };
- Object.assign(doc.body, p);
- return doc.body
+ Object.assign(document.body, p);
+ return document.body
  }
  Vue.config.mustUseProp = mustUseProp$1;
  Vue.config.isReservedTag = isReservedTag$1;
@@ -6081,10 +5387,23 @@ var Viola = this;
                        hydrating
                        )
  };
+ exports.Vue = Vue;
+ }
+ 
+ function intoCTX(ctx) {
+ var taker = {};
+ VueScopeUp(taker, ctx.document);
+ return taker.Vue
+ }
+ var framework = {
+ intoCTX: intoCTX
+ };
  
  function createInstanceCtx(id, config, data) {
  var viola = new ViolaInstance(id, config, data);
- var ctx = { viola: viola, document: viola.document, doc: viola.document, Vue: Vue };
+ var ctx = { viola: viola, document: viola.document, doc: viola.document};
+ var Vue = framework.intoCTX(ctx);
+ ctx.Vue = Vue;
  Object.freeze(ctx);
  return ctx
  }
@@ -6118,3 +5437,4 @@ var Viola = this;
  init();
  
  }());
+
