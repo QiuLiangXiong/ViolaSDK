@@ -70,9 +70,10 @@ var div = document.createElement('text', {
 //                                 borderRadius:'1000dp',
 //                                 padding:'40dp',
                                  animated: true,
-                                 lines:3,
+                                 lines:2,
 //                                 lineHeight:'20dp',
                                  lineSpacing:'10dp',
+                                 headIndent:'20dp',
 
 
 //                                 lineHeight:'30dp',
@@ -108,9 +109,9 @@ div.on('click', function (e) {
 
        var value = [
                     '我们都是好',
-                    '长一点长一',
+                    '长一点长一长一点长长一点长长一点长长一点长',
                     '短一点',
-                    '不短了不短了不短了',
+                    '不短了不短了不短了长一点长长一点长长一点长不短了长一点不短了长一点不短了长一点不短了长一点',
                     ]
 //        this.setAttr('value', value[parseInt(++index%3)])
        var values = [{text:value[parseInt(++index%4)],color:'blue'},{text:value[parseInt(++index%4)], color:'yellow',fontSize:'20dp',textDecoration:'underline',fontWeight:'bold',letterSpacing:'5dp',},{text:value[parseInt(++index%4)],color:'black', textDecoration:'line-through'}];
