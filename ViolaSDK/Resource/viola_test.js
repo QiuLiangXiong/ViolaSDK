@@ -18,9 +18,10 @@ var textContainer = document.createElement('div', {
 })
 
 var div = document.createElement('text', {
+                                 events:['click'],
                                  attr: {
                                  id: 'div1',
-                                 value:'我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子',
+                                 value:'ag我d2们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子',
                                  },
                                  style: {
 //                                    flexDirection: 'row',
@@ -34,11 +35,14 @@ var div = document.createElement('text', {
 //                                 borderRadius:'1000dp',
 //                                 padding:'40dp',
                                  animated: true,
+//                                 lineHeight:'30dp',
+//                                 lineSpacing:'-20dp',
                                     }
                                  })
 
 // window.div = div.ref
 var div2 = document.createElement('div', {
+                                  
                                  attr: {
                                  id: 'div1',
                                  value:'我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子',
@@ -60,18 +64,24 @@ var div2 = document.createElement('div', {
 
 var index = 0;
 div.on('click', function (e) {
+       console.log(e);
+
        var value = [
-                    '我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子',
-                    '短一点短一点短一点短一点短一点短一点短一点一点短一点短一一点短一点短一短一点短一点短一点短一点短一点短一点短一点一点短一点短一一点短一点短一点短一点短一点短一点短一点短一点一点短一点短一一点短一点短一点短一点短一点短一点短一点短一点一点短一点短一一点短一点短一点短一点短一点短一点短一点短一点一点短一点短一一点短一点短一点短一点短一点短一点短一点短一点一点短一点短一一点短一点短一点短一点短一点短一点短一点短一点一点短一点短一一点',
-                    '短一点'
+                    '我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们',
+                    '长一点长一点长一点长一点长一点长一点长一点长一点长一点',
+                    '短一点',
+                    '不短了不短了不短了',
                     ]
-        this.setAttr('value', value[parseInt(++index%3)])
+//        this.setAttr('value', value[parseInt(++index%3)])
+       var values = [{text:value[parseInt(++index%4)],color:'blue'},{text:value[parseInt(++index%4)], color:'yellow',fontSize:'20dp',textDecoration:'underline',fontWeight:'bold',letterSpacing:'5dp',},{text:value[parseInt(++index%4)],color:'black', textDecoration:'line-through'}];
+       
+       this.setAttr('values', values)
        this.setStyle({
 
                      color:'white',
-                     fontWeight:'bold',
+//                     fontWeight:'bold',
 //                     maxWidth:'400dp',
-                     textDecoration:'line-through',
+//                     textDecoration:'line-through',
 
                      
                      
@@ -79,7 +89,7 @@ div.on('click', function (e) {
 })
 
 textContainer.appendChild(div)
-textContainer.appendChild(div2)
+//textContainer.appendChild(div2)
 
 container.appendChild(textContainer)
 

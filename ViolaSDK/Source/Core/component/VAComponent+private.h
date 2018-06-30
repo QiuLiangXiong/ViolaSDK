@@ -102,6 +102,15 @@
 - (void)_updateEventsOnComponentThread:(NSArray *)events;
 - (void)_updateEventsOnMainThread:(NSArray *)events;
 - (void)_syncTouchEventsToView;
+- (void)onSingleClickWithSender:(id)sender;
+- (void)_fireEventWithName:(NSString *)name extralParam:(NSDictionary *)param;
+- (void)onDoubleClickWithSender:(id)sender;
+- (void)onLongPressWithSender:(UILongPressGestureRecognizer *)sender;
+- (void)onSwipeTopWithSender:(id)sender;
+- (void)onSwipeBottomWithSender:(id)sender;
+- (void)onSwipeLeftWithSender:(id)sender;
+- (void)onSwipeRightWithSender:(id)sender;
+- (void)onPanWithSender:(UIPanGestureRecognizer *)panGR;
 
 //update
 - (void)_updateAttributesOnComponentThread:(NSDictionary *)attributes;

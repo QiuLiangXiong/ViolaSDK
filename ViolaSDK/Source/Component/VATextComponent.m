@@ -27,9 +27,11 @@ prop = defaultValue;\
 @end
 
 @implementation VATextComponent{
-    RIJAsyncLabel * _label;
+
+    //attr
     NSString *_text;
-    NSMutableAttributedString * _textAttributedString;
+    NSArray *_texts;//多片段文本 用来显示富文本
+    
     
     //css text style
     UIColor *_color;
@@ -45,7 +47,10 @@ prop = defaultValue;\
     CGFloat _lineHeight;
     CGFloat _letterSpacing;
     
-    CGFloat _lineHeightOffset;//修正RIJAsyncLabel
+
+    RIJAsyncLabel * _label;
+    NSMutableAttributedString * _textAttributedString;
+    CGFloat _lineHeightOffset;//修正RIJAsyncLabel 行高首行问题
     
 }
 
@@ -138,6 +143,26 @@ prop = defaultValue;\
     }
 }
 
+//单击回调
+- (void)onSingleClickWithSender:(id)sender{
+    if ([sender isKindOfClass:[UITapGestureRecognizer class]]) {
+         UITapGestureRecognizer * tagGR = (UITapGestureRecognizer *)sender;
+        CGPoint location = [tagGR locationInView:_label];
+        if (CGRectContainsPoint(_label.bounds, location)) {
+            RIJTextRender * textRender = _textAttributedString.rij_textRender;
+            NSUInteger index = [textRender.layoutManager glyphIndexForPoint:location inTextContainer:textRender.textContainer];
+            NSDictionary * textInfo = [self _getTextInfoWithCharIndex:index];
+            if (textInfo) {
+               [self _fireEventWithName:@"click" extralParam:@{@"textInfo":textInfo}];
+                return;
+            }
+        }
+    }
+    return [super onSingleClickWithSender:sender];
+
+    
+}
+
 #pragma mark - private
 
 //填充styles
@@ -161,7 +186,7 @@ prop = defaultValue;\
     VA_FILL_TEXT_STYLE(textOverflow, _lineBreakMode, convertToTextOverflow,NSLineBreakByTruncatingTail);
     VA_FILL_TEXT_STYLE(lineHeight, _lineHeight, convertToFloatWithPixel,0);
     VA_FILL_TEXT_STYLE(letterSpacing, _letterSpacing, convertToFloatWithPixel,0);
-    VA_FILL_TEXT_STYLE(lineSpacing, _lineSpacing, convertToFloatWithPixel,5);
+    VA_FILL_TEXT_STYLE(lineSpacing, _lineSpacing, convertToFloatWithPixel,MAXFLOAT);
     
     return needUpdate;
 }
@@ -170,62 +195,99 @@ prop = defaultValue;\
 - (BOOL)_fillTextComponentAttr:(NSDictionary *)attrs{
     if(![attrs isKindOfClass:[NSDictionary class]] || attrs.count == 0) return false;
     BOOL needUpdate = NO;
-    NSString * value = attrs[@"value"];
+    id value = attrs[@"value"];
     if(value){
         NSString * text = [VAConvertUtl convertToString:value];
         _text = text;
         needUpdate = true;
         
     }
+    value = attrs[@"values"];
+    if(value){
+       _texts = [value isKindOfClass:[NSArray class]] ? value : nil;
+       needUpdate = true;
+    }
     return needUpdate;
 }
 
 
-
+#define VA_TEXT_STYLE_VALUE(key0,key1) \
+(textInfo[@#key0] ? : textInfo[@#key1])
 
 //创建富文本
 - (nullable  NSMutableAttributedString *)_buildNewAttributedString{
-    //逻辑几乎都在这里    //头大
     
-    if(_text.length <= 0) return nil;
-    
-    
-    NSRange range = NSMakeRange(0, _text.length);
+    if(_text.length == 0 && _texts.count == 0) return nil;
+    NSMutableAttributedString * res = nil;
+    NSArray * texts = [_texts isKindOfClass:[NSArray class]] ? [_texts copy] : nil;
+    if(texts.count){
+        BOOL isFirstLineHeight = true;
+        _lineHeightOffset = 0;
+        res = [[NSMutableAttributedString alloc] init];
+        for (NSDictionary * textInfo in texts) {
+            if(![textInfo isKindOfClass:[NSDictionary class]]) continue;
+            NSString * text = [VAConvertUtl convertToString:textInfo[@"text"]];
+            if(text.length == 0) continue;
+            CGFloat fontSize = [VAConvertUtl convertToFloatWithPixel:VA_TEXT_STYLE_VALUE(fontSize, font-size)] ? : _fontSize;
+            CGFloat fontWeight = [VAConvertUtl converToTextWeight:VA_TEXT_STYLE_VALUE(textWeight, text-weight)] ? : _fontWeight;
+            NSString * fontFamily = [VAConvertUtl convertToString:VA_TEXT_STYLE_VALUE(fontFamily, font-family)] ? : _fontFamily;
+            VATextStyle fontStyle = [VAConvertUtl convertToTextStyle:VA_TEXT_STYLE_VALUE(fontStyle, font-style)] ? : _fontStyle;
+            UIColor * color = [VAConvertUtl convertToColor:textInfo[@"color"]] ? : _color;
+            CGFloat letterSpacing = [VAConvertUtl convertToFloatWithPixel:VA_TEXT_STYLE_VALUE(letterSpacing, letter-spacing)] ? : _letterSpacing;
+            VATextDecoration textDecoration = [VAConvertUtl convertToTextDecoration:VA_TEXT_STYLE_VALUE(textDecoration, text-decoration)] ? : _textDecoration;
+            NSTextAlignment textAlign = [VAConvertUtl convertToTextAlignment:VA_TEXT_STYLE_VALUE(textAlign, text-align)] ? : _textAlign;
+            CGFloat lineHeight = [VAConvertUtl convertToFloatWithPixel:VA_TEXT_STYLE_VALUE(lineHeight, line-height)] ? : _lineHeight;
+            CGFloat lineSpacing = [VAConvertUtl convertToFloatWithPixel:VA_TEXT_STYLE_VALUE(lineSpacing, line-spacing)] ? : _lineSpacing;
+            
+            if(lineHeight && lineHeight > fontSize && isFirstLineHeight){
+                isFirstLineHeight = false;
+                 _lineHeightOffset = -(lineHeight - fontSize) / 2;
+            }
+            NSMutableAttributedString * textAtt = [self _getAttributedStringWith:text fontSize:fontSize fontWeight:fontWeight fontFamily:fontFamily fontStyle:fontStyle color:color letterSpacing:letterSpacing textDecoration:textDecoration textAlign:textAlign lineHeight:lineHeight lineSpacing:lineSpacing != MAXFLOAT ? lineSpacing : 5];
+            if(textAtt){
+               [res appendAttributedString:textAtt];
+            }
 
-    UIFont * font = [self _getFontWithSize:_fontSize weight:_fontWeight fontFamily:_fontFamily fontStyle:_fontStyle];
-    NSMutableAttributedString * attributedString = [[NSMutableAttributedString alloc] initWithString:_text attributes:@{NSFontAttributeName:font?:[NSNull null],NSForegroundColorAttributeName:_color?:[UIColor blackColor]}];
+        }
+    }else {
+        res = [self _getAttributedStringWith:_text fontSize:_fontSize fontWeight:_fontWeight fontFamily:_fontFamily fontStyle:_fontStyle color:_color letterSpacing:_letterSpacing textDecoration:_textDecoration textAlign:_textAlign lineHeight:_lineHeight lineSpacing:_lineSpacing != MAXFLOAT ? _lineSpacing : 5];
+            _lineHeightOffset = 0;
+            if(_lineHeight && _lineHeight > _fontSize){
+                 _lineHeightOffset = -(_lineHeight - _fontSize) / 2;//fix
+            }
+    }
+    return res;
+}
 
+- (nullable NSMutableAttributedString *)_getAttributedStringWith:(NSString *)text fontSize:(CGFloat)fontSize fontWeight:(CGFloat)fontWeight fontFamily:(NSString *)fontFamily fontStyle:(VATextStyle)fontStyle color:(UIColor *)color letterSpacing:(CGFloat)letterSpacing textDecoration:(VATextDecoration)textDecoration textAlign:(NSTextAlignment)textAliment lineHeight:(CGFloat)lineHeight lineSpacing:(CGFloat)lineSpacing{
+    if(text.length <= 0) return nil;
     
-    if(_letterSpacing){
-        [attributedString addAttribute:NSKernAttributeName value:@(_letterSpacing) range:range];
+    NSRange range = NSMakeRange(0, text.length);
+    
+    UIFont * font = [self _getFontWithSize:fontSize weight:fontWeight fontFamily:fontFamily fontStyle:fontStyle];
+    NSMutableAttributedString * attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName:font?:[NSNull null],NSForegroundColorAttributeName:color?:[UIColor blackColor]}];
+    
+    
+    if(letterSpacing){
+        [attributedString addAttribute:NSKernAttributeName value:@(letterSpacing) range:range];
     }
     
-    if(_textDecoration == VATextDecorationUnderline){
-        [attributedString addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlinePatternSolid | NSUnderlineStyleSingle) range:range];
-    } else if(_textDecoration == VATextDecorationLineThrough){
-        [attributedString addAttribute:NSStrikethroughStyleAttributeName value:@(NSUnderlinePatternSolid | NSUnderlineStyleSingle) range:range];
+    if(textDecoration == VATextDecorationUnderline){
+        [attributedString addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:range];
+    } else if(textDecoration == VATextDecorationLineThrough){
+        [attributedString addAttribute:NSStrikethroughStyleAttributeName value:@(NSUnderlineStyleSingle) range:range];
     }
-    
-    
     NSMutableParagraphStyle *style  = [[NSMutableParagraphStyle alloc] init];
-    style.alignment = _textAlign;// type NSTextAlignment
-    
-    _lineHeightOffset = 0;
+    style.alignment = textAliment;
     if(_lineHeight){
         style.minimumLineHeight = _lineHeight;
         style.maximumLineHeight = _lineHeight;
-        if(_lineHeight > _fontSize){
-            _lineHeightOffset = -(_lineHeight - _fontSize) / 2;//fix
-        }
-
     }
-    style.lineSpacing = _lineSpacing;
-
-
-    [attributedString addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0, attributedString.string.length)];
+    style.lineSpacing = lineSpacing;
+    [attributedString addAttribute:NSParagraphStyleAttributeName value:style range:range];
     return attributedString;
-
 }
+
 //计算内容大小
 - (CGSize)_calculateComponentWithSize:(CGSize)constrainedSize{
     kBlockWeakSelf;
@@ -324,6 +386,23 @@ prop = defaultValue;\
         }
         return [UIFont systemFontOfSize:size];
     }
+}
+
+- (NSDictionary *)_getTextInfoWithCharIndex:(NSUInteger)index{
+    NSArray * texts = [_texts isKindOfClass:[NSArray class]] ? [_texts copy] : nil;
+    if(texts.count){
+        NSUInteger count = 0;
+        for (NSDictionary * textInfo in texts) {
+            if(![textInfo isKindOfClass:[NSDictionary class]]) continue;
+            NSString * text = [VAConvertUtl convertToString:textInfo[@"text"]];
+            if(text.length == 0) continue;
+            count += text.length;
+            if(index < count){
+                return textInfo;
+            }
+        }
+    }
+    return nil;
 }
 
 @end

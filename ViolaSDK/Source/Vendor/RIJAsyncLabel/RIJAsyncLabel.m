@@ -347,6 +347,8 @@
     return [self boundingRectForGlyphRange:[self visibleGlyphRange]];
 }
 
+
+
 - (CGSize)textSizeWithRenderWidth:(CGFloat)renderWidth{
     if (!_textStorageOnRender)  return CGSizeZero;
     CGSize size = _textContainer.size;

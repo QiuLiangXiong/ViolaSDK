@@ -246,7 +246,7 @@ if(styles[@#key]){\
 - (void)_componentFrameDidChange{
     self.view.frame = _componentFrame;
     //圆角
-    [self _syncBorderRadiusAndDraw];
+   [self _syncBorderRadiusAndDraw];
     //
 }
 
@@ -326,37 +326,48 @@ if(styles[@#key]){\
     _borderRightLayer.hidden = true;
     CGSize size = _view.bounds.size;
     if([self __isSameBorder]){
-        if(!_borderLayer){
-            _borderLayer = [CAShapeLayer layer];
-            [_view.layer addSublayer:_borderLayer];
-        }
-        _borderLayer.frame = _view.bounds;
-        _borderLayer.hidden = false;
-        UIBezierPath * path = [UIBezierPath bezierPath];
-        CGFloat radius = topLeft;
-        [path addArcWithCenter:CGPointMake(radius, radius) radius:radius startAngle:M_PI endAngle:M_PI * (3/2.0f) clockwise:true];
-        radius = topRight;
-        [path addLineToPoint:CGPointMake(size.width - radius, 0)];
-        [path addArcWithCenter:CGPointMake(size.width - radius, radius) radius:radius startAngle:M_PI * (3/2.0f) endAngle:2 * M_PI clockwise:true];
-        radius = bottomRight;
-        [path addLineToPoint:CGPointMake(size.width, size.height - radius)];
-        [path addArcWithCenter:CGPointMake(size.width - radius, size.height - radius) radius:radius startAngle:2 * M_PI endAngle:M_PI_2 clockwise:YES];
-        radius = bottomLeft;
-        [path addLineToPoint:CGPointMake(radius, size.height)];
-        [path addArcWithCenter:CGPointMake(radius, size.height - radius) radius:radius startAngle:M_PI_2 endAngle:M_PI clockwise:YES];
-        [path closePath];
-        _borderLayer.fillColor = [UIColor clearColor].CGColor;
-        _borderLayer.strokeColor = _borderTopColor.CGColor;
-        _borderLayer.lineWidth = 2 * _borderTopWidth;
         
-        if(_borderTopStyle == VABorderStyleDashed){
-             _borderLayer.lineDashPattern = @[@(3 * _borderTopWidth), @(3 * _borderTopWidth)];//画虚线
-        }else if(_borderTopStyle == VABorderStyleDotted){
-             _borderLayer.lineDashPattern = @[@(_borderTopWidth), @(_borderTopWidth)];//画点
+        if(_borderTopLeftRadius == 0 && _borderTopRightRadius == 0 && _borderBottomLeftRadius == 0 && _borderBottomRightRadius == 0){
+            _view.layer.borderColor = _borderTopColor.CGColor;
+            _view.layer.borderWidth = _borderTopWidth;
         }else {
-            _borderLayer.lineDashPattern = nil;
+            _view.layer.borderColor = nil;
+            _view.layer.borderWidth = 0;
+                    if(!_borderLayer){
+                        _borderLayer = [CAShapeLayer layer];
+                        [_view.layer addSublayer:_borderLayer];
+                    }
+                    _borderLayer.frame = _view.bounds;
+                    _borderLayer.hidden = false;
+                    UIBezierPath * path = [UIBezierPath bezierPath];
+                    CGFloat radius = topLeft;
+                    [path addArcWithCenter:CGPointMake(radius, radius) radius:radius startAngle:M_PI endAngle:M_PI * (3/2.0f) clockwise:true];
+                    radius = topRight;
+                    [path addLineToPoint:CGPointMake(size.width - radius, 0)];
+                    [path addArcWithCenter:CGPointMake(size.width - radius, radius) radius:radius startAngle:M_PI * (3/2.0f) endAngle:2 * M_PI clockwise:true];
+                    radius = bottomRight;
+                    [path addLineToPoint:CGPointMake(size.width, size.height - radius)];
+                    [path addArcWithCenter:CGPointMake(size.width - radius, size.height - radius) radius:radius startAngle:2 * M_PI endAngle:M_PI_2 clockwise:YES];
+                    radius = bottomLeft;
+                    [path addLineToPoint:CGPointMake(radius, size.height)];
+                    [path addArcWithCenter:CGPointMake(radius, size.height - radius) radius:radius startAngle:M_PI_2 endAngle:M_PI clockwise:YES];
+                    [path closePath];
+                    _borderLayer.fillColor = [UIColor clearColor].CGColor;
+                    _borderLayer.strokeColor = _borderTopColor.CGColor;
+                    _borderLayer.lineWidth = 2 * _borderTopWidth;
+            
+                    if(_borderTopStyle == VABorderStyleDashed){
+                         _borderLayer.lineDashPattern = @[@(3 * _borderTopWidth), @(3 * _borderTopWidth)];//画虚线
+                    }else if(_borderTopStyle == VABorderStyleDotted){
+                         _borderLayer.lineDashPattern = @[@(_borderTopWidth), @(_borderTopWidth)];//画点
+                    }else {
+                        _borderLayer.lineDashPattern = nil;
+                    }
+                    _borderLayer.path = path.CGPath;
         }
-        _borderLayer.path = path.CGPath;
+        
+        
+
         
     }else {
 
