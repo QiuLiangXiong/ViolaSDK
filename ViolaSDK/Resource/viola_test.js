@@ -46,7 +46,7 @@ var textContainer = document.createElement('div', {
            backgroundColor:'green',
            margin:'20dp',
            borderWidth:'10dp',
-           padding:'15dp',
+           padding:'0dp',
            animated: true,
     }
 })
@@ -64,14 +64,17 @@ var div = document.createElement('text', {
                                      backgroundColor:'red',
 
 //                                 maxWidth:'200dp',
-                                 borderWidth:'10dp',
+//                                 borderWidth:'10dp',
 
                                  
 //                                 borderRadius:'1000dp',
 //                                 padding:'40dp',
                                  animated: true,
-                                 lines:0,
-                                 lineHeight:'40dp',
+                                 lines:3,
+                                 fontSize:'16dp',
+                                 lineBreakMargin:'70dp',
+                                 
+//                                 lineHeight:'40dp',
                                //  lineSpacing:'10dp',
 //                                 headIndent:'20dp',
 
@@ -82,21 +85,26 @@ var div = document.createElement('text', {
                                  })
 
 // window.div = div.ref
-var div2 = document.createElement('div', {
+var zhankaiText = document.createElement('text', {
                                   
                                  attr: {
-                                 id: 'div1',
-                                 value:'我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子',
+                                 id: 'div2',
+                                 value:'全文展开',
                                  },
                                  style: {
                                  //                                    flexDirection: 'row',
                                  //                                 flexWrap: 'wrap',
-                                 borderColor:'rgba(255,255,255,0.3)',
-                                 backgroundColor:'red',
 
-                                  marginLeft:'5dp',
-                                  marginRight:'20dp',
-                                 borderWidth:'30dp',
+
+                                  position:'absolute',
+                                  right:'10dp',
+                                  bottom:'10dp',
+                                  fontSize:'16dp',
+                                  color:'blue',
+
+
+
+
                                  //                                 borderRadius:'1000dp',
                                  //                                 padding:'40dp',
                                  animated: true,
@@ -109,13 +117,13 @@ div.on('click', function (e) {
 
 
        var value = [
-                    '我们都是好',
+                    '我们都是好孩子',
                     '长一点长一长一点长长一点长长一点长长一点长',
-                    '短一点',
+                    '短一点点点',
                     '不短了不短了不短了长一点长长一点长长一点长不短了长一点不短了长一点不短了长一点不短了长一点',
                     ]
 //        this.setAttr('value', value[parseInt(++index%3)])
-       var values = [ {text:value[parseInt(++index%4)],color:'blue'},{highlightBackgroundColor:'rgba(0,0,0,0.4)',highlightBackgroundInset:'{3dp,0dp,3dp,0dp}',highlightBackgroundRadius:'4dp', text:value[parseInt(++index%4)], color:'yellow',fontSize:'20dp',textDecoration:'underline',fontWeight:'bold',letterSpacing:'5dp',},{highlightBackgroundColor:'rgba(255,255,255,0.4)',highlightBackgroundInset:'{3dp,0dp,3dp,0dp}',highlightBackgroundRadius:'4dp',text:value[parseInt(++index%4)],color:'black', textDecoration:'line-through'}];
+       var values = [ {text:value[parseInt(++index%4)],color:'blue'},{highlightBackgroundColor:'rgba(0,0,0,0.4)',highlightBackgroundInset:'{3dp,0dp,3dp,0dp}',highlightBackgroundRadius:'4dp', text:value[parseInt(++index%4)], color:'yellow',fontSize:'16dp',textDecoration:'underline',},{highlightBackgroundColor:'rgba(255,255,255,0.4)',highlightBackgroundInset:'{3dp,0dp,3dp,0dp}',highlightBackgroundRadius:'4dp',text:value[parseInt(++index%4)],color:'black', textDecoration:'line-through'}];
        
        this.setAttr('values', values)
        this.setStyle({
@@ -130,8 +138,22 @@ div.on('click', function (e) {
        })
 })
 
+div.on('lineBreakChange',function(e){
+        console.log('lineBreakChang___'+JSON.stringify(e));
+       console.log('_____good___\n tom is good boy')
+       if(e.isLineBreak){
+       zhankaiText.setStyle({'visibility':'visible'});
+
+       }else {
+       zhankaiText.setStyle({'visibility':'hidden'});
+       }
+
+       
+       }
+       );
+
 textContainer.appendChild(div)
-//textContainer.appendChild(div2)
+textContainer.appendChild(zhankaiText)
 
 container.appendChild(textContainer)
 

@@ -33,7 +33,7 @@ extern NSString *const RIJHighlightAttributeKey;
  * note：任意线程都可以调用该方法，一般用于 子线程 执行
  */
 + (CGSize)sizeThatFits:(CGSize)size attributedString:(NSAttributedString *)attString numberOfLines:(NSUInteger)lines lineBreakMode:(NSLineBreakMode)mode;
-
++ (CGSize)sizeThatFits:(CGSize)size attributedString:(NSAttributedString *)attString numberOfLines:(NSUInteger)lines lineBreakMode:(NSLineBreakMode)mode lineBreakMarin:(CGFloat)marin;
 
 /**
  自动布局中的自动换行最大宽度
@@ -90,6 +90,9 @@ extern NSString *const RIJHighlightAttributeKey;
 @property (nonatomic, assign) NSLineBreakMode lineBreakMode;
 @property (nonatomic, assign) NSUInteger maximumNumberOfLines;
 @property (nonatomic, assign, readonly) CGRect textBound;
+@property (nonatomic, assign) BOOL isBreakLine;//是否被截断
+
+@property (nonatomic, assign) CGFloat lineBreakMargin;//截断边距
 // initialize
 - (instancetype)initWithAttributedText:(NSAttributedString *)attributedText;
 - (instancetype)initWithTextStorage:(NSTextStorage *)textStorage;

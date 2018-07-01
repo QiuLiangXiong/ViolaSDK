@@ -12,6 +12,7 @@
 #import "VADefine.h"
 #import "ViolaInstance.h"
 #import "VAComponent+private.h"
+#import "VABridgeManager.h"
 #define VA_FILL_TEXT_STYLE(key,prop,method,defaultValue) \
 value = styles[@#key];\
 if(value){\
@@ -48,7 +49,7 @@ prop = defaultValue;\
     CGFloat _letterSpacing;
     
     CGFloat _headIndent;
-    CGFloat _trailIndent;
+    CGFloat _lineBreakMargin;
     
     UIColor * _highlightBackgroundColor;
     CGFloat _highlightBackgroundRadius;
@@ -197,7 +198,7 @@ prop = defaultValue;\
     VA_FILL_TEXT_STYLE(letterSpacing, _letterSpacing, convertToFloatWithPixel,0);
     VA_FILL_TEXT_STYLE(lineSpacing, _lineSpacing, convertToFloatWithPixel,MAXFLOAT);
     VA_FILL_TEXT_STYLE(headIndent, _headIndent, convertToFloatWithPixel,0);
-    VA_FILL_TEXT_STYLE(trailIndent, _trailIndent, convertToFloatWithPixel,0);
+    VA_FILL_TEXT_STYLE(lineBreakMargin,_lineBreakMargin, convertToFloatWithPixel,0);
     VA_FILL_TEXT_STYLE(highlightBackgroundRadius, _highlightBackgroundRadius, convertToFloatWithPixel,2);
     VA_FILL_TEXT_STYLE(highlightBackgroundColor, _highlightBackgroundColor, convertToColor,nil);
     VA_FILL_TEXT_STYLE(highlightBackgroudInset, _highlightBackgroundInset, converToEdgeInsets,UIEdgeInsetsZero);
@@ -259,7 +260,7 @@ prop = defaultValue;\
             CGFloat lineHeight = [VAConvertUtl convertToFloatWithPixel:VA_TEXT_STYLE_VALUE(lineHeight, line-height)] ? : _lineHeight;
             CGFloat lineSpacing = [VAConvertUtl convertToFloatWithPixel:VA_TEXT_STYLE_VALUE(lineSpacing, line-spacing)] ? : _lineSpacing;
             CGFloat headIndent = [VAConvertUtl convertToFloatWithPixel:VA_TEXT_STYLE_VALUE(headIndent, head-indent)] ? : _headIndent;
-            CGFloat trailIndent = [VAConvertUtl convertToFloatWithPixel:VA_TEXT_STYLE_VALUE(trailIndent, trail-indent)] ? : _trailIndent;
+
             UIColor * hilightBGColor = [VAConvertUtl convertToColor:VA_TEXT_STYLE_VALUE(highlightBackgroundColor, highlight-background-color)] ? : _highlightBackgroundColor;
             CGFloat highlightBGRadius = [VAConvertUtl convertToFloatWithPixel:VA_TEXT_STYLE_VALUE(highlightBackgroundRadius, highlight-background-radius)] ? : _highlightBackgroundRadius;
             id value = VA_TEXT_STYLE_VALUE(highlightBackgroundInset, highlight-background-inset);
@@ -277,14 +278,14 @@ prop = defaultValue;\
                 isFirstLineHeight = false;
                  _lineHeightOffset = -(lineHeight - fontSize) / 2;
             }
-            NSMutableAttributedString * textAtt = [self _getAttributedStringWith:text fontSize:fontSize fontWeight:fontWeight fontFamily:fontFamily fontStyle:fontStyle color:color letterSpacing:letterSpacing textDecoration:textDecoration textAlign:textAlign lineHeight:lineHeight lineSpacing:lineSpacing != MAXFLOAT ? lineSpacing : fontSize * 0.3 headIndent:headIndent trailIndent:trailIndent highlightBGColor:hilightBGColor highlightBGRadius:highlightBGRadius highlightBGInset:highlightBGInset];
+            NSMutableAttributedString * textAtt = [self _getAttributedStringWith:text fontSize:fontSize fontWeight:fontWeight fontFamily:fontFamily fontStyle:fontStyle color:color letterSpacing:letterSpacing textDecoration:textDecoration textAlign:textAlign lineHeight:lineHeight lineSpacing:lineSpacing != MAXFLOAT ? lineSpacing : fontSize * 0.3 headIndent:headIndent  highlightBGColor:hilightBGColor highlightBGRadius:highlightBGRadius highlightBGInset:highlightBGInset];
             if(textAtt){
                [res appendAttributedString:textAtt];
             }
 
         }
     }else {
-        res = [self _getAttributedStringWith:_text fontSize:_fontSize fontWeight:_fontWeight fontFamily:_fontFamily fontStyle:_fontStyle color:_color letterSpacing:_letterSpacing textDecoration:_textDecoration textAlign:_textAlign lineHeight:_lineHeight lineSpacing:_lineSpacing != MAXFLOAT ? _lineSpacing : _fontSize * 0.3 headIndent:_headIndent trailIndent:_trailIndent highlightBGColor:_highlightBackgroundColor highlightBGRadius:_highlightBackgroundRadius highlightBGInset:_highlightBackgroundInset];
+        res = [self _getAttributedStringWith:_text fontSize:_fontSize fontWeight:_fontWeight fontFamily:_fontFamily fontStyle:_fontStyle color:_color letterSpacing:_letterSpacing textDecoration:_textDecoration textAlign:_textAlign lineHeight:_lineHeight lineSpacing:_lineSpacing != MAXFLOAT ? _lineSpacing : _fontSize * 0.3 headIndent:_headIndent  highlightBGColor:_highlightBackgroundColor highlightBGRadius:_highlightBackgroundRadius highlightBGInset:_highlightBackgroundInset];
             _lineHeightOffset = 0;
             if(_lineHeight && _lineHeight > _fontSize){
                  _lineHeightOffset = -(_lineHeight - _fontSize) / 2;//fix
@@ -293,7 +294,7 @@ prop = defaultValue;\
     return res;
 }
 
-- (nullable NSMutableAttributedString *)_getAttributedStringWith:(NSString *)text fontSize:(CGFloat)fontSize fontWeight:(CGFloat)fontWeight fontFamily:(NSString *)fontFamily fontStyle:(VATextStyle)fontStyle color:(UIColor *)color letterSpacing:(CGFloat)letterSpacing textDecoration:(VATextDecoration)textDecoration textAlign:(NSTextAlignment)textAliment lineHeight:(CGFloat)lineHeight lineSpacing:(CGFloat)lineSpacing headIndent:(CGFloat)headIndent trailIndent:(CGFloat)trailIndent highlightBGColor:(UIColor *)highightBGColor highlightBGRadius:(CGFloat)highlightBGRadius highlightBGInset:(UIEdgeInsets)highlightBGInset{
+- (nullable NSMutableAttributedString *)_getAttributedStringWith:(NSString *)text fontSize:(CGFloat)fontSize fontWeight:(CGFloat)fontWeight fontFamily:(NSString *)fontFamily fontStyle:(VATextStyle)fontStyle color:(UIColor *)color letterSpacing:(CGFloat)letterSpacing textDecoration:(VATextDecoration)textDecoration textAlign:(NSTextAlignment)textAliment lineHeight:(CGFloat)lineHeight lineSpacing:(CGFloat)lineSpacing headIndent:(CGFloat)headIndent highlightBGColor:(UIColor *)highightBGColor highlightBGRadius:(CGFloat)highlightBGRadius highlightBGInset:(UIEdgeInsets)highlightBGInset{
     if(text.length <= 0) return nil;
     
     NSRange range = NSMakeRange(0, text.length);
@@ -385,7 +386,13 @@ prop = defaultValue;\
     if(_textAttributedString.string.length == 0){
         res = CGSizeZero;
     }else {
-       res = [RIJAsyncLabel sizeThatFits:CGSizeMake(width, height) attributedString:_textAttributedString numberOfLines:_maxLines lineBreakMode:_lineBreakMode];
+       res = [RIJAsyncLabel sizeThatFits:CGSizeMake(width, height) attributedString:_textAttributedString numberOfLines:_maxLines lineBreakMode:_lineBreakMode lineBreakMarin:_lineBreakMargin];
+        if (_lineBreakMargin > 0) {
+            //状态
+            BOOL isLineBreak = _textAttributedString.rij_textRender.isBreakLine;
+            [[VABridgeManager shareManager] fireEventWithIntanceID:_vaInstance.instanceId ref:_ref type:@"lineBreakChange" params:@{@"isLineBreak":@((int)isLineBreak)} domChanges:nil];
+        }
+        
     }
     
     if (!isnan(_cssNode->style.minDimensions[CSS_WIDTH])) {

@@ -192,11 +192,23 @@ NSString *const RIJHighlightAttributeKey = @"RIJHighlightAttributeKey";
 #pragma mark - public
 
 + (CGSize)sizeThatFits:(CGSize)size attributedString:(NSAttributedString *)attString numberOfLines:(NSUInteger)lines lineBreakMode:(NSLineBreakMode)mode{
+    return [self sizeThatFits:size attributedString:attString numberOfLines:lines lineBreakMode:mode lineBreakMarin:0];
+}
+
++ (CGSize)sizeThatFits:(CGSize)size attributedString:(NSAttributedString *)attString numberOfLines:(NSUInteger)lines lineBreakMode:(NSLineBreakMode)mode lineBreakMarin:(CGFloat)marin{
     NSTextStorage *textStorage = [[NSTextStorage alloc] initWithAttributedString:attString];
     RIJTextRender *textRender = [[RIJTextRender alloc] initWithTextStorage:textStorage];
+    textRender.lineBreakMargin = marin;
     textRender.maximumNumberOfLines = lines;
     textRender.lineBreakMode = mode;
     CGSize fitSize = [textRender textSizeWithRenderWidth:size.width];
+    if (marin > 0 && lines) {
+        textRender.maximumNumberOfLines = 0;
+        CGSize newSize = [textRender textSizeWithRenderWidth:size.width];
+        textRender.isBreakLine = !CGSizeEqualToSize(fitSize, newSize);
+        NSLog(@"____FDSFDF__%d",(int)textRender.isBreakLine);
+        textRender.maximumNumberOfLines = lines;//复原
+    }
     attString.rij_textRender = textRender;
     attString.rij_size = fitSize;
     return fitSize;
@@ -210,6 +222,8 @@ NSString *const RIJHighlightAttributeKey = @"RIJHighlightAttributeKey";
     
     NSInteger numberOfLines = _numberOfLines;
     NSLineBreakMode lineBreakMode = _lineBreakMode;
+    CGFloat lineBreakMargin = _textRender.lineBreakMargin;
+    BOOL isLineBreak = _textRender.isBreakLine;
     RIJTextAsyncLayerDisplayTask * task = [RIJTextAsyncLayerDisplayTask new];
     
     CGSize attributedTextSize  = _attributedText.rij_size;
@@ -227,11 +241,20 @@ NSString *const RIJHighlightAttributeKey = @"RIJHighlightAttributeKey";
         textRender.maximumNumberOfLines = numberOfLines;
         textRender.lineBreakMode = lineBreakMode;
         
+        
         if (CGSizeEqualToSize(attributedTextSize, size) && numberOfLines ) {
             size = CGSizeMake(size.width, size.height + 50);//fix
+
+            if(lineBreakMargin > 0 && isLineBreak){
+                
+                UIBezierPath * bezierPath = [UIBezierPath bezierPathWithRect:CGRectMake(size.width - lineBreakMargin, size.height - 60, lineBreakMargin, 10)];
+                textRender.textContainer.exclusionPaths = @[bezierPath];
+            }
         }
-        
         textRender.size = size;
+        
+        
+        
         if (isCancelled()) return ;
         [textRender drawTextAtPoint:self.drawAtPoint isCanceled:isCancelled];
         
@@ -437,7 +460,11 @@ NSString *const RIJHighlightAttributeKey = @"RIJHighlightAttributeKey";
     _textContainer.size = CGSizeMake(renderWidth, MAXFLOAT);
     CGSize textSize = [self boundingRectForGlyphRange:[self visibleGlyphRange]].size;
     _textContainer.size = size;
-    return CGSizeMake(ceil(textSize.width), ceil(textSize.height));
+    CGSize res = CGSizeMake(ceil(textSize.width), ceil(textSize.height));
+    return  res;
+    
+    
+    
 }
 #pragma mark -  draw text
 
