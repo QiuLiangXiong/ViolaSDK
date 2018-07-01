@@ -60,7 +60,7 @@ var div = document.createElement('text', {
                                  style: {
 //                                    flexDirection: 'row',
 //                                 flexWrap: 'wrap',
-//                                 borderColor:'rgba(255,255,255,0.3)',
+//                                 borderColor:'r',
                                      backgroundColor:'red',
 
 //                                 maxWidth:'200dp',

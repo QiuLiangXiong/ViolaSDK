@@ -328,7 +328,7 @@ if(styles[@#key]){\
     if([self __isSameBorder]){
         
         if(_borderTopLeftRadius == 0 && _borderTopRightRadius == 0 && _borderBottomLeftRadius == 0 && _borderBottomRightRadius == 0){
-            _view.layer.borderColor = _borderTopColor.CGColor;
+            _view.layer.borderColor = _borderTopColor.CGColor ? : [UIColor clearColor].CGColor;
             _view.layer.borderWidth = _borderTopWidth;
         }else {
             _view.layer.borderColor = nil;
@@ -353,7 +353,7 @@ if(styles[@#key]){\
                     [path addArcWithCenter:CGPointMake(radius, size.height - radius) radius:radius startAngle:M_PI_2 endAngle:M_PI clockwise:YES];
                     [path closePath];
                     _borderLayer.fillColor = [UIColor clearColor].CGColor;
-                    _borderLayer.strokeColor = _borderTopColor.CGColor;
+                    _borderLayer.strokeColor = _borderTopColor.CGColor ? : [UIColor clearColor].CGColor;
                     _borderLayer.lineWidth = 2 * _borderTopWidth;
             
                     if(_borderTopStyle == VABorderStyleDashed){
@@ -385,7 +385,7 @@ if(styles[@#key]){\
             CGPathAddLineToPoint(path, NULL, size.width, 0);
 //            CGPathAddArc(path, NULL, size.width - 0, 0, 0, -M_PI_2, -M_PI_4, NO);
             _borderTopLayer.fillColor = [UIColor clearColor].CGColor;
-            _borderTopLayer.strokeColor = _borderTopColor.CGColor;
+            _borderTopLayer.strokeColor = _borderTopColor.CGColor ? : [UIColor clearColor].CGColor;
             _borderTopLayer.lineWidth = 2 * _borderTopWidth;
             if(_borderTopStyle == VABorderStyleDashed){
                 _borderTopLayer.lineDashPattern = @[@(3 * _borderTopWidth), @(3 * _borderTopWidth)];//画虚线
@@ -408,7 +408,7 @@ if(styles[@#key]){\
             CGPathMoveToPoint(path, NULL, 0, size.height);
             CGPathAddLineToPoint(path, NULL, size.width, size.height);
             _borderBottomLayer.fillColor = [UIColor clearColor].CGColor;
-            _borderBottomLayer.strokeColor = _borderBottomColor.CGColor;
+            _borderBottomLayer.strokeColor = _borderBottomColor.CGColor? : [UIColor clearColor].CGColor;;
             _borderBottomLayer.lineWidth = 2 * _borderBottomWidth;
             _borderBottomLayer.path = path;
             if(_borderTopStyle == VABorderStyleDashed){
@@ -431,7 +431,7 @@ if(styles[@#key]){\
             CGPathMoveToPoint(path, NULL, 0, 0);
             CGPathAddLineToPoint(path, NULL, 0, size.height);
             _borderLeftLayer.fillColor = [UIColor clearColor].CGColor;
-            _borderLeftLayer.strokeColor = _borderLeftColor.CGColor;
+            _borderLeftLayer.strokeColor = _borderLeftColor.CGColor ? : [UIColor clearColor].CGColor;;
             _borderLeftLayer.lineWidth = 2 * _borderLeftWidth;
             _borderLeftLayer.path = path;
             if(_borderTopStyle == VABorderStyleDashed){
@@ -454,7 +454,7 @@ if(styles[@#key]){\
             CGPathMoveToPoint(path, NULL, size.width, 0);
             CGPathAddLineToPoint(path, NULL, size.width, size.height);
             _borderRightLayer.fillColor = [UIColor clearColor].CGColor;
-            _borderRightLayer.strokeColor = _borderRightColor.CGColor;
+            _borderRightLayer.strokeColor = _borderRightColor.CGColor ? : [UIColor clearColor].CGColor;;
             _borderRightLayer.lineWidth = 2 * _borderRightWidth;
             _borderRightLayer.path = path;
             if(_borderTopStyle == VABorderStyleDashed){
