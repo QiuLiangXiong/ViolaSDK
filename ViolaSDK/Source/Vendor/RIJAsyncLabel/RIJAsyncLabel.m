@@ -11,7 +11,7 @@
 #import <libkern/OSAtomic.h>
 #import "objc/runtime.h"
 #define RIJAssertMainThread() NSAssert(0 != pthread_main_np(), @"This method must be called on the main thread!")
-
+NSString *const RIJHighlightAttributeKey = @"RIJHighlightAttributeKey";
 @interface RIJAsyncLabel()<RIJTextAsyncLayerDelegate>
 
 @property (nullable, nonatomic, strong) NSTextStorage * textStorageOnRender;
@@ -245,7 +245,6 @@
 - (void)dealloc {
     _textRender = nil;
 }
-
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event{
     BOOL result = [super pointInside:point withEvent:event];
     if (!UIEdgeInsetsEqualToEdgeInsets(self.touchFrameAddEdge, UIEdgeInsetsZero) ) {
@@ -256,13 +255,82 @@
     return result;
 }
 
+
+#pragma mark - touch override
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+
+    if(_textRenderOnDisplay){
+        RIJLayoutManager * layoutManager = _textRenderOnDisplay.layoutManager;
+        UITouch *touch = touches.anyObject;
+        CGPoint point = [touch locationInView:self];
+        NSRange range = NSMakeRange(0, 0);
+        
+        RIJHighlightAttribute * highlightAttribute = [self _getHighlightAttrWithPoint:point effectiveRange:&range];
+        
+        if (highlightAttribute.highlightBackgroudColor && range.length) {
+            layoutManager.highlightRange = range;
+            layoutManager.highlightAttribute = highlightAttribute;
+            //临时设一下背景来触发背景
+            [layoutManager.textStorage addAttribute:NSBackgroundColorAttributeName value:highlightAttribute.highlightBackgroudColor range:range];
+            [self immediatelyDisplayRedraw];
+        }
+    }
+    [super touchesBegan:touches withEvent:event];
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    UITouch *touch = touches.anyObject;
+    CGPoint point = [touch locationInView:self];
+    
+    if (!CGRectContainsPoint(self.bounds, point)) {
+        [self _endOrCancelTouch];
+    }
+    
+    [super touchesMoved:touches withEvent:event];
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self _endOrCancelTouch];
+    [super touchesEnded:touches withEvent:event];
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self _endOrCancelTouch];
+    [super touchesCancelled:touches withEvent:event];
+}
+
+
+
+#pragma mark - private
+
+- (RIJHighlightAttribute *)_getHighlightAttrWithPoint:(CGPoint)point effectiveRange:(NSRangePointer)range {
+    NSInteger index = [_textRenderOnDisplay characterIndexForPoint:point];
+    if (index < 0) {
+        return nil;
+    }
+    return [_textRender.textStorage attribute:RIJHighlightAttributeKey atIndex:index effectiveRange:range];
+}
+
+- (void)_endOrCancelTouch{
+    if (_textRenderOnDisplay) {
+        RIJLayoutManager * layoutManager = _textRenderOnDisplay.layoutManager;
+        if (layoutManager.highlightAttribute) {
+            [_textRenderOnDisplay.textStorage removeAttribute:NSBackgroundColorAttributeName range:layoutManager.highlightRange];
+            layoutManager.highlightRange = NSMakeRange(0, 0);
+            layoutManager.highlightAttribute = nil;
+            [self immediatelyDisplayRedraw];
+        }
+        
+    }
+}
+
 @end
 //---------RIJTextRender类分割线------------
 @interface RIJTextRender(){
     CGRect _textBound;
 }
-
-@property (nonatomic, strong) NSLayoutManager * layoutManager;
+@property (nonatomic, strong) RIJLayoutManager * layoutManager;
 @property (nonatomic, strong) NSTextContainer * textContainer;
 @property (nonatomic, strong) NSTextStorage * textStorageOnRender;
 
@@ -274,7 +342,7 @@
 - (instancetype)init{
     if (self = [super init]) {
         _textContainer = [NSTextContainer new];
-        _layoutManager = [NSLayoutManager new];
+        _layoutManager = [RIJLayoutManager new];
         [_layoutManager addTextContainer:_textContainer];
         _textContainer.lineFragmentPadding = 0;
     }
@@ -356,6 +424,11 @@
     return [self boundingRectForGlyphRange:[self visibleGlyphRange]];
 }
 
+- (NSInteger)characterIndexForPoint:(CGPoint)point{
+    CGFloat distanceToPoint = 1.0;
+    NSUInteger index = [_layoutManager characterIndexForPoint:point inTextContainer:_textContainer fractionOfDistanceBetweenInsertionPoints:&distanceToPoint];
+    return distanceToPoint < 1 ? index : -1;
+}
 
 
 - (CGSize)textSizeWithRenderWidth:(CGFloat)renderWidth{
@@ -392,6 +465,90 @@
 }
 
 @end
+
+//------RIJLayoutManager类分割线-----
+
+@implementation RIJLayoutManager{
+    CGPoint _drawAtPoint;
+}
+
+- (void)drawBackgroundForGlyphRange:(NSRange)glyphsToShow atPoint:(CGPoint)origin {
+    _drawAtPoint = origin;
+    [super drawBackgroundForGlyphRange:glyphsToShow atPoint:origin];
+    _drawAtPoint = CGPointZero;
+}
+
+- (void)fillBackgroundRectArray:(const CGRect *)rectArray count:(NSUInteger)rectCount forCharacterRange:(NSRange)charRange color:(UIColor *)color {
+    if (_highlightAttribute == nil || _highlightRange.length == 0 || NSIntersectionRange(_highlightRange, charRange).length > charRange.length) {
+        [super fillBackgroundRectArray:rectArray count:rectCount forCharacterRange:charRange color:color];
+        return;
+    }
+    for (int i = 0; i < rectCount; ++i) {
+        CGRect rect = [self _caculateHighlightRect:rectArray[i] characterRange:charRange];
+        [self _drawHighlightBackgroundRect:rect color:color];
+    }
+}
+
+
+
+- (void)_drawHighlightBackgroundRect:(CGRect)rect color:(UIColor *)color{
+    CGFloat radius = _highlightAttribute.highlightBackgroudRadius;
+    UIEdgeInsets inset = _highlightAttribute.highlightBackgroudInset;
+    
+    
+    CGFloat x = floor(rect.origin.x)- inset.left;
+    CGFloat y  = ceil(rect.origin.y)- inset.top;
+    CGFloat width = ceil(rect.size.width)+inset.left+inset.right;
+    CGFloat height = ceil(rect.size.height)+inset.top+inset.bottom;
+
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextMoveToPoint(context, x + radius, y);
+    CGContextAddLineToPoint(context, x + width - radius, y);
+    CGContextAddArc(context,x+ width - radius,y+ radius, radius, -0.5 * M_PI, 0.0, 0);
+    CGContextAddLineToPoint(context, x + width,y + height - radius);
+    CGContextAddArc(context,x+ width - radius,y+ height - radius, radius, 0.0, 0.5 * M_PI, 0);
+    CGContextAddLineToPoint(context, x+radius, y+height);
+    CGContextAddArc(context, x+radius,y+ height - radius, radius, 0.5 * M_PI, M_PI, 0);
+
+    CGContextAddLineToPoint(context, x,y+ radius);
+    CGContextAddArc(context,x+ radius,y+ radius, radius, M_PI, 1.5 * M_PI, 0);
+
+    CGContextClosePath(context);
+    CGContextSetFillColorWithColor(context, color.CGColor);
+    CGContextDrawPath(context, kCGPathFill);
+}
+- (CGRect)_caculateHighlightRect:(CGRect)rect characterRange:(NSRange)charRange {
+    NSUInteger index = [self glyphIndexForCharacterAtIndex:charRange.location];
+    CGRect lineBounds = [self lineFragmentUsedRectForGlyphAtIndex:index effectiveRange:NULL];
+    lineBounds.origin.x += _drawAtPoint.x;
+    lineBounds.origin.y += _drawAtPoint.y;
+    CGFloat startDrawY = CGFLOAT_MAX;
+    CGFloat maxLineHeight = 0.0f;
+    for (NSInteger charIndex = charRange.location; charIndex<NSMaxRange(charRange); ++charIndex) {
+        UIFont *font = [self.textStorage attribute:NSFontAttributeName
+                                           atIndex:charIndex
+                                    effectiveRange:nil];
+        if (!font) {
+            font = [UIFont systemFontOfSize:12];
+        }
+        NSUInteger glyphIndex = [self glyphIndexForCharacterAtIndex:charIndex];
+        CGPoint location = [self locationForGlyphAtIndex:glyphIndex];
+        CGFloat height = [self attachmentSizeForGlyphAtIndex:glyphIndex].height;
+        startDrawY = fmin(startDrawY, lineBounds.origin.y+location.y-(height > 0 ?height :font.ascender));
+        maxLineHeight = fmax(maxLineHeight, height > 0? height:font.lineHeight);
+    }
+    lineBounds.origin.y = startDrawY;
+    lineBounds.size.height = maxLineHeight;
+    return CGRectIntersection(lineBounds, rect);
+}
+
+@end
+
+
+//-------RIJHighlightAttribute分割线----------
+@implementation RIJHighlightAttribute
+@end
+
 //-----------RIJTextAsyncLayer类分割线-----------
 static dispatch_queue_t RIJTextAsyncLayerGetDisplayQueue() {
 #define MAX_QUEUE_COUNT 10  //orgin 16

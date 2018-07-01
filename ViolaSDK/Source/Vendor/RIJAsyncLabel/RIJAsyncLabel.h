@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 NS_ASSUME_NONNULL_BEGIN
+
+
+extern NSString *const RIJHighlightAttributeKey;
+
+
+
 @interface RIJAsyncLabel : UIView
 /**
  是否异步渲染 default YES
@@ -50,10 +56,25 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 
+//------RIJHighlightAttribute类分割线-----
+
+@interface RIJHighlightAttribute : NSObject
+
+@property (nonatomic, strong) UIColor * highlightBackgroudColor;//高亮背景色
+@property (nonatomic, assign) UIEdgeInsets highlightBackgroudInset;//相对于字符区域的边距
+@property (nonatomic, assign) CGFloat highlightBackgroudRadius;//高亮背景矩形的圆角
 
 
 
+@end
+//------RIJLayoutManager类分割线-----
 
+@interface RIJLayoutManager : NSLayoutManager
+
+@property (nonatomic, assign) NSRange highlightRange;
+@property (nullable, nonatomic, strong) RIJHighlightAttribute * highlightAttribute;
+
+@end
 
 
 
@@ -62,7 +83,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface RIJTextRender : NSObject
 
 @property (nonatomic, strong, nullable) NSTextStorage *textStorage;
-@property (nonatomic, strong, readonly) NSLayoutManager * layoutManager;
+@property (nonatomic, strong, readonly) RIJLayoutManager * layoutManager;
 @property (nonatomic, strong, readonly) NSTextContainer *textContainer;
 @property (nonatomic, assign) CGSize size;
 @property (nonatomic, assign) CGFloat lineFragmentPadding;
@@ -77,6 +98,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readonly, nullable) NSSet<NSTextAttachment *> *attachmentViewSet;
 
 - (CGSize)textSizeWithRenderWidth:(CGFloat)renderWidth;
+- (NSInteger)characterIndexForPoint:(CGPoint)point;
 
 /**
  draw text at point
@@ -84,9 +106,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)drawTextAtPoint:(CGPoint)point isCanceled:(BOOL (^__nullable)(void))isCanceled;
 
 @end
-
-
-
 
 
 

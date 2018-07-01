@@ -81,6 +81,7 @@
         if (_singleClickEnable) {
             if (!_tapGesture) {
                 _tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onSingleClickWithSender:)];
+                
             }
             if (![_view.gestureRecognizers containsObject:_tapGesture]) {
                 [_view addGestureRecognizer:_tapGesture];
@@ -206,6 +207,7 @@
 #pragma mark - action
 
 - (void)onSingleClickWithSender:(id)sender{
+    
     [self _fireEventWithName:@"click" extralParam:nil];
     
 }

@@ -513,5 +513,22 @@ if([string isEqualToString:@#key]){\
     return NSLineBreakByTruncatingTail;
 }
 
+#define VA_EDGE_VALUE(str)\
+([[self class] convertToFloatWithPixel:str])
+
++ (UIEdgeInsets)converToEdgeInsets:(id)value{
+    NSString *string = [[self class] convertToString:value];
+    if(string.length < 5) return UIEdgeInsetsZero;
+    string = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    if(string.length < 5) return UIEdgeInsetsZero;
+    if ([string rangeOfString:@"{"].length || [string rangeOfString:@"("].length) {
+       string = [string substringWithRange:NSMakeRange(1, string.length- 2)];
+    }
+    NSArray * nums = [string componentsSeparatedByString:@","];
+    if (nums.count < 4) return UIEdgeInsetsZero;
+    
+    return UIEdgeInsetsMake(VA_EDGE_VALUE(nums[0]), VA_EDGE_VALUE(nums[1]), VA_EDGE_VALUE(nums[2]), VA_EDGE_VALUE(nums[3]));
+}
+
 //convertToTextDecoration
 @end

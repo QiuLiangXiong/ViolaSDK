@@ -55,12 +55,12 @@ var div = document.createElement('text', {
                                  events:['click'],
                                  attr: {
                                  id: 'div1',
-                                 value:'ag我d2们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子',
+                                 value:'们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子',
                                  },
                                  style: {
 //                                    flexDirection: 'row',
 //                                 flexWrap: 'wrap',
-                                 borderColor:'rgba(255,255,255,0.3)',
+//                                 borderColor:'rgba(255,255,255,0.3)',
                                      backgroundColor:'red',
 
 //                                 maxWidth:'200dp',
@@ -70,10 +70,10 @@ var div = document.createElement('text', {
 //                                 borderRadius:'1000dp',
 //                                 padding:'40dp',
                                  animated: true,
-                                 lines:2,
-//                                 lineHeight:'20dp',
-                                 lineSpacing:'10dp',
-                                 headIndent:'20dp',
+                                 lines:0,
+                                 lineHeight:'40dp',
+                               //  lineSpacing:'10dp',
+//                                 headIndent:'20dp',
 
 
 //                                 lineHeight:'30dp',
@@ -107,6 +107,7 @@ var index = 0;
 div.on('click', function (e) {
        console.log(e);
 
+
        var value = [
                     '我们都是好',
                     '长一点长一长一点长长一点长长一点长长一点长',
@@ -114,7 +115,7 @@ div.on('click', function (e) {
                     '不短了不短了不短了长一点长长一点长长一点长不短了长一点不短了长一点不短了长一点不短了长一点',
                     ]
 //        this.setAttr('value', value[parseInt(++index%3)])
-       var values = [{text:value[parseInt(++index%4)],color:'blue'},{text:value[parseInt(++index%4)], color:'yellow',fontSize:'20dp',textDecoration:'underline',fontWeight:'bold',letterSpacing:'5dp',},{text:value[parseInt(++index%4)],color:'black', textDecoration:'line-through'}];
+       var values = [ {text:value[parseInt(++index%4)],color:'blue'},{highlightBackgroundColor:'rgba(0,0,0,0.4)',highlightBackgroundInset:'{3dp,0dp,3dp,0dp}',highlightBackgroundRadius:'4dp', text:value[parseInt(++index%4)], color:'yellow',fontSize:'20dp',textDecoration:'underline',fontWeight:'bold',letterSpacing:'5dp',},{highlightBackgroundColor:'rgba(255,255,255,0.4)',highlightBackgroundInset:'{3dp,0dp,3dp,0dp}',highlightBackgroundRadius:'4dp',text:value[parseInt(++index%4)],color:'black', textDecoration:'line-through'}];
        
        this.setAttr('values', values)
        this.setStyle({
