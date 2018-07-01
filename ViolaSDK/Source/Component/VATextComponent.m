@@ -49,7 +49,7 @@ prop = defaultValue;\
     CGFloat _letterSpacing;
     
     CGFloat _headIndent;
-    CGFloat _lineBreakMargin;
+    CGFloat _lineBreakMargin;//被截断的右边距
     
     UIColor * _highlightBackgroundColor;
     CGFloat _highlightBackgroundRadius;
@@ -60,15 +60,16 @@ prop = defaultValue;\
     NSMutableAttributedString * _textAttributedString;
     CGFloat _lineHeightOffset;//修正RIJAsyncLabel 行高首行问题
     
+    BOOL _listenLastLineMarginChange;//最后一行边距变化事件监听
+    BOOL _listenLineBreakChange;//被截断事件监听
+    
 }
 
 - (instancetype)initWithRef:(NSString *)ref type:(NSString *)type styles:(NSDictionary *)styles attributes:(NSDictionary *)attributes events:(NSArray *)events weexInstance:(ViolaInstance *)violaInstance{
     if(self = [super initWithRef:ref type:type styles:styles attributes:attributes events:events weexInstance:violaInstance]){
-        
-        
-        
         [self _fillTextComponentAttr:attributes];
         [self _fillTextComponentStyles:styles isInit:true];
+        [self _fillTextEvents:events];
         _textAttributedString = [self _buildNewAttributedString];
     }
     return self;
@@ -116,6 +117,9 @@ prop = defaultValue;\
         _textAttributedString = [self _buildNewAttributedString];
         [self setNeedsLayout];//这个时候得更新布局了
     }
+    
+    [self _fillTextEvents:events];
+    
 }
 
 - (void)updateComponentOnMainThreadWithAttributes:(NSDictionary *)attributes styles:(NSDictionary *)styles events:(NSArray *)events{
@@ -229,6 +233,18 @@ prop = defaultValue;\
        needUpdate = true;
     }
     return needUpdate;
+}
+
+- (void)_fillTextEvents:(NSArray *)events{
+    if([events isKindOfClass:[NSArray class]] && events.count){
+        if ([events containsObject:@"lastLineMarginChange"] || [events containsObject:@"LastLineMarginChange"]) {
+            _listenLastLineMarginChange = true;
+        }
+        if([events containsObject:@"lineBreakChange"]){
+            _listenLineBreakChange = true;
+        }
+        
+    }
 }
 
 
@@ -382,17 +398,11 @@ prop = defaultValue;\
     
 
     CGSize res = CGSizeZero;
-    
+
     if(_textAttributedString.string.length == 0){
         res = CGSizeZero;
     }else {
        res = [RIJAsyncLabel sizeThatFits:CGSizeMake(width, height) attributedString:_textAttributedString numberOfLines:_maxLines lineBreakMode:_lineBreakMode lineBreakMarin:_lineBreakMargin];
-        if (_lineBreakMargin > 0) {
-            //状态
-            BOOL isLineBreak = _textAttributedString.rij_textRender.isBreakLine;
-            [[VABridgeManager shareManager] fireEventWithIntanceID:_vaInstance.instanceId ref:_ref type:@"lineBreakChange" params:@{@"isLineBreak":@((int)isLineBreak)} domChanges:nil];
-        }
-        
     }
     
     if (!isnan(_cssNode->style.minDimensions[CSS_WIDTH])) {
@@ -410,6 +420,7 @@ prop = defaultValue;\
     if (!isnan(_cssNode->style.maxDimensions[CSS_HEIGHT])) {
         res.height = MIN(res.height, _cssNode->style.maxDimensions[CSS_HEIGHT]);
     }
+    [self _didCalcutedComponentFrameFinishWithRes:res shouldWidth:width];
     return res;
 }
 
@@ -455,6 +466,36 @@ prop = defaultValue;\
         }
     }
     return nil;
+}
+
+- (void)_didCalcutedComponentFrameFinishWithRes:(CGSize)res shouldWidth:(CGFloat)width{
+    if (_listenLineBreakChange) {//文本是否被截断通知
+        BOOL isLineBreak = _textAttributedString.rij_textRender.isBreakLine;
+        [[VABridgeManager shareManager] fireEventWithIntanceID:_vaInstance.instanceId ref:_ref type:@"lineBreakChange" params:@{@"isLineBreak":@((int)isLineBreak)} domChanges:nil];
+    }
+    if (_listenLastLineMarginChange) {//尾行边距变化通知
+        NSString * margin = @"0";
+        RIJTextRender * textRender = _textAttributedString.rij_textRender;
+        if (textRender) {
+            CGSize originSize = textRender.textContainer.size;
+            textRender.textContainer.size = res;
+            CGPoint point = [textRender.layoutManager locationForGlyphAtIndex:textRender.textStorage.length - 1];
+            CGFloat marginDistance =  width - point.x - _fontSize / 2 - 5;
+            if (marginDistance < 0) {
+                marginDistance = 0;
+            }
+            
+            margin = [[@(marginDistance) stringValue] stringByAppendingString:@"dp"];
+            textRender.textContainer.size = originSize;
+        }
+        
+        
+        [[VABridgeManager shareManager] fireEventWithIntanceID:_vaInstance.instanceId ref:_ref type:@"lastLineMarginChange" params:@{@"margin":margin?:@"0"} domChanges:nil];
+        
+        
+        
+
+    }
 }
 
 @end

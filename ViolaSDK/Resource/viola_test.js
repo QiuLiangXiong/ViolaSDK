@@ -52,7 +52,7 @@ var textContainer = document.createElement('div', {
 })
 
 var div = document.createElement('text', {
-                                 events:['click'],
+                                 events:['click','lastLineMarginChange'],
                                  attr: {
                                  id: 'div1',
                                  value:'们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子',
@@ -112,6 +112,9 @@ var zhankaiText = document.createElement('text', {
                                  })
 
 var index = 0;
+div.on('lastLineMarginChange',function(e){
+       console.log(e);
+       })
 div.on('click', function (e) {
        console.log(e);
 
