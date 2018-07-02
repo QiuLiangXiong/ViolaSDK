@@ -11,6 +11,8 @@
 #import "VAConvertUtl.h"
 #import "VADefine.h"
 #import "VARegisterManager.h"
+#import "VABridgeManager.h"
+#import "ViolaInstance.h"
 
 @interface VAImageComponent()
 
@@ -19,6 +21,8 @@
 @property (nullable, nonatomic, strong) NSString * placeholderUrl;
 @property (nullable, nonatomic, strong) NSString * url;
 @property (nullable, nonatomic, strong) UIImageView * imageView;
+
+@property (nonatomic, assign) BOOL listenImageFinishEvent;//监听图片加载事件
 
 @end
 
@@ -36,7 +40,7 @@
         //
         [self _fillImageComponentStyles:styles isInit:true];
         [self _fillImageComponenAtts:attributes isInit:true];
-        
+        [self _fillImageComponentEvents:events];
         
         
 //        BOOL showFade = ((options & YYWebImageOptionSetImageWithFadeAnimation) && !self.highlighted);
@@ -90,6 +94,7 @@
     if ([self _fillImageComponenAtts:attributes isInit:false]) {
         [self _syncImageToView];//更新了属性再次更新加载图片
     }
+    [self _fillImageComponentEvents:events];
 }
 
 
@@ -170,6 +175,14 @@
     
 }
 
+- (void)_fillImageComponentEvents:(NSArray *)events{
+    if ([events isKindOfClass:[NSArray class]] && events.count) {
+        if ([events containsObject:@"finish"]) {
+            _listenImageFinishEvent = true;
+        }
+    }
+}
+
 
 //加载图片
 //
@@ -218,6 +231,8 @@
                             weakSelf.imageOperation.error = error;
                         }];
                     }
+                   [weakSelf _notifyImageFinisthEventWithImage:image];
+                   
                     if ([weakSelf isViewLoaded]) {
                         [VAThreadManager performOnMainThreadWithBlock:^{
                             [weakSelf _setImageViewWithImage:image isPlaceHolder:false requestUrl:url curUrl:weakSelf.url];
@@ -270,6 +285,7 @@
                             weakSelf.placeHolderImageOperation.error = error;
                         }];
                     }
+
                     if ([weakSelf isViewLoaded]) {
                         [VAThreadManager performOnMainThreadWithBlock:^{
                              [weakSelf _setImageViewWithImage:image isPlaceHolder:true requestUrl:placeHolderUrl curUrl:weakSelf.placeholderUrl];
@@ -295,7 +311,7 @@
     //一期先做淡入动画
     if (isPlaceHolder) {
         if (self.imageView.image == nil) {
-            if (_fade) {
+            if (_fade && [self isBodyLayoutFinish]) {
                 CATransition *transition = [CATransition animation];
                 transition.duration = 0.1;
                 transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
@@ -306,7 +322,7 @@
         }
     }else {
         if (self.imageView.image != image) {
-            if (_fade) {
+            if (_fade && [self isBodyLayoutFinish]) {
                 CATransition *transition = [CATransition animation];
                 transition.duration = 0.2;
                 transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
@@ -342,6 +358,17 @@
     return [url0 isEqualToString:url1];
 }
 
+
+- (void)_notifyImageFinisthEventWithImage:(UIImage *)image{
+    if (self.listenImageFinishEvent) {
+        NSMutableDictionary * imageDic = [NSMutableDictionary new];
+        imageDic[@"imageWidth"] = [[@(image.size.width) stringValue] stringByAppendingString:@"dp"];
+        imageDic[@"imageHeight"] = [[@(image.size.height) stringValue] stringByAppendingString:@"dp"];
+        imageDic[@"url"] = _url ? : @"";
+        [[VABridgeManager shareManager] fireEventWithIntanceID:self.violaInstance.instanceId ref:self.ref type:@"finish" params:@{@"image":imageDic,@"success":image ? @true : @false} domChanges:nil];
+        
+    }
+}
 
 
 @end

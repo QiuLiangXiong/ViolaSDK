@@ -94,6 +94,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)addTaskToMainQueueOnComponentThead:(dispatch_block_t)block withAnimated:(BOOL)animated;
 
 
+- (BOOL)isBodyLayoutFinish;
+
 @end
 
 

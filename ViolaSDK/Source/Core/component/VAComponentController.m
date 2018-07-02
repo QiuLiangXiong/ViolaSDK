@@ -67,9 +67,14 @@
     
 
     dispatch_async([VAThreadManager getComponentQueue], ^{
-       weakSelf.isBodyLayoutFinish = true;
+
+        
+        
        [VAThreadManager violaIntanceRenderFinish];
     });
+    [VAThreadManager performOnComponentThreadWithBlock:^{
+        weakSelf.isBodyLayoutFinish = true;
+    } afterDelay:0.5];
 
     
 

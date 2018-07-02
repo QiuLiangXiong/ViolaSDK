@@ -162,6 +162,10 @@ static int componentAllocCount;
     VAAssertMainThread();
 }
 
+- (BOOL)isBodyLayoutFinish{
+    return self.violaInstance.componentController.isBodyLayoutFinish;
+}
+
 #pragma private
 
 - (void)_insertSubcomponent:(VAComponent *)subcomponent atIndex:(NSInteger)index{

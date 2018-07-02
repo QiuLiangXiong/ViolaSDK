@@ -201,7 +201,7 @@ var image = document.createElement('image', {
 container.appendChild(image);
 
 var imageArray = ['https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530543710813&di=96d5365b426fa140761a173c6ee92ff1&imgtype=0&src=http%3A%2F%2Fa.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Ffc1f4134970a304eb5088f73ddc8a786c9175c14.jpg',
-                  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530550515600&di=d87726454dea066c9f3ae4a512502916&imgtype=0&src=http%3A%2F%2Fimg.styleonme.com%2Ffiles%2Fgoods%2F1340337556_13.jpg',
+                  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530552750328&di=14e7f4982777d3132e5e589d4397edc0&imgtype=0&src=http%3A%2F%2Fimg0.pconline.com.cn%2Fpconline%2F1405%2F15%2F4778816_08baizi_thumb.gif',
                    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530543710813&di=97c9b207624e8fe56d2b3cbd74e2e051&imgtype=0&src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fb7003af33a87e95053e42ae21c385343faf2b449.jpg',
                    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530543710813&di=5256b51d3b6b78e59626f0973f66d468&imgtype=0&src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fb8014a90f603738d1f357dacbf1bb051f919ecc5.jpg',
                   ]
