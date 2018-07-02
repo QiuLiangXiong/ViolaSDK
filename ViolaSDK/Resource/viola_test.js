@@ -201,7 +201,7 @@ var image = document.createElement('image', {
 container.appendChild(image);
 
 var imageArray = ['https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530543710813&di=96d5365b426fa140761a173c6ee92ff1&imgtype=0&src=http%3A%2F%2Fa.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Ffc1f4134970a304eb5088f73ddc8a786c9175c14.jpg',
-                  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530543710813&di=7ccc90179f0b0a24601fb85c76b7efb6&imgtype=0&src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F37d3d539b6003af33cd1a3ee392ac65c1138b6d0.jpg',
+                  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530550515600&di=d87726454dea066c9f3ae4a512502916&imgtype=0&src=http%3A%2F%2Fimg.styleonme.com%2Ffiles%2Fgoods%2F1340337556_13.jpg',
                    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530543710813&di=97c9b207624e8fe56d2b3cbd74e2e051&imgtype=0&src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fb7003af33a87e95053e42ae21c385343faf2b449.jpg',
                    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530543710813&di=5256b51d3b6b78e59626f0973f66d468&imgtype=0&src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fb8014a90f603738d1f357dacbf1bb051f919ecc5.jpg',
                   ]
@@ -209,7 +209,7 @@ var imageIndex = 0;
 var ratioValues = [0.5,0.8,2,1];
 image.on('click',function(e){
          image.setAttr('value',imageArray[++index % 4])
-         image.setStyle({aspectRatio:ratioValues[index % 4]})
+       //  image.setStyle({aspectRatio:ratioValues[index % 4]})
          })
 
 //container.appendChild(div)

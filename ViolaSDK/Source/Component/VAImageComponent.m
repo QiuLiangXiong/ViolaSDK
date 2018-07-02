@@ -27,6 +27,7 @@
     UIViewContentMode  _contentMode;//图片占位模式
     CGFloat _aspectRatio;//图片宽高比
     CGFloat _blurRadius;//高斯模糊半径
+    BOOL _fade;//淡入
     
 }
 #pragma mark - override
@@ -35,6 +36,17 @@
         //
         [self _fillImageComponentStyles:styles isInit:true];
         [self _fillImageComponenAtts:attributes isInit:true];
+        
+        
+        
+//        BOOL showFade = ((options & YYWebImageOptionSetImageWithFadeAnimation) && !self.highlighted);
+//        if (showFade) {
+//            CATransition *transition = [CATransition animation];
+//            transition.duration = stage == YYWebImageStageFinished ? _YYWebImageFadeTime : _YYWebImageProgressiveFadeTime;
+//            transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+//            transition.type = kCATransitionFade;
+//            [self.layer addAnimation:transition forKey:_YYWebImageFadeAnimationKey];
+//        }
 
     }
     return self;
@@ -132,6 +144,14 @@
     }else if(isInit){
         _contentMode = UIViewContentModeScaleToFill;
     }
+    
+    value = attrs[@"fade"];
+    if (value) {
+        _fade = [VAConvertUtl convertToBOOL:value];
+    }else if(isInit){
+        _fade = true;
+    }
+    
     return needUpdate;
 
 }
@@ -172,11 +192,14 @@
         if (weakImageView && weakImageView.image != _placeHolderImageOperation.image) {
             UIImage * newImage = _placeHolderImageOperation.image;
             UIImage * originImage = weakImageView.image;
-            [VAThreadManager performOnMainThreadWithBlock:^{
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((0.2) * NSEC_PER_SEC)),dispatch_get_main_queue(), ^{
                 if (weakImageView.image == originImage ) {
-                     weakImageView.image = newImage;
+                    weakImageView.image = newImage;
                 }
-            }];
+            });
+            
+          
         }
         _imageOperation = nil;
         if (_url.length) {
@@ -272,10 +295,27 @@
     //一期先做淡入动画
     if (isPlaceHolder) {
         if (self.imageView.image == nil) {
+            if (_fade) {
+                CATransition *transition = [CATransition animation];
+                transition.duration = 0.1;
+                transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+                transition.type = kCATransitionFade;
+                [self.imageView.layer addAnimation:transition forKey:@"VAImageComponentFadeAnimationKey"];
+            }
             self.imageView.image = image;
         }
     }else {
-        self.imageView.image = image;
+        if (self.imageView.image != image) {
+            if (_fade) {
+                CATransition *transition = [CATransition animation];
+                transition.duration = 0.2;
+                transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+                transition.type = kCATransitionFade;
+                [self.imageView.layer addAnimation:transition forKey:@"VAImageComponentFadeAnimationKey"];
+            }
+              self.imageView.image = image;
+        }
+
     }
 }
 
