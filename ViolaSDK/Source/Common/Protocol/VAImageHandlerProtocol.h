@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @protocol VAImageOperationProtocol <NSObject>
 
@@ -16,6 +17,6 @@
 
 @protocol VAImageHandlerProtocol <NSObject>
 
-//- (id<VAImageOperationProtocol>)downloadImageWithURL:(NSString *)url imageFrame:(CGRect)imageFrame userInfo:(NSDictionary *)options completed:(void(^)(UIImage *image,  NSError *error, BOOL finished))completedBlock;
+- (id<VAImageOperationProtocol>)downloadImageWithUrl:(NSString *)url contentMode:(UIViewContentMode)contentMode imageFrame:(CGRect)frame options:(NSDictionary *)options completed:(void(^)(UIImage *image,  NSError *error, BOOL finished))completedBlock;
 
 @end

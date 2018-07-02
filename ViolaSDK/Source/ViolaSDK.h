@@ -7,6 +7,8 @@
 
 #ifndef ViolaSDK_h
 
+#define VAExpandDevelopment 1
+
 #import "ViolaEngine.h"
 #import "VAModuleProtocol.h"
 #import "ViolaInstance.h"

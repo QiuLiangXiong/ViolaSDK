@@ -11,6 +11,7 @@
 #import "VADomModule.h"
 #import "VADivComponent.h"
 #import "VABridgeManager.h"
+#import "VAImageHandlerProtocol.h"
 
 @implementation ViolaEngine
 
@@ -51,6 +52,12 @@
     
     [self registerComponent:@"div" withClass:[VADivComponent class]];
     [self registerComponent:@"text" withClass:NSClassFromString(@"VATextComponent")];
+    
+    //handler
+    
+    if(NSClassFromString(@"VAImageHandler")){//可选
+        [self registerHandler:[NSClassFromString(@"VAImageHandler") new] withProtocol:@protocol(VAImageHandlerProtocol)];
+    }
     
 }
 
