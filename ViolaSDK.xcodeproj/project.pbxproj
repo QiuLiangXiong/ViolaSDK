@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C10F37641523840519DA37E /* libPods-ViolaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81E0BFB4061778097807BAD1 /* libPods-ViolaSDK.a */; };
 		FF17DDF920E3D4ED008F29B3 /* viola_main.js in Resources */ = {isa = PBXBuildFile; fileRef = FF17DDF820E3D4EC008F29B3 /* viola_main.js */; };
 		FF66078F20DBA1A300A99EE0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FF66078E20DBA1A300A99EE0 /* AppDelegate.m */; };
 		FF66079220DBA1A300A99EE0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF66079120DBA1A300A99EE0 /* ViewController.m */; };
@@ -64,6 +65,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3BB39F8B722A98E20AF0546B /* Pods-ViolaSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ViolaSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ViolaSDK/Pods-ViolaSDK.debug.xcconfig"; sourceTree = "<group>"; };
+		81E0BFB4061778097807BAD1 /* libPods-ViolaSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ViolaSDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D327B15CF3B1F42B86E46D13 /* Pods-ViolaSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ViolaSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-ViolaSDK/Pods-ViolaSDK.release.xcconfig"; sourceTree = "<group>"; };
 		FF17DDF820E3D4EC008F29B3 /* viola_main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = viola_main.js; sourceTree = "<group>"; };
 		FF66078A20DBA1A300A99EE0 /* ViolaSDK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ViolaSDK.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF66078D20DBA1A300A99EE0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -149,6 +153,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C10F37641523840519DA37E /* libPods-ViolaSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,6 +174,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E90C60E9697FECB62E486B65 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3BB39F8B722A98E20AF0546B /* Pods-ViolaSDK.debug.xcconfig */,
+				D327B15CF3B1F42B86E46D13 /* Pods-ViolaSDK.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		FF66078120DBA1A300A99EE0 = {
 			isa = PBXGroup;
 			children = (
@@ -177,6 +191,7 @@
 				FF6607B020DBA1A300A99EE0 /* ViolaSDKUITests */,
 				FF66078B20DBA1A300A99EE0 /* Products */,
 				FF66080020DBA4F900A99EE0 /* Frameworks */,
+				E90C60E9697FECB62E486B65 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -341,6 +356,7 @@
 			isa = PBXGroup;
 			children = (
 				FF66080120DBA4F900A99EE0 /* JavaScriptCore.framework */,
+				81E0BFB4061778097807BAD1 /* libPods-ViolaSDK.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -420,9 +436,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FF6607B620DBA1A300A99EE0 /* Build configuration list for PBXNativeTarget "ViolaSDK" */;
 			buildPhases = (
+				710BACF7EAA8A62EE35C4C91 /* [CP] Check Pods Manifest.lock */,
 				FF66078620DBA1A300A99EE0 /* Sources */,
 				FF66078720DBA1A300A99EE0 /* Frameworks */,
 				FF66078820DBA1A300A99EE0 /* Resources */,
+				839CEC156DD355689959D9B6 /* [CP] Embed Pods Frameworks */,
+				3EBEA383DBB4F94D21907AFA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -542,6 +561,57 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3EBEA383DBB4F94D21907AFA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ViolaSDK/Pods-ViolaSDK-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		710BACF7EAA8A62EE35C4C91 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ViolaSDK-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		839CEC156DD355689959D9B6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ViolaSDK/Pods-ViolaSDK-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FF66078620DBA1A300A99EE0 /* Sources */ = {
@@ -738,6 +808,7 @@
 		};
 		FF6607B720DBA1A300A99EE0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3BB39F8B722A98E20AF0546B /* Pods-ViolaSDK.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -755,6 +826,7 @@
 		};
 		FF6607B820DBA1A300A99EE0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D327B15CF3B1F42B86E46D13 /* Pods-ViolaSDK.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
