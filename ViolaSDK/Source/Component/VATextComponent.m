@@ -284,12 +284,7 @@ prop = defaultValue;\
             if (value) {
                 highlightBGInset =  [VAConvertUtl converToEdgeInsets:value];
             }
-            
 
-            
-            
-            
-            
             if(lineHeight && lineHeight > fontSize && isFirstLineHeight){
                 isFirstLineHeight = false;
                  _lineHeightOffset = -(lineHeight - fontSize) / 2;
@@ -479,22 +474,17 @@ prop = defaultValue;\
         if (textRender) {
             CGSize originSize = textRender.textContainer.size;
             textRender.textContainer.size = res;
-            CGPoint point = [textRender.layoutManager locationForGlyphAtIndex:textRender.textStorage.length - 1];
-            CGFloat marginDistance =  width - point.x - _fontSize / 2 - 5;
-            if (marginDistance < 0) {
-                marginDistance = 0;
+            NSInteger lastVisibleGlyphIndex = NSMaxRange([textRender visibleGlyphRange]) - 1 ;
+            if (lastVisibleGlyphIndex < 0) {
+                margin = [[@(width) stringValue] stringByAppendingString:@"dp"];
+            }else {
+                CGRect lastLineUsedRect = [textRender.layoutManager lineFragmentUsedRectForGlyphAtIndex:lastVisibleGlyphIndex effectiveRange:NULL];
+                CGFloat marginDistance =  width - CGRectGetMaxX(lastLineUsedRect);
+                margin = [[@(marginDistance) stringValue] stringByAppendingString:@"dp"];
             }
-            
-            margin = [[@(marginDistance) stringValue] stringByAppendingString:@"dp"];
             textRender.textContainer.size = originSize;
         }
-        
-        
         [[VABridgeManager shareManager] fireEventWithIntanceID:_vaInstance.instanceId ref:_ref type:@"lastLineMarginChange" params:@{@"margin":margin?:@"0"} domChanges:nil];
-        
-        
-        
-
     }
 }
 

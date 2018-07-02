@@ -34,6 +34,7 @@
 		FF6607FE20DBA23B00A99EE0 /* VAInstanceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6607E620DBA23B00A99EE0 /* VAInstanceManager.m */; };
 		FF6607FF20DBA23B00A99EE0 /* VARootView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6607ED20DBA23B00A99EE0 /* VARootView.m */; };
 		FF66080520DBA8B000A99EE0 /* viola_test.js in Resources */ = {isa = PBXBuildFile; fileRef = FF66080420DBA8B000A99EE0 /* viola_test.js */; };
+		FF760ECF20E9CE5A001949F0 /* VAImageComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FF760ECE20E9CE5A001949F0 /* VAImageComponent.m */; };
 		FFB278B520DE463C009FD859 /* VADivComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB278B420DE463C009FD859 /* VADivComponent.m */; };
 		FFB278BC20DE9AED009FD859 /* Layout.c in Sources */ = {isa = PBXBuildFile; fileRef = FFB278BB20DE9AED009FD859 /* Layout.c */; };
 		FFB278C220DE9C41009FD859 /* VAComponent+layout.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB278C120DE9C41009FD859 /* VAComponent+layout.m */; };
@@ -119,6 +120,9 @@
 		FF6607ED20DBA23B00A99EE0 /* VARootView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VARootView.m; sourceTree = "<group>"; };
 		FF66080120DBA4F900A99EE0 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		FF66080420DBA8B000A99EE0 /* viola_test.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = viola_test.js; sourceTree = "<group>"; };
+		FF760ECD20E9CE5A001949F0 /* VAImageComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VAImageComponent.h; sourceTree = "<group>"; };
+		FF760ECE20E9CE5A001949F0 /* VAImageComponent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAImageComponent.m; sourceTree = "<group>"; };
+		FF760ED320E9CF76001949F0 /* VAImageHandlerProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VAImageHandlerProtocol.h; sourceTree = "<group>"; };
 		FFB278B320DE463C009FD859 /* VADivComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VADivComponent.h; sourceTree = "<group>"; };
 		FFB278B420DE463C009FD859 /* VADivComponent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VADivComponent.m; sourceTree = "<group>"; };
 		FFB278BA20DE9AED009FD859 /* Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layout.h; sourceTree = "<group>"; };
@@ -319,6 +323,7 @@
 			isa = PBXGroup;
 			children = (
 				FF6607EA20DBA23B00A99EE0 /* VAModuleProtocol.h */,
+				FF760ED320E9CF76001949F0 /* VAImageHandlerProtocol.h */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -356,6 +361,8 @@
 				FFB278B420DE463C009FD859 /* VADivComponent.m */,
 				FFBC38D520E5FAE300D3D806 /* VATextComponent.h */,
 				FFBC38D620E5FAE300D3D806 /* VATextComponent.m */,
+				FF760ECD20E9CE5A001949F0 /* VAImageComponent.h */,
+				FF760ECE20E9CE5A001949F0 /* VAImageComponent.m */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -549,6 +556,7 @@
 				FFB278C720E0F6C9009FD859 /* VAComponent+view.m in Sources */,
 				FF6607F420DBA23B00A99EE0 /* VAJSBridge.m in Sources */,
 				FF6607FF20DBA23B00A99EE0 /* VARootView.m in Sources */,
+				FF760ECF20E9CE5A001949F0 /* VAImageComponent.m in Sources */,
 				FF6607FB20DBA23B00A99EE0 /* VARegisterManager.m in Sources */,
 				FFBC38D720E5FAE300D3D806 /* VATextComponent.m in Sources */,
 				FF6607FE20DBA23B00A99EE0 /* VAInstanceManager.m in Sources */,

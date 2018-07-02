@@ -100,6 +100,10 @@ extern NSString *const RIJHighlightAttributeKey;
 @property (nonatomic, strong, readonly, nullable) NSArray<NSTextAttachment *> *attachmentViews;
 @property (nonatomic, strong, readonly, nullable) NSSet<NSTextAttachment *> *attachmentViewSet;
 
+- (NSRange)visibleGlyphRange ;
+- (NSRange)visibleCharacterRange ;
+- (CGRect)boundingRectForCharacterRange:(NSRange)characterRange;
+- (CGRect)boundingRectForGlyphRange:(NSRange)glyphRange ;
 - (CGSize)textSizeWithRenderWidth:(CGFloat)renderWidth;
 - (NSInteger)characterIndexForPoint:(CGPoint)point;
 

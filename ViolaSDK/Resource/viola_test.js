@@ -70,7 +70,7 @@ var div = document.createElement('text', {
 //                                 borderRadius:'1000dp',
 //                                 padding:'40dp',
                                  animated: true,
-                                 lines:3,
+                                 lines:4,
                                  fontSize:'16dp',
                                  lineBreakMargin:'70dp',
                                  
