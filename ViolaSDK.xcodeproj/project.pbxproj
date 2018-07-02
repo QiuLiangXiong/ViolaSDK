@@ -37,6 +37,7 @@
 		FF6607FF20DBA23B00A99EE0 /* VARootView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6607ED20DBA23B00A99EE0 /* VARootView.m */; };
 		FF66080520DBA8B000A99EE0 /* viola_test.js in Resources */ = {isa = PBXBuildFile; fileRef = FF66080420DBA8B000A99EE0 /* viola_test.js */; };
 		FF760ECF20E9CE5A001949F0 /* VAImageComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FF760ECE20E9CE5A001949F0 /* VAImageComponent.m */; };
+		FF760ED620EA7B5E001949F0 /* VAScrollerComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FF760ED520EA7B5E001949F0 /* VAScrollerComponent.m */; };
 		FFB278B520DE463C009FD859 /* VADivComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB278B420DE463C009FD859 /* VADivComponent.m */; };
 		FFB278BC20DE9AED009FD859 /* Layout.c in Sources */ = {isa = PBXBuildFile; fileRef = FFB278BB20DE9AED009FD859 /* Layout.c */; };
 		FFB278C220DE9C41009FD859 /* VAComponent+layout.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB278C120DE9C41009FD859 /* VAComponent+layout.m */; };
@@ -130,6 +131,8 @@
 		FF760ECD20E9CE5A001949F0 /* VAImageComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VAImageComponent.h; sourceTree = "<group>"; };
 		FF760ECE20E9CE5A001949F0 /* VAImageComponent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAImageComponent.m; sourceTree = "<group>"; };
 		FF760ED320E9CF76001949F0 /* VAImageHandlerProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VAImageHandlerProtocol.h; sourceTree = "<group>"; };
+		FF760ED420EA7B5E001949F0 /* VAScrollerComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VAScrollerComponent.h; sourceTree = "<group>"; };
+		FF760ED520EA7B5E001949F0 /* VAScrollerComponent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAScrollerComponent.m; sourceTree = "<group>"; };
 		FFB278B320DE463C009FD859 /* VADivComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VADivComponent.h; sourceTree = "<group>"; };
 		FFB278B420DE463C009FD859 /* VADivComponent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VADivComponent.m; sourceTree = "<group>"; };
 		FFB278BA20DE9AED009FD859 /* Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layout.h; sourceTree = "<group>"; };
@@ -400,6 +403,8 @@
 				FFBC38D620E5FAE300D3D806 /* VATextComponent.m */,
 				FF760ECD20E9CE5A001949F0 /* VAImageComponent.h */,
 				FF760ECE20E9CE5A001949F0 /* VAImageComponent.m */,
+				FF760ED420EA7B5E001949F0 /* VAScrollerComponent.h */,
+				FF760ED520EA7B5E001949F0 /* VAScrollerComponent.m */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -639,6 +644,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF760ED620EA7B5E001949F0 /* VAScrollerComponent.m in Sources */,
 				FFB278C220DE9C41009FD859 /* VAComponent+layout.m in Sources */,
 				FF6607F320DBA23B00A99EE0 /* VAMethod.m in Sources */,
 				FF66079220DBA1A300A99EE0 /* ViewController.m in Sources */,

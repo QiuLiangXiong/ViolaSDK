@@ -14,6 +14,7 @@
 #import "VABridgeManager.h"
 #import "ViolaInstance.h"
 
+
 @interface VAImageComponent()
 
 @property (nullable, nonatomic, strong)  id<VAImageOperationProtocol> imageOperation;
@@ -41,17 +42,6 @@
         [self _fillImageComponentStyles:styles isInit:true];
         [self _fillImageComponenAtts:attributes isInit:true];
         [self _fillImageComponentEvents:events];
-        
-        
-//        BOOL showFade = ((options & YYWebImageOptionSetImageWithFadeAnimation) && !self.highlighted);
-//        if (showFade) {
-//            CATransition *transition = [CATransition animation];
-//            transition.duration = stage == YYWebImageStageFinished ? _YYWebImageFadeTime : _YYWebImageProgressiveFadeTime;
-//            transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-//            transition.type = kCATransitionFade;
-//            [self.layer addAnimation:transition forKey:_YYWebImageFadeAnimationKey];
-//        }
-
     }
     return self;
 }
@@ -122,6 +112,7 @@
 }
 
 
+#pragma mark - touch event
 
 #pragma mark - private
 
