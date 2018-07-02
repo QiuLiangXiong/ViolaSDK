@@ -147,6 +147,7 @@ if(styles[@#key]){\
     [subcomponent willMoveToSuperview:self.view];
     [self.view insertSubview:subcomponent.view atIndex:index];
     [subcomponent didMoveToSuperview];
+    [self _adjustBorderLayerToFront];
     
 }
 
@@ -489,11 +490,23 @@ if(styles[@#key]){\
 }
 
 - (void)_adjustBorderLayerToFront{
-    if(_borderTopLayer){
-//        _borderTopLayer
-        //todo tomqiu
+    [self _moveLayerToFrontWithLayer:_borderLayer];
+    [self _moveLayerToFrontWithLayer:_borderBottomLayer];
+    [self _moveLayerToFrontWithLayer:_borderTopLayer];
+    [self _moveLayerToFrontWithLayer:_borderLeftLayer];
+    [self _moveLayerToFrontWithLayer:_borderRightLayer];
+}
+
+-  (void)_moveLayerToFrontWithLayer:(CALayer *)layer{
+    if (layer) {
+        NSInteger index = [_view.layer.sublayers indexOfObject:layer];
+        if (index >= 0 && index < _view.layer.sublayers.count - 1) {
+            [layer removeFromSuperlayer];
+            [_view.layer addSublayer:layer];
+        }
     }
 }
+
 
 
 

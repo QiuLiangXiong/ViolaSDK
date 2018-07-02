@@ -48,10 +48,13 @@
     //module
     [self registerModule:@"dom" withClass:[VADomModule class]];    //dom
     
+    
     //component
     
     [self registerComponent:@"div" withClass:[VADivComponent class]];
     [self registerComponent:@"text" withClass:NSClassFromString(@"VATextComponent")];
+    [self registerComponent:@"image" withClass:NSClassFromString(@"VAImageComponent")];
+    //scroller
     
     //handler
     

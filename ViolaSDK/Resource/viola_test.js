@@ -34,6 +34,7 @@
 //return;
 
 
+
 var container = document.createElement('div', {
                                        attr: { id: 'container' }
                                        })
@@ -159,6 +160,57 @@ textContainer.appendChild(div)
 textContainer.appendChild(zhankaiText)
 
 container.appendChild(textContainer)
+
+
+var image = document.createElement('image', {
+                                                     
+                                                     attr: {
+                                                     id: 'image2',
+                                   resize:'cover',
+                                                     value:'https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=f560166a52df8db1a32e7a643922dddb/0ff41bd5ad6eddc4f8daa30935dbb6fd52663306.jpg',
+                                   placeholder:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530543710813&di=d27902729d11bce986ce2f03d50c7b42&imgtype=0&src=http%3A%2F%2Fc.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fb7fd5266d0160924592977e8d80735fae6cd3431.jpg'
+                                                     },
+                                                     style: {
+                                                     //                                    flexDirection: 'row',
+                                                     //                                 flexWrap: 'wrap',
+                                                     
+                                                     
+//                                                     position:'absolute',
+//                                                     right:'10dp',
+//                                                     bottom:'10dp',
+//                                                     fontSize:'16dp',
+//                                                     color:'blue',
+                                   
+
+                                   backgroundColor:'yellow',
+                                   
+                                   aspectRatio:1,
+                                   borderRadius:'40dp',
+                                   margin:'20dp',
+                                   borderColor:'yellow',
+                                   borderWidth:'10dp',
+                                                     
+                                                     
+                                                     //                                 borderRadius:'1000dp',
+                                                     //                                 padding:'40dp',
+                                                     animated: true,
+                                                     }
+                                                     })
+
+
+container.appendChild(image);
+
+var imageArray = ['https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530543710813&di=96d5365b426fa140761a173c6ee92ff1&imgtype=0&src=http%3A%2F%2Fa.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Ffc1f4134970a304eb5088f73ddc8a786c9175c14.jpg',
+                  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530543710813&di=7ccc90179f0b0a24601fb85c76b7efb6&imgtype=0&src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F37d3d539b6003af33cd1a3ee392ac65c1138b6d0.jpg',
+                   'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530543710813&di=97c9b207624e8fe56d2b3cbd74e2e051&imgtype=0&src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fb7003af33a87e95053e42ae21c385343faf2b449.jpg',
+                   'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530543710813&di=5256b51d3b6b78e59626f0973f66d468&imgtype=0&src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fb8014a90f603738d1f357dacbf1bb051f919ecc5.jpg',
+                  ]
+var imageIndex = 0;
+var ratioValues = [0.5,0.8,2,1];
+image.on('click',function(e){
+         image.setAttr('value',imageArray[++index % 4])
+         image.setStyle({aspectRatio:ratioValues[index % 4]})
+         })
 
 //container.appendChild(div)
 

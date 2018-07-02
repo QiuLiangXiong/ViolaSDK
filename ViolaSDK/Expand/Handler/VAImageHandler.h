@@ -8,7 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import "VAImageHandlerProtocol.h"
-
+#import "YYWebImageManager.h"
+#import "YYWebImageOperation.h"
 @interface VAImageHandler : NSObject<VAImageHandlerProtocol>
 
 @end
+
+@interface VAImageOperation : NSObject<VAImageOperationProtocol>
+
+@property (nullable, nonatomic, strong) YYWebImageOperation * imageOpertaion;
+
+@end
+

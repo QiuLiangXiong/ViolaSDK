@@ -80,5 +80,6 @@ CGFloat VAFloorValue(CGFloat value);
 + (VATextDecoration)convertToTextDecoration:(id)value;
 + (NSLineBreakMode)convertToTextOverflow:(id)value;
 + (UIEdgeInsets)converToEdgeInsets:(id)value;
++ (UIViewContentMode)converToContentMode:(id)value;
 @end
 

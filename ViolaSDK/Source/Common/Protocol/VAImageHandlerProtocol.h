@@ -13,6 +13,10 @@
 
 - (void)cancel;
 
+@property (nullable, nonatomic, strong) NSString * imageUrl;
+@property (nullable, nonatomic, strong) UIImage * image;
+@property (nullable, nonatomic, strong) NSError * error;
+
 @end
 
 @protocol VAImageHandlerProtocol <NSObject>

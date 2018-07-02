@@ -12,6 +12,7 @@
 #import "VAComponent+private.h"
 #import "VAWeakObject.h"
 #import "VADefine.h"
+#import "ViolaInstance.h"
 
 @implementation VAComponent 
 static int componentAllocCount;
@@ -110,6 +111,19 @@ static int componentAllocCount;
 
 - (void)updateComponentOnMainThreadWithAttributes:(NSDictionary *)attributes styles:(NSDictionary *)styles events:(NSArray *)events{
     VAAssertMainThread();
+}
+
+
+- (void)addTaskToMainQueueOnComponentThead:(dispatch_block_t)block{
+   
+    [self addTaskToMainQueueOnComponentThead:block withAnimated:false];
+}
+- (void)addTaskToMainQueueOnComponentThead:(dispatch_block_t)block withAnimated:(BOOL)animated{
+    kBlockWeakSelf;
+    [VAThreadManager performOnComponentThreadWithBlock:^{
+        [weakSelf.violaInstance.componentController addTaskToMainQueueOnComponentThead:block withAnimated:animated];
+    }];
+
 }
 
 #pragma mark update

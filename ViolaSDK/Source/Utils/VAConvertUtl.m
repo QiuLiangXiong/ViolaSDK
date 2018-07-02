@@ -530,5 +530,16 @@ if([string isEqualToString:@#key]){\
     return UIEdgeInsetsMake(VA_EDGE_VALUE(nums[0]), VA_EDGE_VALUE(nums[1]), VA_EDGE_VALUE(nums[2]), VA_EDGE_VALUE(nums[3]));
 }
 
++ (UIViewContentMode)converToContentMode:(id)value{
+    NSString *string = [[self class] convertToString:value];
+    if ([string isEqualToString:@"cover"])
+        return UIViewContentModeScaleAspectFill;
+    else if ([string isEqualToString:@"contain"])
+        return UIViewContentModeScaleAspectFit;
+    else if ([string isEqualToString:@"stretch"])
+        return UIViewContentModeScaleToFill;
+    return UIViewContentModeScaleToFill;
+}
+
 //convertToTextDecoration
 @end

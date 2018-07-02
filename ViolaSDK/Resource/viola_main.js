@@ -456,7 +456,7 @@ var Viola = this;
  
  function createBody(doc, bodyRef) {
  if ( bodyRef === void 0 ) bodyRef = 'root';
- var body = new Element('body', {}, bodyRef);
+ var body = new Element('div', {}, bodyRef);
  body.role = bodyRef;
  body.parentNode = doc;
  body.__setCTX(doc.ctx);
@@ -661,8 +661,8 @@ var Viola = this;
                  TextNode.prototype = Object.create( Element$$1 && Element$$1.prototype );
                  TextNode.prototype.constructor = TextNode;
                  TextNode.prototype.setText = function setText (text) {
-                 this.text = text;
-                 this.attr.value = text;
+                 this.attr.value = this.text = text;
+                 this.setAttr('value', text);
                  };
                  TextNode.prototype.toJSON = function toJSON () {
                  var ref$1 = this;
@@ -4043,6 +4043,9 @@ var Viola = this;
  Vue.version = '2.5.17-beta.0';
  var namespaceMap = {};
  function createElement$1 (tagName, vnode) {
+ if (tagName === 'text') {
+ return document.createTextNode()
+ }
  return document.createElement(tagName)
  }
  function createElementNS(namespace, tagName, vnode) {
@@ -4069,6 +4072,11 @@ var Viola = this;
  node.removeChild(child);
  }
  function appendChild (node, child) {
+ if (child.nodeType === 3 && node.nodeType === 3) {
+ node.setText(child.text);
+ child.parentNode = node;
+ return
+ }
  node.appendChild(child);
  child.setInNative && child.setInNative();
  }
@@ -4082,10 +4090,10 @@ var Viola = this;
  return node.type
  }
  function setTextContent (node, text) {
- if (node.nodeType === 3) {
+ if (node.parentNode.nodeType === 3) {
+ node.parentNode.setText(text);
+ } else {
  node.setText(text);
- } else if (node.parentNode) {
- node.parentNode.setAttr(value, text);
  }
  }
  function setAttribute (node, key, val) {
@@ -5437,4 +5445,3 @@ var Viola = this;
  init();
  
  }());
-
