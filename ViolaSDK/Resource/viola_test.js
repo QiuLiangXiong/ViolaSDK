@@ -167,8 +167,8 @@ var image = document.createElement('image', {
                                                      attr: {
                                                      id: 'image2',
                                    resize:'cover',
-                                                     value:'https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=f560166a52df8db1a32e7a643922dddb/0ff41bd5ad6eddc4f8daa30935dbb6fd52663306.jpg',
-                                   placeholder:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530543710813&di=d27902729d11bce986ce2f03d50c7b42&imgtype=0&src=http%3A%2F%2Fc.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fb7fd5266d0160924592977e8d80735fae6cd3431.jpg'
+                                                     value:'https://timgs2a.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530606236618&di=ac19662b9b4d4170d64cdbc75c1d722a&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01006f55e2d00932f875a1328c5f44.gif',
+                                   placeholder:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530606299342&di=ed9920da188b43b713432c736f31ef95&imgtype=0&src=http%3A%2F%2Fpic2.16pic.com%2F00%2F20%2F02%2F16pic_2002642_b.jpg'
                                                      },
                                                      style: {
                                                      //                                    flexDirection: 'row',
@@ -182,14 +182,14 @@ var image = document.createElement('image', {
 //                                                     color:'blue',
                                    
 
-                                   backgroundColor:'yellow',
+//                                   backgroundColor:'yellow',
                                    
-                                   aspectRatio:1,
-                                   borderRadius:'40dp',
-                                   margin:'20dp',
+                                   aspectRatio:1.8,
+                                   borderRadius:'10dp',
+                                   margin:'10dp',
                                    borderColor:'yellow',
-                                   borderWidth:'10dp',
-                                                     
+//                                   borderWidth:'10dp',
+                                   
                                                      
                                                      //                                 borderRadius:'1000dp',
                                                      //                                 padding:'40dp',
@@ -200,15 +200,20 @@ var image = document.createElement('image', {
 
 container.appendChild(image);
 
-var imageArray = ['https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530543710813&di=96d5365b426fa140761a173c6ee92ff1&imgtype=0&src=http%3A%2F%2Fa.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Ffc1f4134970a304eb5088f73ddc8a786c9175c14.jpg',
-                  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530552750328&di=14e7f4982777d3132e5e589d4397edc0&imgtype=0&src=http%3A%2F%2Fimg0.pconline.com.cn%2Fpconline%2F1405%2F15%2F4778816_08baizi_thumb.gif',
-                   'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530543710813&di=97c9b207624e8fe56d2b3cbd74e2e051&imgtype=0&src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fb7003af33a87e95053e42ae21c385343faf2b449.jpg',
-                   'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530543710813&di=5256b51d3b6b78e59626f0973f66d468&imgtype=0&src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fb8014a90f603738d1f357dacbf1bb051f919ecc5.jpg',
+var imageArray = ['https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530605724621&di=c5372a172d3dc65edd25a2325e0a8b7a&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01520856fc12636ac725794866fd27.gif',
+                  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530605724621&di=1666092893e145389366f060b7c6167f&imgtype=0&src=http%3A%2F%2Fwww.etaiyang.com%2Ffile%2Fupload%2F201610%2F07%2F11-21-06-29-12635.gif',
+                   'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530605724619&di=7fcb6c6b34cbbf748fe0c83b89083b03&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01006f55e2d00932f875a1328c5f44.gif',
+                  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530606719762&di=e15bd430aea26c17ac199b669cf871fb&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0123205986fcfa0000002129ec6a7c.gif',
+                   'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530605724617&di=020c8b0ba72091312ddc282ce78b6732&imgtype=0&src=http%3A%2F%2Fd.ifengimg.com%2Fw128%2Fp0.ifengimg.com%2Fpmop%2F2017%2F0710%2F3A6528751DBBE11294791593C3265E4C91EE7DC7_size968_w500_h259.gif',
+                  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530605724617&di=eae8ad53d0f7935f3bc1e2216611f742&imgtype=0&src=http%3A%2F%2Fp0.ifengimg.com%2Fpmop%2F2017%2F0822%2F24490F325E9E5E47F5F6A5FFFE0DCED944234B80_size1073_w640_h270.gif',
+                  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530605724616&di=5da3368c59d5402621b489f017f9514a&imgtype=0&src=http%3A%2F%2Fp0.ifengimg.com%2Fpmop%2F2017%2F0701%2FA7D94B702E843DF0D95B790390169C5F1118E224_size1669_w502_h295.gif',
+                  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530605724587&di=b82f5909542cf8313227de3339ce6ff4&imgtype=0&src=http%3A%2F%2Fp1.ifengimg.com%2Fa%2F2017_23%2F15964f84a01cbcf_size1542_w611_h336.gif',
+                  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530605889114&di=0267551c724f48a3868cff27c232fbd1&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Fgames%2Fcrawl%2F20160921%2Fc-Vc-fxvyqvy6954777.gif',
                   ]
 var imageIndex = 0;
 var ratioValues = [0.5,0.8,2,1];
 image.on('click',function(e){
-         image.setAttr('value',imageArray[++index % 4])
+         image.setAttr('value',imageArray[++index % imageArray.length])
        //  image.setStyle({aspectRatio:ratioValues[index % 4]})
          })
 

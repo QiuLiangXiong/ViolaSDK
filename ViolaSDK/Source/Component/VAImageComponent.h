@@ -10,4 +10,6 @@
 
 @interface VAImageComponent : VAComponent
 
+- (UIImageView *)loadImageView;
+
 @end

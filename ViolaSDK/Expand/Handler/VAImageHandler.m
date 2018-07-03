@@ -7,6 +7,7 @@
 //
 
 #import "VAImageHandler.h"
+#import "YYImage.h"
 
 
 @implementation VAImageHandler
@@ -18,6 +19,7 @@
 //            if (image && isBlued) {
 //                image = [TFImageEffects tf_blurredImageWithImage:image];
 //            }
+            
             completedBlock(image, error, true);
         }
     }];

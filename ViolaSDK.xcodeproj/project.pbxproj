@@ -183,6 +183,7 @@
 		2D1B694520E9FE7100F03E33 /* Expand */ = {
 			isa = PBXGroup;
 			children = (
+				FF760F2720EB36E7001949F0 /* Component */,
 				2D1B694620E9FE8A00F03E33 /* Handler */,
 			);
 			path = Expand;
@@ -392,6 +393,13 @@
 				FF66080420DBA8B000A99EE0 /* viola_test.js */,
 			);
 			path = Resource;
+			sourceTree = "<group>";
+		};
+		FF760F2720EB36E7001949F0 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Component;
 			sourceTree = "<group>";
 		};
 		FFB278B220DE462A009FD859 /* Component */ = {

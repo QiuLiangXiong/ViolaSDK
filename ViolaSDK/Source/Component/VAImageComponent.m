@@ -35,6 +35,16 @@
     BOOL _fade;//淡入
     
 }
+
+- (UIImageView *)loadImageView{
+    
+    static  Class imageViewClass;
+    
+    if (!imageViewClass) {
+        imageViewClass = NSClassFromString(@"YYAnimatedImageView") ? : [UIImageView class];
+    }
+    return [[imageViewClass alloc] init];
+}
 #pragma mark - override
 - (instancetype)initWithRef:(NSString *)ref type:(NSString *)type styles:(NSDictionary *)styles attributes:(NSDictionary *)attributes events:(NSArray *)events weexInstance:(ViolaInstance *)violaInstance{
     if (self = [super initWithRef:ref type:type styles:styles attributes:attributes events:events weexInstance:violaInstance]) {
@@ -48,10 +58,12 @@
 
 - (UIView *)loadView{
     UIView * view = [[UIView alloc] init];;
-    _imageView = [[UIImageView alloc] init];
+    _imageView = [self loadImageView];
     [view addSubview:_imageView];
     return view;
 }
+
+
 
 - (void)viewDidLoad{
     [super viewDidLoad];
@@ -311,7 +323,7 @@
             }
             self.imageView.image = image;
         }
-    }else {
+    }else if(image){
         if (self.imageView.image != image) {
             if (_fade && [self isBodyLayoutFinish]) {
                 CATransition *transition = [CATransition animation];
