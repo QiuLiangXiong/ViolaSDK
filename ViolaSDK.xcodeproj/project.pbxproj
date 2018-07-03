@@ -10,6 +10,7 @@
 		1C10F37641523840519DA37E /* libPods-ViolaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81E0BFB4061778097807BAD1 /* libPods-ViolaSDK.a */; };
 		2D1B694920E9FEA200F03E33 /* VAImageHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D1B694820E9FEA200F03E33 /* VAImageHandler.m */; };
 		2D1B694C20EB877C00F03E33 /* VAWrapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D1B694B20EB877C00F03E33 /* VAWrapView.m */; };
+		C6B2FAAE20EBBD0E005453DF /* VAModalUIModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C6B2FAAD20EBBD0E005453DF /* VAModalUIModule.m */; };
 		FF17DDF920E3D4ED008F29B3 /* viola_main.js in Resources */ = {isa = PBXBuildFile; fileRef = FF17DDF820E3D4EC008F29B3 /* viola_main.js */; };
 		FF66078F20DBA1A300A99EE0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FF66078E20DBA1A300A99EE0 /* AppDelegate.m */; };
 		FF66079220DBA1A300A99EE0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF66079120DBA1A300A99EE0 /* ViewController.m */; };
@@ -74,6 +75,8 @@
 		2D1B694B20EB877C00F03E33 /* VAWrapView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAWrapView.m; sourceTree = "<group>"; };
 		3BB39F8B722A98E20AF0546B /* Pods-ViolaSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ViolaSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ViolaSDK/Pods-ViolaSDK.debug.xcconfig"; sourceTree = "<group>"; };
 		81E0BFB4061778097807BAD1 /* libPods-ViolaSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ViolaSDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C6B2FAAC20EBBD09005453DF /* VAModalUIModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VAModalUIModule.h; sourceTree = "<group>"; };
+		C6B2FAAD20EBBD0E005453DF /* VAModalUIModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VAModalUIModule.m; sourceTree = "<group>"; };
 		D327B15CF3B1F42B86E46D13 /* Pods-ViolaSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ViolaSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-ViolaSDK/Pods-ViolaSDK.release.xcconfig"; sourceTree = "<group>"; };
 		FF17DDF820E3D4EC008F29B3 /* viola_main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = viola_main.js; sourceTree = "<group>"; };
 		FF66078A20DBA1A300A99EE0 /* ViolaSDK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ViolaSDK.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -316,6 +319,8 @@
 			isa = PBXGroup;
 			children = (
 				FF6607D320DBA23B00A99EE0 /* VADomModule.h */,
+				C6B2FAAD20EBBD0E005453DF /* VAModalUIModule.m */,
+				C6B2FAAC20EBBD09005453DF /* VAModalUIModule.h */,
 				FF6607D420DBA23B00A99EE0 /* VADomModule.m */,
 			);
 			path = Module;
@@ -677,6 +682,7 @@
 				FFB278CD20E12822009FD859 /* VAComponent+event.m in Sources */,
 				FF6607F620DBA23B00A99EE0 /* VADomModule.m in Sources */,
 				FFB278CA20E0FD14009FD859 /* VAWeakObject.m in Sources */,
+				C6B2FAAE20EBBD0E005453DF /* VAModalUIModule.m in Sources */,
 				FF6607F220DBA23B00A99EE0 /* VABridgeCategory.m in Sources */,
 				FFB278BC20DE9AED009FD859 /* Layout.c in Sources */,
 				FFB2793820E206AB009FD859 /* TestViewController.m in Sources */,
