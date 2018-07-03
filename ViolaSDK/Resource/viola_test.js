@@ -33,6 +33,7 @@
 //
 //return;
 
+callNative(1,[{module:'modal',method:'alert',args:[{ message: 'Hello', okTitle: 'Get it!' }, function() {}]}])
 
 
 var container = document.createElement('scroller', {

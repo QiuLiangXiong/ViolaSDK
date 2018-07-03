@@ -11,5 +11,6 @@
 @interface VAUtil : NSObject
 
 + (NSDictionary *)getNativeInfo;
++ (BOOL)isBlankString:(NSString *)string;
 
 @end
