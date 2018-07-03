@@ -7,7 +7,16 @@
 //
 
 #import "VAScrollerComponent.h"
+#import "VAComponent+private.h"
 
 @implementation VAScrollerComponent
+
+#pragma mark - layout
+
+- (int)_getChildrenCountForCSSNode{
+    return 0;
+}
+
+
 
 @end

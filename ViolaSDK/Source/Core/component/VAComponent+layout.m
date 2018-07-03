@@ -62,6 +62,10 @@
     }
 }
 
+- (int)_getChildrenCountForCSSNode{
+     return (int)_subcomponents.count;
+}
+
 #pragma mark - private
 
 
@@ -76,7 +80,7 @@ static void cssNode_print(void *context){
 
 static int cssNode_childrenCount(void * context){
     VAComponent *component = (__bridge VAComponent *)context;
-    return (int)component->_subcomponents.count;
+    return [component _getChildrenCountForCSSNode];
 }
 
 static css_node_t* cssNode_getChild(void *context, int i){

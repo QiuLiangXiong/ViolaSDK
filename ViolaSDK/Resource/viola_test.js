@@ -36,8 +36,28 @@
 
 
 var container = document.createElement('div', {
-                                       attr: { id: 'container' }
+                                       attr: { id: 'container' },
+                                       style:{
+                                       }
                                        })
+
+var bgIMage = document.createElement('image',{
+                                     attr:{
+                                     resize:'cover',
+                                     value:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530608545073&di=5ed52abc5ee0a6029473c458032eddcd&imgtype=0&src=http%3A%2F%2Fs9.sinaimg.cn%2Fmw690%2F001jbVQCzy70gBb9NkQ98%26690'},
+                                     style:{
+                                     position:'absolute',
+                                     top:'0',
+                                     left:'0',
+                                     right:'0',
+                                     bottom:'0',
+                                     }
+                                     
+                                     }
+                                     )
+
+container.appendChild(bgIMage);
+
 
 var textContainer = document.createElement('div', {
      style: {
@@ -62,7 +82,7 @@ var div = document.createElement('text', {
 //                                    flexDirection: 'row',
 //                                 flexWrap: 'wrap',
 //                                 borderColor:'r',
-                                     backgroundColor:'red',
+//                                     backgroundColor:'red',
 
 //                                 maxWidth:'200dp',
 //                                 borderWidth:'10dp',
@@ -167,7 +187,7 @@ var image = document.createElement('image', {
                                                      attr: {
                                                      id: 'image2',
                                    resize:'cover',
-                                                     value:'https://timgs2a.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530606236618&di=ac19662b9b4d4170d64cdbc75c1d722a&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01006f55e2d00932f875a1328c5f44.gif',
+                                                     value:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530606236618&di=ac19662b9b4d4170d64cdbc75c1d722a&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01006f55e2d00932f875a1328c5f44.gif',
                                    placeholder:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530606299342&di=ed9920da188b43b713432c736f31ef95&imgtype=0&src=http%3A%2F%2Fpic2.16pic.com%2F00%2F20%2F02%2F16pic_2002642_b.jpg'
                                                      },
                                                      style: {
@@ -204,16 +224,25 @@ var imageArray = ['https://timgsa.baidu.com/timg?image&quality=80&size=b9999_100
                   'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530605724621&di=1666092893e145389366f060b7c6167f&imgtype=0&src=http%3A%2F%2Fwww.etaiyang.com%2Ffile%2Fupload%2F201610%2F07%2F11-21-06-29-12635.gif',
                    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530605724619&di=7fcb6c6b34cbbf748fe0c83b89083b03&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01006f55e2d00932f875a1328c5f44.gif',
                   'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530606719762&di=e15bd430aea26c17ac199b669cf871fb&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0123205986fcfa0000002129ec6a7c.gif',
+                  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530608428219&di=cf4ae204656c2d0cfa1b98d31417ac22&imgtype=0&src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201410%2F04%2F20141004224736_SUUrT.gif',
+                  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530608428218&di=e8074d8efe75e91430bc1ff29f4a71c5&imgtype=0&src=http%3A%2F%2Fww2.sinaimg.cn%2Flarge%2F85cccab3gw1etdlb5wq0hg20dm07eu0y.jpg',
+                  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530608545071&di=2d114fdc98823b6bb81fdcd1b8b03557&imgtype=0&src=http%3A%2F%2Fww1.sinaimg.cn%2Flarge%2F85cccab3gw1etelu78uh2g20dw0821jl.jpg',
+                  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530609452001&di=c8b60fa2fbd83d2e8ea47096c0a78fd0&imgtype=0&src=http%3A%2F%2Fc.hiphotos.baidu.com%2Fexp%2Fw%3D500%2Fsign%3D1bc38569556034a829e2b881fb1249d9%2F9e3df8dcd100baa14ff74bd34e10b912c9fc2efa.jpg',
+                  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530609452000&di=422c9062d7f1651733ad8b4ba69ef357&imgtype=0&src=http%3A%2F%2Fwww.2qqtouxiang.com%2Fpic%2FTP5072_05.gif',
+                  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530609513975&di=8563333210e48f8fe1793e8a3dabc9e0&imgtype=0&src=http%3A%2F%2Fww2.sinaimg.cn%2Fbmiddle%2Fad6a04a7tw1ege94ute9lg209w05khdu.gif',
                    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530605724617&di=020c8b0ba72091312ddc282ce78b6732&imgtype=0&src=http%3A%2F%2Fd.ifengimg.com%2Fw128%2Fp0.ifengimg.com%2Fpmop%2F2017%2F0710%2F3A6528751DBBE11294791593C3265E4C91EE7DC7_size968_w500_h259.gif',
                   'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530605724617&di=eae8ad53d0f7935f3bc1e2216611f742&imgtype=0&src=http%3A%2F%2Fp0.ifengimg.com%2Fpmop%2F2017%2F0822%2F24490F325E9E5E47F5F6A5FFFE0DCED944234B80_size1073_w640_h270.gif',
                   'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530605724616&di=5da3368c59d5402621b489f017f9514a&imgtype=0&src=http%3A%2F%2Fp0.ifengimg.com%2Fpmop%2F2017%2F0701%2FA7D94B702E843DF0D95B790390169C5F1118E224_size1669_w502_h295.gif',
                   'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530605724587&di=b82f5909542cf8313227de3339ce6ff4&imgtype=0&src=http%3A%2F%2Fp1.ifengimg.com%2Fa%2F2017_23%2F15964f84a01cbcf_size1542_w611_h336.gif',
                   'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530605889114&di=0267551c724f48a3868cff27c232fbd1&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Fgames%2Fcrawl%2F20160921%2Fc-Vc-fxvyqvy6954777.gif',
+                  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530608428213&di=77b33b96a1b8dcf9238a006009ec79ee&imgtype=0&src=http%3A%2F%2Fpic.962.net%2Fup%2F2016-8%2F2016081911352067076.gif',
+                  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530608428211&di=e98c1880cb36ec21c8977f51a123a1dc&imgtype=0&src=http%3A%2F%2Fs16.sinaimg.cn%2Fmw690%2F003siCTLty6PBWuZrhZ3f%26690',
+                 
                   ]
 var imageIndex = 0;
 var ratioValues = [0.5,0.8,2,1];
 image.on('click',function(e){
-         image.setAttr('value',imageArray[++index % imageArray.length])
+         image.setAttr('value',imageArray[index++ % imageArray.length])
        //  image.setStyle({aspectRatio:ratioValues[index % 4]})
          })
 
@@ -305,7 +334,7 @@ container.appendChild(div3)
 
 var btnGroup = document.createElement('div', {
                                       style: {
-                                      backgroundColor: 'black',
+//                                      backgroundColor: '',
                                       flexDirection: 'row',
                                       justifyContent: 'space-between'
                                       }

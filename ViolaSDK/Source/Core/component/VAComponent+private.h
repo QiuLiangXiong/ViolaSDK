@@ -93,6 +93,7 @@
 - (void) _initLayoutWithStyles:(NSDictionary *)styles;
 - (void)_updateLayoutWithStyles:(NSDictionary *)styles;
 - (void)_syncCSSNodeLayoutWithDirtyComponents:(NSMutableArray *)dirtyComponents;
+- (int)_getChildrenCountForCSSNode;
 //+view
 - (void)_initViewPropWithStyles:(NSDictionary *)styles;//on component thread
 - (void)_updateViewPropOnMainTheadWithStyles:(NSDictionary *)styles;//on main thread

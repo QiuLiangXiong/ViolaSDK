@@ -27,6 +27,8 @@
     intance.instanceFrame = self.view.frame;
     
     
+    
+    
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"viola_test" ofType:@"js"];
     NSString * script = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
     
@@ -49,6 +51,8 @@
 
 - (void)viewDidLayoutSubviews{
     [super viewDidLayoutSubviews];
+    CGRect dfd = self.view.frame;
+    
     self.vaInstance.instanceFrame = self.view.frame;
 }
 
