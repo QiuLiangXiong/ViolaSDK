@@ -42,6 +42,7 @@ var container = document.createElement('scroller', {
                                        pagingEnable:0,
                                        },
                                        style:{
+//                                       flexDirection:'row',
                                        bouncesEnable:0,
                                       // backgroundColor:'',
                                        
@@ -606,4 +607,8 @@ document.render()
 ////    nativeLog(JSON.stringify(tasks));
 ////}
 ////
+
+
+
+
 

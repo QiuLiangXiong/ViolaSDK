@@ -27,7 +27,7 @@
     intance.instanceFrame = self.view.frame;
     
     
-    self.navigationController.navigationBar.hidden = true;
+   // self.navigationController.navigationBar.hidden = true;
     
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"viola_test" ofType:@"js"];
     NSString * script = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];

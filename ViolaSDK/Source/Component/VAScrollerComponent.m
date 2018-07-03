@@ -53,6 +53,11 @@
 
 - (void)viewDidLoad{
     _scrollView.contentSize = _contentSize;
+    if (@available(iOS 11.0, *)) {
+        _scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    } else {
+        // Fallback on earlier versions
+    }
     [self _syncAttrToScrollView];
     
 }
