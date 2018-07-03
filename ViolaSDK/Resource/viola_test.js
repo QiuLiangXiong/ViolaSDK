@@ -39,6 +39,7 @@ var container = document.createElement('scroller', {
                                        attr: { id: 'container'
                                        ,
                                        bouncesEnable:1,
+                                       pagingEnable:0,
                                        },
                                        style:{
                                        bouncesEnable:0,

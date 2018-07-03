@@ -6,6 +6,7 @@ source 'git@github.com:CocoaPods/Specs.git'
 def general_pods
    
     pod 'YYWebImage'
+    pod 'AFNetworking'
 
 end
 
