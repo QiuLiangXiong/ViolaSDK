@@ -34,6 +34,11 @@ typedef NS_ENUM(NSInteger, VATextDecoration) {
     VATextDecorationLineThrough
 };
 
+typedef NS_ENUM(NSUInteger, VAScrollDirection) {
+    VAScrollDirectionVertical,
+    VAScrollDirectionHorizontal,
+};
+
 
 
 @interface VAConvertUtl : NSObject

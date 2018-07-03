@@ -229,7 +229,11 @@ CGSize VAScreenSize(void)
 }
 
 CGFloat VARoundValue(CGFloat value){
+    if(isnan(value)){
+        value = 0;
+    }
     CGFloat scale = VAScreenScale();
+    
     return round(value * scale) / scale;
 }
 CGFloat VACeilValue(CGFloat value)

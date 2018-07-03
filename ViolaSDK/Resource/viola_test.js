@@ -35,9 +35,18 @@
 
 
 
-var container = document.createElement('div', {
-                                       attr: { id: 'container' },
+var container = document.createElement('scroller', {
+                                       attr: { id: 'container'
+                                       ,
+                                       bouncesEnable:1,
+                                       },
                                        style:{
+                                       bouncesEnable:0,
+                                      // backgroundColor:'',
+                                       
+                                    
+                                       //
+                                       
                                        }
                                        })
 
@@ -243,6 +252,9 @@ var imageIndex = 0;
 var ratioValues = [0.5,0.8,2,1];
 image.on('click',function(e){
          image.setAttr('value',imageArray[index++ % imageArray.length])
+         
+       //  container.setAttr('showScrollerIndicator',0)
+         
        //  image.setStyle({aspectRatio:ratioValues[index % 4]})
          })
 

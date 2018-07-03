@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1C10F37641523840519DA37E /* libPods-ViolaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81E0BFB4061778097807BAD1 /* libPods-ViolaSDK.a */; };
 		2D1B694920E9FEA200F03E33 /* VAImageHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D1B694820E9FEA200F03E33 /* VAImageHandler.m */; };
+		2D1B694C20EB877C00F03E33 /* VAWrapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D1B694B20EB877C00F03E33 /* VAWrapView.m */; };
 		FF17DDF920E3D4ED008F29B3 /* viola_main.js in Resources */ = {isa = PBXBuildFile; fileRef = FF17DDF820E3D4EC008F29B3 /* viola_main.js */; };
 		FF66078F20DBA1A300A99EE0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FF66078E20DBA1A300A99EE0 /* AppDelegate.m */; };
 		FF66079220DBA1A300A99EE0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF66079120DBA1A300A99EE0 /* ViewController.m */; };
@@ -69,6 +70,8 @@
 /* Begin PBXFileReference section */
 		2D1B694720E9FEA200F03E33 /* VAImageHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VAImageHandler.h; sourceTree = "<group>"; };
 		2D1B694820E9FEA200F03E33 /* VAImageHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAImageHandler.m; sourceTree = "<group>"; };
+		2D1B694A20EB877C00F03E33 /* VAWrapView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VAWrapView.h; sourceTree = "<group>"; };
+		2D1B694B20EB877C00F03E33 /* VAWrapView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAWrapView.m; sourceTree = "<group>"; };
 		3BB39F8B722A98E20AF0546B /* Pods-ViolaSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ViolaSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ViolaSDK/Pods-ViolaSDK.debug.xcconfig"; sourceTree = "<group>"; };
 		81E0BFB4061778097807BAD1 /* libPods-ViolaSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ViolaSDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D327B15CF3B1F42B86E46D13 /* Pods-ViolaSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ViolaSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-ViolaSDK/Pods-ViolaSDK.release.xcconfig"; sourceTree = "<group>"; };
@@ -183,7 +186,6 @@
 		2D1B694520E9FE7100F03E33 /* Expand */ = {
 			isa = PBXGroup;
 			children = (
-				FF760F2720EB36E7001949F0 /* Component */,
 				2D1B694620E9FE8A00F03E33 /* Handler */,
 			);
 			path = Expand;
@@ -373,6 +375,8 @@
 			children = (
 				FF6607EC20DBA23B00A99EE0 /* VARootView.h */,
 				FF6607ED20DBA23B00A99EE0 /* VARootView.m */,
+				2D1B694A20EB877C00F03E33 /* VAWrapView.h */,
+				2D1B694B20EB877C00F03E33 /* VAWrapView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -393,13 +397,6 @@
 				FF66080420DBA8B000A99EE0 /* viola_test.js */,
 			);
 			path = Resource;
-			sourceTree = "<group>";
-		};
-		FF760F2720EB36E7001949F0 /* Component */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Component;
 			sourceTree = "<group>";
 		};
 		FFB278B220DE462A009FD859 /* Component */ = {
@@ -655,6 +652,7 @@
 				FF760ED620EA7B5E001949F0 /* VAScrollerComponent.m in Sources */,
 				FFB278C220DE9C41009FD859 /* VAComponent+layout.m in Sources */,
 				FF6607F320DBA23B00A99EE0 /* VAMethod.m in Sources */,
+				2D1B694C20EB877C00F03E33 /* VAWrapView.m in Sources */,
 				FF66079220DBA1A300A99EE0 /* ViewController.m in Sources */,
 				FF6607F120DBA23B00A99EE0 /* VAComponent.m in Sources */,
 				FF6607EE20DBA23B00A99EE0 /* ViolaEngine.m in Sources */,

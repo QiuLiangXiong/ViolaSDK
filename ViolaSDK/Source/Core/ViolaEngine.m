@@ -54,7 +54,9 @@
     [self registerComponent:@"div" withClass:[VADivComponent class]];
     [self registerComponent:@"text" withClass:NSClassFromString(@"VATextComponent")];
     [self registerComponent:@"image" withClass:NSClassFromString(@"VAImageComponent")];
+    
     //scroller
+    [self registerComponent:@"scroller" withClass:NSClassFromString(@"VAScrollerComponent")];
     
     //handler
     

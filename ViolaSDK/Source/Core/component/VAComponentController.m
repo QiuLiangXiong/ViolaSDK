@@ -64,14 +64,12 @@
     }];
     //添加真元素
     [self addComponent:body toSupercomponent:_rootComponent.ref atIndex:0];
+//    dispatch_async([VAThreadManager getComponentQueue], ^{
+//    });
     
-
-    dispatch_async([VAThreadManager getComponentQueue], ^{
-
-        
-        
+    [VAThreadManager performOnComponentThreadWithBlock:^{
        [VAThreadManager violaIntanceRenderFinish];
-    });
+    } afterDelay:0.1];
     [VAThreadManager performOnComponentThreadWithBlock:^{
         weakSelf.isBodyLayoutFinish = true;
     } afterDelay:0.5];

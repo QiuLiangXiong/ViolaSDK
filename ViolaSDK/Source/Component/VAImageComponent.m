@@ -254,10 +254,6 @@
         
     }
     
-    
-    
-    
-    
     //_url
     BOOL placeHolderUlrEqual = [self _isUrlEqual:_placeholderUrl url1:_placeHolderImageOperation.imageUrl];
     if (!placeHolderUlrEqual || _placeHolderImageOperation.error) {
