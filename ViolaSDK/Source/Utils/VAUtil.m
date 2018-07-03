@@ -35,4 +35,20 @@
     return data;
 }
 
++ (BOOL)isBlankString:(NSString *)string {
+    
+    if (string == nil || string == NULL || [string isKindOfClass:[NSNull class]]) {
+        return true;
+    }
+    if (![string isKindOfClass:[NSString class]]) {
+        VALogError(@"%@ is not a string", string);
+        return true;
+    }
+    if ([[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0) {
+        return true;
+    }
+    
+    return false;
+}
+
 @end
