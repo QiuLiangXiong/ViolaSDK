@@ -43,7 +43,9 @@ var container = document.createElement('scroller', {
                                        },
                                        style:{
 //                                       flexDirection:'row',
-                                       bouncesEnable:0,
+//                                       bouncesEnable:0,
+//                                       borderColor:'red',
+
                                       // backgroundColor:'',
                                        
                                     
@@ -67,7 +69,7 @@ var bgIMage = document.createElement('image',{
                                      }
                                      )
 
-container.appendChild(bgIMage);
+//container.appendChild(bgIMage);
 
 
 var textContainer = document.createElement('div', {
@@ -199,7 +201,7 @@ var image = document.createElement('image', {
                                                      id: 'image2',
                                    resize:'cover',
                                                      value:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530606236618&di=ac19662b9b4d4170d64cdbc75c1d722a&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01006f55e2d00932f875a1328c5f44.gif',
-                                   placeholder:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530606299342&di=ed9920da188b43b713432c736f31ef95&imgtype=0&src=http%3A%2F%2Fpic2.16pic.com%2F00%2F20%2F02%2F16pic_2002642_b.jpg'
+                                   placeholder:''
                                                      },
                                                      style: {
                                                      //                                    flexDirection: 'row',
@@ -211,6 +213,7 @@ var image = document.createElement('image', {
 //                                                     bottom:'10dp',
 //                                                     fontSize:'16dp',
 //                                                     color:'blue',
+
                                    
 
 //                                   backgroundColor:'yellow',
@@ -229,7 +232,48 @@ var image = document.createElement('image', {
                                                      })
 
 
+function createImage(){
+   return document.createElement('text', {
+                           events:['click'],
+                           attr: {
+                           id: 'div1',
+                           value:'们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子我们都是好孩子',
+                           },
+                           style: {
+                           //                                    flexDirection: 'row',
+                           //                                 flexWrap: 'wrap',
+                           //                                 borderColor:'r',
+                           //                                     backgroundColor:'red',
+                           
+                           //                                 maxWidth:'200dp',
+                           //                                 borderWidth:'10dp',
+                           
+                           
+                           //                                 borderRadius:'1000dp',
+                           //                                 padding:'40dp',
+                           animated: true,
+                           lines:4,
+                           fontSize:'16dp',
+                           lineBreakMargin:'70dp',
+                                 borderWidth:'10dp',
+                                 borderColor:'yellow',
+                                 margin:'5dp',
+                           
+                           //                                 lineHeight:'40dp',
+                           //  lineSpacing:'10dp',
+                           //                                 headIndent:'20dp',
+                           
+                           
+                           //                                 lineHeight:'30dp',
+                           //                                 lineSpacing:'-20dp',
+                           }
+                           })
+}
+
+
 container.appendChild(image);
+
+
 
 var imageArray = ['https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530605724621&di=c5372a172d3dc65edd25a2325e0a8b7a&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01520856fc12636ac725794866fd27.gif',
                   'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530605724621&di=1666092893e145389366f060b7c6167f&imgtype=0&src=http%3A%2F%2Fwww.etaiyang.com%2Ffile%2Fupload%2F201610%2F07%2F11-21-06-29-12635.gif',

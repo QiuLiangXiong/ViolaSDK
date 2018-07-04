@@ -11,6 +11,7 @@
 #define VA_BRIDGE_THREAD_NAME @"com.tencent.viola.bridge"
 #define VA_COMPONENT_THREAD_NAME @"com.tencent.viola.component"
 #import "UIKit/UIKit.h"
+#import "VADefine.h"
 
 @interface VAThreadManager()
 
@@ -31,6 +32,7 @@ static dispatch_queue_t bridgeQueue = NULL;
 }
 static dispatch_semaphore_t va_signal;
 + (void)waitUntilViolaIntanceRenderFinish{
+    VAAssertMainThread();
     va_signal = dispatch_semaphore_create(0);
     dispatch_semaphore_wait(va_signal, dispatch_time(DISPATCH_TIME_NOW, 2*1000*1000*1000));
 }

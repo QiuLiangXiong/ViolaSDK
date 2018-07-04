@@ -48,7 +48,8 @@
 		FFB2793820E206AB009FD859 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB2793720E206AB009FD859 /* TestViewController.m */; };
 		FFBC38D420E5FA2100D3D806 /* RIJAsyncLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBC38D220E5FA2100D3D806 /* RIJAsyncLabel.m */; };
 		FFBC38D720E5FAE300D3D806 /* VATextComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBC38D620E5FAE300D3D806 /* VATextComponent.m */; };
-		FFF1D5BE20EBA7BD002F4A81 /* VABaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF1D5BD20EBA7BD002F4A81 /* VABaseViewController.m */; };
+		FFF1D5C220EC99D3002F4A81 /* VABaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF1D5C020EC99D3002F4A81 /* VABaseViewController.m */; };
+		FFF1D5C520EC9A09002F4A81 /* VAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF1D5C420EC9A09002F4A81 /* VAViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -156,8 +157,10 @@
 		FFBC38D320E5FA2100D3D806 /* RIJAsyncLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIJAsyncLabel.h; sourceTree = "<group>"; };
 		FFBC38D520E5FAE300D3D806 /* VATextComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VATextComponent.h; sourceTree = "<group>"; };
 		FFBC38D620E5FAE300D3D806 /* VATextComponent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VATextComponent.m; sourceTree = "<group>"; };
-		FFF1D5BC20EBA7BD002F4A81 /* VABaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VABaseViewController.h; sourceTree = "<group>"; };
-		FFF1D5BD20EBA7BD002F4A81 /* VABaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VABaseViewController.m; sourceTree = "<group>"; };
+		FFF1D5C020EC99D3002F4A81 /* VABaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VABaseViewController.m; sourceTree = "<group>"; };
+		FFF1D5C120EC99D3002F4A81 /* VABaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VABaseViewController.h; sourceTree = "<group>"; };
+		FFF1D5C320EC9A09002F4A81 /* VAViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VAViewController.h; sourceTree = "<group>"; };
+		FFF1D5C420EC9A09002F4A81 /* VAViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -359,6 +362,7 @@
 		FF6607E820DBA23B00A99EE0 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				FFF1D5BF20EC99D3002F4A81 /* Controller */,
 				FF6607E920DBA23B00A99EE0 /* Protocol */,
 				FF6607EB20DBA23B00A99EE0 /* View */,
 			);
@@ -467,8 +471,17 @@
 		FFF1D5BB20EBA7A8002F4A81 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				FFF1D5BC20EBA7BD002F4A81 /* VABaseViewController.h */,
-				FFF1D5BD20EBA7BD002F4A81 /* VABaseViewController.m */,
+				FFF1D5C320EC9A09002F4A81 /* VAViewController.h */,
+				FFF1D5C420EC9A09002F4A81 /* VAViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		FFF1D5BF20EC99D3002F4A81 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				FFF1D5C020EC99D3002F4A81 /* VABaseViewController.m */,
+				FFF1D5C120EC99D3002F4A81 /* VABaseViewController.h */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -679,6 +692,7 @@
 				FF6607FA20DBA23B00A99EE0 /* VAUtil.m in Sources */,
 				FF6607FD20DBA23B00A99EE0 /* VABridgeManager.m in Sources */,
 				FFB278B520DE463C009FD859 /* VADivComponent.m in Sources */,
+				FFF1D5C520EC9A09002F4A81 /* VAViewController.m in Sources */,
 				FF6607EF20DBA23B00A99EE0 /* ViolaInstance.m in Sources */,
 				FF6607F820DBA23B00A99EE0 /* VAConvertUtl.m in Sources */,
 				FF6607FC20DBA23B00A99EE0 /* VAThreadManager.m in Sources */,
@@ -686,7 +700,7 @@
 				2D1B694920E9FEA200F03E33 /* VAImageHandler.m in Sources */,
 				FFBC38D420E5FA2100D3D806 /* RIJAsyncLabel.m in Sources */,
 				FF6607F020DBA23B00A99EE0 /* VAComponentController.m in Sources */,
-				FFF1D5BE20EBA7BD002F4A81 /* VABaseViewController.m in Sources */,
+				FFF1D5C220EC99D3002F4A81 /* VABaseViewController.m in Sources */,
 				FF66078F20DBA1A300A99EE0 /* AppDelegate.m in Sources */,
 				FFB278CD20E12822009FD859 /* VAComponent+event.m in Sources */,
 				FF6607F620DBA23B00A99EE0 /* VADomModule.m in Sources */,

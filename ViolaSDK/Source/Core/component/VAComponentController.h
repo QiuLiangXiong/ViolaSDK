@@ -12,6 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 @class VAComponent;
 @class ViolaInstance;
+@protocol VAComponentControllerDelegate;
 @interface VAComponentController : NSObject
 
 @property (nullable, nonatomic,weak) ViolaInstance * vaInstance;
@@ -19,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL isEnable;
 @property (nonatomic, assign) BOOL mainQueueSyncWithAnimated;
 @property (nonatomic, assign) BOOL isBodyLayoutFinish;
+@property (nullable, nonatomic,weak) id<VAComponentControllerDelegate> delegate;
 
 
 - (void)createBody:(NSDictionary *)body;
@@ -42,4 +44,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 @end
+
+@protocol VAComponentControllerDelegate<NSObject>
+
+- (void)renderFinishWithComponentController:(VAComponentController *)componentController;
+
+@end
+
 NS_ASSUME_NONNULL_END
