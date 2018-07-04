@@ -49,18 +49,6 @@ VAAssert([VAThreadManager isComponentThread], \
 VAAssert([NSThread isMainThread], \
 @"must be called on the bridge thread")
 
-
-#define VA_SYS_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
-
-#define VA_SYS_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
-
-#define VA_SYS_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
-
-#define VA_SYS_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
-
-#define VA_SYS_LESS_THAN_OR_EQUAL_TO(v)             ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
-
-
 #define VA_ENUMBER_CASE(_invoke, idx, code, obj, _type, op, _flist) \
 case code:{\
 _type *_tmp = malloc(sizeof(_type));\
