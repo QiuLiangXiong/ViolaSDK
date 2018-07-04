@@ -53,6 +53,7 @@
 		FFF1D5C920ECC856002F4A81 /* VABundleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF1D5C820ECC856002F4A81 /* VABundleManager.m */; };
 		FFF1D5CF20ECE536002F4A81 /* QLXHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF1D5CB20ECE536002F4A81 /* QLXHttpRequest.m */; };
 		FFF1D5D020ECE536002F4A81 /* QLXHttpRequestTool.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF1D5CD20ECE536002F4A81 /* QLXHttpRequestTool.m */; };
+		FFF1D5D720ED0B03002F4A81 /* VAHttpModule.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF1D5D620ED0B03002F4A81 /* VAHttpModule.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -170,6 +171,8 @@
 		FFF1D5CC20ECE536002F4A81 /* QLXHttpRequestTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLXHttpRequestTool.h; sourceTree = "<group>"; };
 		FFF1D5CD20ECE536002F4A81 /* QLXHttpRequestTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLXHttpRequestTool.m; sourceTree = "<group>"; };
 		FFF1D5CE20ECE536002F4A81 /* QLXHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLXHttpRequest.h; sourceTree = "<group>"; };
+		FFF1D5D520ED0B03002F4A81 /* VAHttpModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VAHttpModule.h; sourceTree = "<group>"; };
+		FFF1D5D620ED0B03002F4A81 /* VAHttpModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAHttpModule.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -201,6 +204,7 @@
 		2D1B694520E9FE7100F03E33 /* Expand */ = {
 			isa = PBXGroup;
 			children = (
+				FFF1D5D420ED0AF9002F4A81 /* Module */,
 				FFF1D5CA20ECE536002F4A81 /* QLXHttpRequest */,
 				FFF1D5C620ECC606002F4A81 /* Manager */,
 				FFF1D5BB20EBA7A8002F4A81 /* Controller */,
@@ -517,6 +521,15 @@
 			path = QLXHttpRequest;
 			sourceTree = "<group>";
 		};
+		FFF1D5D420ED0AF9002F4A81 /* Module */ = {
+			isa = PBXGroup;
+			children = (
+				FFF1D5D520ED0B03002F4A81 /* VAHttpModule.h */,
+				FFF1D5D620ED0B03002F4A81 /* VAHttpModule.m */,
+			);
+			path = Module;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -717,6 +730,7 @@
 				FFB278C720E0F6C9009FD859 /* VAComponent+view.m in Sources */,
 				FF6607F420DBA23B00A99EE0 /* VAJSBridge.m in Sources */,
 				FF6607FF20DBA23B00A99EE0 /* VARootView.m in Sources */,
+				FFF1D5D720ED0B03002F4A81 /* VAHttpModule.m in Sources */,
 				FF760ECF20E9CE5A001949F0 /* VAImageComponent.m in Sources */,
 				FF6607FB20DBA23B00A99EE0 /* VARegisterManager.m in Sources */,
 				FFBC38D720E5FAE300D3D806 /* VATextComponent.m in Sources */,

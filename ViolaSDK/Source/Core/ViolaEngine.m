@@ -48,7 +48,9 @@
     //module
     [self registerModule:@"dom" withClass:[VADomModule class]];    //dom
     
-    
+    if (NSClassFromString(@"VAHttpModule")) {
+    [self registerModule:@"http" withClass:NSClassFromString(@"VAHttpModule")];    //dom
+    }
     //component
     
     [self registerComponent:@"div" withClass:[VADivComponent class]];
