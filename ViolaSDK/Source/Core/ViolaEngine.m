@@ -9,6 +9,7 @@
 #import "ViolaEngine.h"
 #import "VARegisterManager.h"
 #import "VADomModule.h"
+#import "VAModalUIModule.h"
 #import "VADivComponent.h"
 #import "VABridgeManager.h"
 #import "VAImageHandlerProtocol.h"
@@ -47,6 +48,7 @@
 + (void)_registerDefaults{
     //module
     [self registerModule:@"dom" withClass:[VADomModule class]];    //dom
+    [self registerModule:@"modal" withClass:[VAModalUIModule class]];  //modal
     
     
     //component
