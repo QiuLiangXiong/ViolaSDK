@@ -31,7 +31,6 @@
         _instance = [[ViolaInstance alloc] init];
         _instance.viewController = self;
         _instance.delegate = self;
-        _instance.instanceFrame = self.view.frame;
         [ViolaEngine startEngineIfNeed];
 
         // self.navigationController.navigationBar.hidden = true;

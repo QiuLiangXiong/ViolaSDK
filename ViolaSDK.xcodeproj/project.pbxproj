@@ -50,6 +50,9 @@
 		FFBC38D720E5FAE300D3D806 /* VATextComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBC38D620E5FAE300D3D806 /* VATextComponent.m */; };
 		FFF1D5C220EC99D3002F4A81 /* VABaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF1D5C020EC99D3002F4A81 /* VABaseViewController.m */; };
 		FFF1D5C520EC9A09002F4A81 /* VAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF1D5C420EC9A09002F4A81 /* VAViewController.m */; };
+		FFF1D5C920ECC856002F4A81 /* VABundleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF1D5C820ECC856002F4A81 /* VABundleManager.m */; };
+		FFF1D5CF20ECE536002F4A81 /* QLXHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF1D5CB20ECE536002F4A81 /* QLXHttpRequest.m */; };
+		FFF1D5D020ECE536002F4A81 /* QLXHttpRequestTool.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF1D5CD20ECE536002F4A81 /* QLXHttpRequestTool.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -161,6 +164,12 @@
 		FFF1D5C120EC99D3002F4A81 /* VABaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VABaseViewController.h; sourceTree = "<group>"; };
 		FFF1D5C320EC9A09002F4A81 /* VAViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VAViewController.h; sourceTree = "<group>"; };
 		FFF1D5C420EC9A09002F4A81 /* VAViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAViewController.m; sourceTree = "<group>"; };
+		FFF1D5C720ECC856002F4A81 /* VABundleManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VABundleManager.h; sourceTree = "<group>"; };
+		FFF1D5C820ECC856002F4A81 /* VABundleManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VABundleManager.m; sourceTree = "<group>"; };
+		FFF1D5CB20ECE536002F4A81 /* QLXHttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLXHttpRequest.m; sourceTree = "<group>"; };
+		FFF1D5CC20ECE536002F4A81 /* QLXHttpRequestTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLXHttpRequestTool.h; sourceTree = "<group>"; };
+		FFF1D5CD20ECE536002F4A81 /* QLXHttpRequestTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLXHttpRequestTool.m; sourceTree = "<group>"; };
+		FFF1D5CE20ECE536002F4A81 /* QLXHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLXHttpRequest.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +201,8 @@
 		2D1B694520E9FE7100F03E33 /* Expand */ = {
 			isa = PBXGroup;
 			children = (
+				FFF1D5CA20ECE536002F4A81 /* QLXHttpRequest */,
+				FFF1D5C620ECC606002F4A81 /* Manager */,
 				FFF1D5BB20EBA7A8002F4A81 /* Controller */,
 				2D1B694620E9FE8A00F03E33 /* Handler */,
 			);
@@ -486,6 +497,26 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		FFF1D5C620ECC606002F4A81 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				FFF1D5C720ECC856002F4A81 /* VABundleManager.h */,
+				FFF1D5C820ECC856002F4A81 /* VABundleManager.m */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		FFF1D5CA20ECE536002F4A81 /* QLXHttpRequest */ = {
+			isa = PBXGroup;
+			children = (
+				FFF1D5CB20ECE536002F4A81 /* QLXHttpRequest.m */,
+				FFF1D5CC20ECE536002F4A81 /* QLXHttpRequestTool.h */,
+				FFF1D5CD20ECE536002F4A81 /* QLXHttpRequestTool.m */,
+				FFF1D5CE20ECE536002F4A81 /* QLXHttpRequest.h */,
+			);
+			path = QLXHttpRequest;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -675,6 +706,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFF1D5C920ECC856002F4A81 /* VABundleManager.m in Sources */,
 				FF760ED620EA7B5E001949F0 /* VAScrollerComponent.m in Sources */,
 				FFB278C220DE9C41009FD859 /* VAComponent+layout.m in Sources */,
 				FF6607F320DBA23B00A99EE0 /* VAMethod.m in Sources */,
@@ -698,6 +730,8 @@
 				FF6607FC20DBA23B00A99EE0 /* VAThreadManager.m in Sources */,
 				FF66079D20DBA1A300A99EE0 /* main.m in Sources */,
 				2D1B694920E9FEA200F03E33 /* VAImageHandler.m in Sources */,
+				FFF1D5CF20ECE536002F4A81 /* QLXHttpRequest.m in Sources */,
+				FFF1D5D020ECE536002F4A81 /* QLXHttpRequestTool.m in Sources */,
 				FFBC38D420E5FA2100D3D806 /* RIJAsyncLabel.m in Sources */,
 				FF6607F020DBA23B00A99EE0 /* VAComponentController.m in Sources */,
 				FFF1D5C220EC99D3002F4A81 /* VABaseViewController.m in Sources */,
