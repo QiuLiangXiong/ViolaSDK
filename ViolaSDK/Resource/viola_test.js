@@ -33,6 +33,7 @@
 //
 //return;
 
+<<<<<<< HEAD
 //callNative(1,[{module:'modal',method:'alert',args:[{ message: 'Hello', okTitle: 'Get it!' }, function() {}]}])
 
 //callNative(1,[{module:'modal',method:'confirm',args:[{ message: 'Are you sure?', okTitle: 'Yes' }, function() {}]}])
@@ -40,6 +41,8 @@
 //callNative(1,[{module:'modal',method:'prompt',args:[{ message: 'Are you sure?', okTitle: 'Yes' }, function() {}]}])
 
 callNative(1,[{module:'modal',method:'toast',args:[{ message: 'This is a toast', duration: 1 }]}])
+=======
+>>>>>>> master
 
 
 var container = document.createElement('scroller', {
@@ -49,6 +52,7 @@ var container = document.createElement('scroller', {
                                        pagingEnable:0,
                                        },
                                        style:{
+//                                       flexDirection:'row',
                                        bouncesEnable:0,
                                       // backgroundColor:'',
                                        
@@ -613,4 +617,8 @@ document.render()
 ////    nativeLog(JSON.stringify(tasks));
 ////}
 ////
+
+
+
+
 
