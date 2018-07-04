@@ -24,24 +24,22 @@ NS_ASSUME_NONNULL_BEGIN
  * 实例唯一ID
  */
 @property (nonatomic, copy ,readonly) NSString * instanceId;
-@property (nonnull, nonatomic, strong, readonly) VAComponentController * componentController;
 
 @property (nonatomic, assign) CGRect instanceFrame;
 
 @property (nonatomic, weak,nullable) UIViewController * viewController;
 
-
 @property (nonatomic, strong ,readonly) VARootView * rootView;
-/**
- * js脚本url
- **/
-@property (nonatomic, strong,nullable) NSURL * scriptURL;
 
-@property (nonatomic, weak) ViolaInstance * parentInstance;
+@property (nonnull, nonatomic, strong, readonly) VAComponentController * componentController;
+
+@property (nonatomic, strong) UIColor * rootViewBackgroundColor;
+
+//@property (nonatomic, weak) ViolaInstance * parentInstance;
 
 
 
-- (void)renderViewWithURL:(NSURL *)scriptURL data:(NSDictionary *)data;
+//- (void)renderViewWithURL:(NSURL *)scriptURL data:(NSDictionary *)data;
 
 - (void)renderViewWithScript:(NSString *)script data:(NSDictionary *)data;
 
@@ -50,16 +48,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (VAComponent * _Nullable)componentWithRef:(NSString *)ref;
 
+- (void)refreshInstance:(NSDictionary *)data;
 - (void)destroyInstance;
 
 
 //添加主线程任务
 - (void)addTaskToMainQueue:(dispatch_block_t)block;
-
-
-
-
-//- (void)refreshInstance:(id)data;
 
 
 
@@ -70,6 +64,8 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol ViolaInstanceDelegate<NSObject>
 
 - (void)violaIntance:(ViolaInstance *)instance didCreatedView:(UIView *)view;
+@optional
+- (void)renderFinishWithViolaIntance:(ViolaInstance *)instance ;
 
 @end
 NS_ASSUME_NONNULL_END

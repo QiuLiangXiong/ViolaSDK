@@ -206,7 +206,6 @@ NSString *const RIJHighlightAttributeKey = @"RIJHighlightAttributeKey";
         textRender.maximumNumberOfLines = 0;
         CGSize newSize = [textRender textSizeWithRenderWidth:size.width];
         textRender.isBreakLine = !CGSizeEqualToSize(fitSize, newSize);
-        NSLog(@"____FDSFDF__%d",(int)textRender.isBreakLine);
         textRender.maximumNumberOfLines = lines;//复原
     }
     attString.rij_textRender = textRender;

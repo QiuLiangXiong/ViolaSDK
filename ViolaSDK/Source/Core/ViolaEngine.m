@@ -16,7 +16,7 @@
 @implementation ViolaEngine
 
 
-+ (void)startEngine{
++ (void)startEngineIfNeed{
     [self startEngine:@""];//tomqiu todo
 }
 /**

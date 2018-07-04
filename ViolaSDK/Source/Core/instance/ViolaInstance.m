@@ -15,7 +15,7 @@
 #import "VARootView.h"
 #import "VADefine.h"
 #import "objc/runtime.h"
-@interface ViolaInstance()
+@interface ViolaInstance()<VAComponentControllerDelegate>
 
 @property (nonatomic, copy ,readwrite) NSString * instanceId;
 @property (nonatomic, strong ,readwrite) VARootView * rootView;
@@ -44,6 +44,7 @@
         _modules = [NSMutableDictionary new];
         _componentController = [VAComponentController new];
         _componentController.vaInstance = self;
+        _componentController.delegate = self;
         
         [VAInstanceManager setInstance:self forID:self.instanceId];
 
@@ -51,9 +52,9 @@
     return self;
 }
 
-- (void)renderViewWithURL:(NSURL *)scriptURL data:(NSDictionary *)data{
-    
-}
+//- (void)renderViewWithURL:(NSURL *)scriptURL data:(NSDictionary *)data{
+//    
+//}
 
 - (void)renderViewWithScript:(NSString *)script data:(NSDictionary *)data{
     NSMutableDictionary * realData = [NSMutableDictionary dictionaryWithDictionary:data];
@@ -93,6 +94,10 @@
     return [self.componentController componentWithRef:ref];
 }
 
+- (void)refreshInstance:(NSDictionary *)data{
+    //todo tomqiu
+}
+
 - (void)destroyInstance{
     
     [[VABridgeManager shareManager] destroyInstanceWithID:self.instanceId];//还有其他逻辑 稍后继续
@@ -113,6 +118,14 @@
         [weakSelf.componentController addTaskToMainQueueOnComponentThead:block];
     }];
 
+}
+
+#pragma mark VAComponentControllerDelegate
+
+- (void)renderFinishWithComponentController:(VAComponentController *)componentController{
+    if ([self.delegate respondsToSelector:@selector(renderFinishWithViolaIntance:)]) {
+        [self.delegate renderFinishWithViolaIntance:self];
+    }
 }
 
 #pragma mark - getter

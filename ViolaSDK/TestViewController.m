@@ -9,9 +9,8 @@
 #import "TestViewController.h"
 #import "ViolaSDK.h"
 
-@interface TestViewController ()<ViolaInstanceDelegate>
+@interface TestViewController ()
 
-@property (nullable, nonatomic, strong) ViolaInstance * vaInstance;
 
 @end
 
@@ -19,28 +18,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    self.edgesForExtendedLayout = UIRectEdgeNone;
-    ViolaInstance * intance = [ViolaInstance new];
-    intance.delegate = self;
-    self.vaInstance = intance;
-    intance.instanceFrame = self.view.frame;
-    
-    
-   // self.navigationController.navigationBar.hidden = true;
-    
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"viola_test" ofType:@"js"];
-    NSString * script = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
-    
 
-  
-    [intance renderViewWithScript:script data:@{@"os":@"iOS"}];
     
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [VAThreadManager waitUntilViolaIntanceRenderFinish];
 
 }
 
@@ -51,21 +34,9 @@
 
 - (void)viewDidLayoutSubviews{
     [super viewDidLayoutSubviews];
-    CGRect dfd = self.view.frame;
-    
-    self.vaInstance.instanceFrame = self.view.frame;
-}
-
-#pragma mark - ViolaInstanceDelegate
-
-- (void)violaIntance:(ViolaInstance *)instance didCreatedView:(UIView *)view{
-    [self.view addSubview:view];
 }
 
 
-- (void)dealloc{
-    [self.vaInstance destroyInstance];
-}
 
 /*
 #pragma mark - Navigation

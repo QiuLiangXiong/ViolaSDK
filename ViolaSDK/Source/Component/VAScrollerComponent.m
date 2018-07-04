@@ -179,10 +179,10 @@ static int cssNode_scroller_childrenCount(void * context){
         _scrollerCSSNode->style.position[CSS_TOP] = 0;
         
         if (_scrollerCSSNode->style.flex_direction == CSS_FLEX_DIRECTION_COLUMN) {
-            _scrollerCSSNode->style.dimensions[CSS_WIDTH] = _cssNode->layout.dimensions[CSS_WIDTH];
+            _scrollerCSSNode->style.dimensions[CSS_WIDTH] = _cssNode->layout.dimensions[CSS_WIDTH] - _contentEdge.left - _contentEdge.right;
             _scrollerCSSNode->style.dimensions[CSS_HEIGHT] = CSS_UNDEFINED;
         } else {
-            _scrollerCSSNode->style.dimensions[CSS_HEIGHT] = _cssNode->layout.dimensions[CSS_HEIGHT];
+            _scrollerCSSNode->style.dimensions[CSS_HEIGHT] = _cssNode->layout.dimensions[CSS_HEIGHT]  - _contentEdge.top - _contentEdge.bottom;
             _scrollerCSSNode->style.dimensions[CSS_WIDTH] = CSS_UNDEFINED;
         }
         
@@ -198,6 +198,7 @@ static int cssNode_scroller_childrenCount(void * context){
         
         if (!CGSizeEqualToSize(size, _contentSize)) {
             // content size
+            
             _contentSize = size;
             [dirtyComponents addObject:self];
         }

@@ -21,9 +21,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [ViolaEngine startEngine];
+        [ViolaEngine startEngineIfNeed];
     
-    self.view.backgroundColor = [UIColor blackColor];
+    self.view.backgroundColor = [UIColor whiteColor];
     self.edgesForExtendedLayout = UIRectEdgeNone;
 //    ViolaInstance * intance = [ViolaInstance new];
 //    intance.delegate = self;

@@ -13,7 +13,7 @@
 /**
  * 启动引擎
  **/
-+ (void)startEngine;
++ (void)startEngineIfNeed;
 
 /**
  * 注册 module

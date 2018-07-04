@@ -241,7 +241,6 @@
                             [weakSelf _setImageViewWithImage:image isPlaceHolder:false requestUrl:url curUrl:weakSelf.url];
                         }];
                     }else {
-                        
                         [weakSelf addTaskToMainQueueOnComponentThead:^{
                             [weakSelf _setImageViewWithImage:image isPlaceHolder:false requestUrl:url curUrl:weakSelf.url];
                         }];

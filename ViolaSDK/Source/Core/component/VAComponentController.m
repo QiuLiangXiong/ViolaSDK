@@ -28,6 +28,8 @@
 
 @property (nonatomic, assign) BOOL __setNeedSyncLayoutAndMainQuequeTasks;
 
+@property (nonatomic, assign) BOOL _isCreateBodying;
+
 @end
 
 @implementation VAComponentController
@@ -62,17 +64,31 @@
             [strongSelf.vaInstance.rootView addSubview:strongSelf.rootComponent.view];
         }
     }];
-    //添加真元素
-    [self addComponent:body toSupercomponent:_rootComponent.ref atIndex:0];
-//    dispatch_async([VAThreadManager getComponentQueue], ^{
-//    });
+    //添加body
     
-    [VAThreadManager performOnComponentThreadWithBlock:^{
-       [VAThreadManager violaIntanceRenderFinish];
-    } afterDelay:0.1];
+    [self addComponent:body toSupercomponent:_rootComponent.ref atIndex:0];
+
+    VAComponent * pageRootCompoment = _rootComponent.subcomponents.firstObject;
+    if (pageRootCompoment) {
+        _vaInstance.rootViewBackgroundColor = pageRootCompoment.backgroundColor ? : [UIColor clearColor];
+    }
     [VAThreadManager performOnComponentThreadWithBlock:^{
         weakSelf.isBodyLayoutFinish = true;
     } afterDelay:0.5];
+    
+
+    [VAThreadManager performOnComponentThreadWithBlock:^{
+        [VAThreadManager violaIntanceRenderFinish];
+        
+        
+        //
+        
+//        [VAThreadManager performOnMainThreadWithBlock:^{
+//            if ([weakSelf.delegate respondsToSelector:@selector(renderFinishWithComponentController:)]) {
+//                [self.delegate renderFinishWithComponentController:weakSelf];
+//            }
+//        }];
+    }];
 
     
 
@@ -330,6 +346,10 @@
         if(!self.isBodyLayoutFinish){
             animated = false;
         }
+        
+        //是否未释放
+//        [VAThreadManager waitUntilViolaIntanceRenderFinish];
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             
             

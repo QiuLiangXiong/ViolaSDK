@@ -263,6 +263,7 @@ CGFloat VAFloorValue(CGFloat value)
         colorCache.countLimit = 128;
     });
     
+    
     if ([value isKindOfClass:[NSNull class]] || !value) {
         return nil;
     }

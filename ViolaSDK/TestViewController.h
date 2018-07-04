@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface TestViewController : UIViewController
+#import "VAViewController.h"
+@interface TestViewController : VAViewController
 
 @end
