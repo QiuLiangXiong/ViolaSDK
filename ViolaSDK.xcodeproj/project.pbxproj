@@ -54,6 +54,7 @@
 		FFF1D5CF20ECE536002F4A81 /* QLXHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF1D5CB20ECE536002F4A81 /* QLXHttpRequest.m */; };
 		FFF1D5D020ECE536002F4A81 /* QLXHttpRequestTool.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF1D5CD20ECE536002F4A81 /* QLXHttpRequestTool.m */; };
 		FFF1D5D720ED0B03002F4A81 /* VAHttpModule.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF1D5D620ED0B03002F4A81 /* VAHttpModule.m */; };
+		FFF1D5DA20ED0CC2002F4A81 /* VAAnimationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF1D5D920ED0CC2002F4A81 /* VAAnimationModule.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -173,6 +174,8 @@
 		FFF1D5CE20ECE536002F4A81 /* QLXHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLXHttpRequest.h; sourceTree = "<group>"; };
 		FFF1D5D520ED0B03002F4A81 /* VAHttpModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VAHttpModule.h; sourceTree = "<group>"; };
 		FFF1D5D620ED0B03002F4A81 /* VAHttpModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAHttpModule.m; sourceTree = "<group>"; };
+		FFF1D5D820ED0CC2002F4A81 /* VAAnimationModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VAAnimationModule.h; sourceTree = "<group>"; };
+		FFF1D5D920ED0CC2002F4A81 /* VAAnimationModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAAnimationModule.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -339,6 +342,8 @@
 			children = (
 				FF6607D320DBA23B00A99EE0 /* VADomModule.h */,
 				FF6607D420DBA23B00A99EE0 /* VADomModule.m */,
+				FFF1D5D820ED0CC2002F4A81 /* VAAnimationModule.h */,
+				FFF1D5D920ED0CC2002F4A81 /* VAAnimationModule.m */,
 			);
 			path = Module;
 			sourceTree = "<group>";
@@ -730,6 +735,7 @@
 				FFB278C720E0F6C9009FD859 /* VAComponent+view.m in Sources */,
 				FF6607F420DBA23B00A99EE0 /* VAJSBridge.m in Sources */,
 				FF6607FF20DBA23B00A99EE0 /* VARootView.m in Sources */,
+				FFF1D5DA20ED0CC2002F4A81 /* VAAnimationModule.m in Sources */,
 				FFF1D5D720ED0B03002F4A81 /* VAHttpModule.m in Sources */,
 				FF760ECF20E9CE5A001949F0 /* VAImageComponent.m in Sources */,
 				FF6607FB20DBA23B00A99EE0 /* VARegisterManager.m in Sources */,

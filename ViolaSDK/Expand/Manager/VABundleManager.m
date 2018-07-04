@@ -92,7 +92,7 @@
     }
     NSString * filePath = [self _getDownloadPath];
     
-    [QLXHttpRequestTool downloadWithUrl:url filePath:[self _getDownloadPath]  params:nil progress:nil completion:^(id  _Nullable data, NSError * _Nullable error) {
+    [QLXHttpRequestTool downloadWithUrl:url filePath:[self _getDownloadPath]  params:@{} progress:nil completion:^(id  _Nullable data, NSError * _Nullable error) {
         if (!error && data) {
             NSData *fileData = [[NSFileManager defaultManager] contentsAtPath:filePath];
             NSString * script = [[NSString alloc] initWithData:fileData encoding:NSUTF8StringEncoding];;
