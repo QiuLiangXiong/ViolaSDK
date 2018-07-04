@@ -33,8 +33,13 @@
 //
 //return;
 
-callNative(1,[{module:'modal',method:'alert',args:[{ message: 'Hello', okTitle: 'Get it!' }, function() {}]}])
+//callNative(1,[{module:'modal',method:'alert',args:[{ message: 'Hello', okTitle: 'Get it!' }, function() {}]}])
 
+//callNative(1,[{module:'modal',method:'confirm',args:[{ message: 'Are you sure?', okTitle: 'Yes' }, function() {}]}])
+
+//callNative(1,[{module:'modal',method:'prompt',args:[{ message: 'Are you sure?', okTitle: 'Yes' }, function() {}]}])
+
+callNative(1,[{module:'modal',method:'toast',args:[{ message: 'This is a toast', duration: 1 }]}])
 
 var container = document.createElement('scroller', {
                                        attr: { id: 'container'
