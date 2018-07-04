@@ -7,11 +7,11 @@
 //
 
 #import "VABaseViewController.h"
-#import "ViolaInstance.h"
 
-@interface VABaseViewController ()
 
-@property (nullable, nonatomic, strong) ViolaInstance * instance;
+@interface VABaseViewController ()<ViolaInstanceDelegate>
+
+
 @property (nullable, nonatomic, strong) NSString * bundle;
 
 @end
@@ -24,35 +24,46 @@
     if (self) {
         self.hidesBottomBarWhenPushed = YES;
         self.edgesForExtendedLayout = UIRectEdgeNone;
-    }
-    return self;
-}
-
-
-- (instancetype)initWithSourceUrl:(NSString *)sourceUrl;
-{
-    if ((self = [self init])) {
+        _instance = [[ViolaInstance alloc] init];
+        _instance.delegate = self;
+      
+        // self.navigationController.navigationBar.hidden = true;
         
+//        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"viola_test" ofType:@"js"];
+//        NSString * script = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
+        
+        
+        
+      //  [_instance renderViewWithScript:script data:@{@"os":@"iOS"}];
     }
     return self;
 }
 
-- (instancetype)initWithSourceUrl:(NSString *)sourceUrl data:(NSDictionary *)data{
-    if (self = [self initWithSourceUrl:sourceUrl]) {
-        if ([data isKindOfClass:[NSDictionary class]]) {
-            //self.data = data;
-            
-        }
-    }
-    return self;
+#pragma mark - ViolaInstanceDelegate
+
+- (void)violaIntance:(ViolaInstance *)instance didCreatedView:(UIView *)view{
+    [self.view addSubview:view];
 }
+
+// 更新生命周期 todo tomqiu
+
+
 
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.instance.instanceFrame = self.view.frame;
     // Do any additional setup after loading the view.
 }
+
+
+- (void)viewDidLayoutSubviews{
+    [super viewDidLayoutSubviews];
+    self.instance.instanceFrame = self.view.frame;
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
