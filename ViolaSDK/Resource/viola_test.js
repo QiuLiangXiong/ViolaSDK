@@ -35,6 +35,8 @@
 
 
 
+
+
 var container = document.createElement('scroller', {
                                        attr: { id: 'container'
                                        ,
@@ -331,6 +333,15 @@ var imageIndex = 0;
 var ratioValues = [0.5,0.8,2,1];
 image.on('click',function(e){
          image.setAttr('value',imageArray[index++ % imageArray.length])
+         
+//         viola.request
+         
+         
+         
+         viola.requireAPI('http').requestGet('http://api.duihua.doufu.la/',{},function(res){
+                                             console.log(22222);
+                                             console.log(res);
+                                             })
          
        //  container.setAttr('showScrollerIndicator',0)
          

@@ -78,13 +78,16 @@
 - (void)registerModuleWithName:(NSString *)name methods:(NSArray *)methods{
     kBlockWeakSelf;
     [VAThreadManager performOnBridgeThreadWithBlock:^{
+        if ([name isEqualToString:@"dom"]) {
+            return ;//js那边不需要dom的注册
+        }
         [weakSelf.jsBridge  registerModuleWithName:name methods:methods];
     }];
 }
 - (void)registerComponentWithName:(NSString *)name methods:(NSArray *)methods{
     kBlockWeakSelf;
     [VAThreadManager performOnBridgeThreadWithBlock:^{
-        [weakSelf.jsBridge  registerComponentWithName:name methods:methods];
+        //[weakSelf.jsBridge  registerComponentWithName:name methods:methods];
     }];
 }
 
