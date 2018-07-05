@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "ViolaSDK.h"
-#import "TestViewController.h"
+#import "VAViewController.h"
 
 @interface ViewController ()<ViolaInstanceDelegate>
 
@@ -23,7 +23,7 @@
 
         [ViolaEngine startEngineIfNeed];
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor brownColor];
     self.edgesForExtendedLayout = UIRectEdgeNone;
 //    ViolaInstance * intance = [ViolaInstance new];
 //    intance.delegate = self;
@@ -51,7 +51,7 @@
 #pragma mark - action
 
 - (void)onClickJumpBtnWithSender:(UIButton *)sender{
-    TestViewController * vc = [TestViewController new];
+    VAViewController * vc = [[VAViewController alloc] initWithSourceUrl:@"viola_test.js" pageParam:nil];
     [self.navigationController pushViewController:vc animated:true];
 }
 

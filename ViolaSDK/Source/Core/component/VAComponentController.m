@@ -65,10 +65,12 @@
         }
     }];
     //添加body
-    
     [self addComponent:body toSupercomponent:_rootComponent.ref atIndex:0];
 
     VAComponent * pageRootCompoment = _rootComponent.subcomponents.firstObject;
+#if DEBUG
+    VAAssert(body[@"style"][@"backgroundColor"], @"root div backgroundColor can't be nil");
+#endif
     if (pageRootCompoment) {
         _vaInstance.rootViewBackgroundColor = pageRootCompoment.backgroundColor ? : [UIColor clearColor];
     }
@@ -79,20 +81,7 @@
 
     [VAThreadManager performOnComponentThreadWithBlock:^{
         [VAThreadManager violaIntanceRenderFinish];
-        
-        
-        //
-        
-//        [VAThreadManager performOnMainThreadWithBlock:^{
-//            if ([weakSelf.delegate respondsToSelector:@selector(renderFinishWithComponentController:)]) {
-//                [self.delegate renderFinishWithComponentController:weakSelf];
-//            }
-//        }];
     }];
-
-    
-
-    
 }
 
 - (VAComponent *)componentWithRef:(NSString *)ref{

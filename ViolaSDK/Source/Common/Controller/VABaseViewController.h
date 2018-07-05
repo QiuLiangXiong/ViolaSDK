@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)renderWithJSScript:(NSString * _Nonnull)script  pageParam:(NSDictionary * _Nullable)param;
 
 
-//可以override
+//可以重写
 - (void)violaIntance:(ViolaInstance *)instance didCreatedView:(UIView *)view;
 - (void)renderFinishWithViolaIntance:(ViolaInstance *)instance;
 

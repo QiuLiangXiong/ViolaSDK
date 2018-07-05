@@ -50,7 +50,9 @@
     [self registerModule:@"dom" withClass:[VADomModule class]];    //dom
     [self registerModule:@"modal" withClass:[VAModalUIModule class]];  //modal
     
-    
+    if (NSClassFromString(@"VAHttpModule")) {
+    [self registerModule:@"http" withClass:NSClassFromString(@"VAHttpModule")];    //dom
+    }
     //component
     
     [self registerComponent:@"div" withClass:[VADivComponent class]];
