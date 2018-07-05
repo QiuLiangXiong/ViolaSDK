@@ -75,6 +75,19 @@
     }];
 }
 
+- (void)registerModuleWithName:(NSString *)name methods:(NSArray *)methods{
+    kBlockWeakSelf;
+    [VAThreadManager performOnBridgeThreadWithBlock:^{
+        [weakSelf.jsBridge  registerModuleWithName:name methods:methods];
+    }];
+}
+- (void)registerComponentWithName:(NSString *)name methods:(NSArray *)methods{
+    kBlockWeakSelf;
+    [VAThreadManager performOnBridgeThreadWithBlock:^{
+        [weakSelf.jsBridge  registerComponentWithName:name methods:methods];
+    }];
+}
+
 - (void)fireEventWithIntanceID:(NSString *)instanceId ref:(NSString *)ref type:(NSString *)type params:(NSDictionary *)params domChanges:(NSDictionary *)domChanges{
     VAAssertReturn(ref && type, @"can't be nil");
     NSArray *args = @[ref, type, params?:@{}, domChanges?:@{}];

@@ -47,7 +47,10 @@
  * 回调js的callback函数
  */
 - (void)callJSCallback:(NSString *)instanceId func:(NSString *)funcId data:(id)data;
-
-
+/*
+ * 注册module中可以被js调用的方法
+ */
+- (void)registerModuleWithName:(NSString *)name methods:(NSArray *)methods;
+- (void)registerComponentWithName:(NSString *)name methods:(NSArray *)methods;
 
 @end

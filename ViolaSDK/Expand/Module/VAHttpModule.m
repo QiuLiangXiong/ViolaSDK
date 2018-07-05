@@ -14,7 +14,7 @@
 @end
 @implementation VAHttpModule
 
-- (void)requestGet:(NSString *)url param:(NSDictionary *)param response:(VAModuleCallback)block{
+- (void)va_requestGet:(NSString *)url param:(NSDictionary *)param response:(VAModuleCallback)block{
     if ([url isKindOfClass:[NSString class]]) {
         kBlockWeakSelf;
         [QLXHttpRequestTool requestForGetWithUrl:url params:param response:^(id  _Nullable data, NSError * _Nullable error) {
@@ -33,7 +33,7 @@
     
 }
 
-- (void)requestPost:(NSString *)url param:(NSDictionary *)param response:(VAModuleCallback)block{
+- (void)va_requestPost:(NSString *)url param:(NSDictionary *)param response:(VAModuleCallback)block{
     if ([url isKindOfClass:[NSString class]]) {
         kBlockWeakSelf;
         [QLXHttpRequestTool requestForPostWithUrl:url params:param response:^(id  _Nullable data, NSError * _Nullable error) {

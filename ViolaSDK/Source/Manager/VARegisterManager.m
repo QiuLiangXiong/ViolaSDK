@@ -15,15 +15,23 @@
 
 @property (nullable, nonatomic, strong) Class aClass;
 @property (nullable, nonatomic, strong) NSMutableDictionary * methodsDic;
+@property (nullable, nonatomic, strong) NSMutableArray * methods;
 
 
 @end
 
 @implementation VAClassInfo
 
+
+- (void)setAClass:(Class)aClass{
+    _aClass = aClass;
+    [self methodsDic];
+}
+
 - (NSMutableDictionary *)methodsDic{
     if(!_methodsDic){
         _methodsDic = [NSMutableDictionary new];
+        _methods = [NSMutableArray new];
         Class currentClass = self.aClass;
         while (currentClass && currentClass != [NSObject class] && [currentClass conformsToProtocol:@protocol(VAModuleProtocol)] ) {
             unsigned int methCount = 0;
@@ -42,6 +50,10 @@
                         name = selName;
                     }
                     [_methodsDic setObject:selName forKey:name];
+                    NSString * jsMethodName = [name substringFromIndex:3];
+                    if (jsMethodName) {
+                        [_methods addObject:jsMethodName];
+                    }
                 }
             }
             free(meths);
@@ -133,6 +145,8 @@
             VAClassInfo * info = [VAClassInfo new];
             info.aClass = aClass;
             [self.modulesDic setObject:info forKey:name];
+            [[VABridgeManager shareManager] registerModuleWithName:name methods:info.methods];
+            
         }
     }
 }
@@ -143,8 +157,15 @@
             VAClassInfo * info = [VAClassInfo new];
             info.aClass = aClass;
             [self.componentsDic setObject:info forKey:name];
+            [[VABridgeManager shareManager] registerComponentWithName:name methods:info.methods];
         }
     }
+}
+
+- (void)_registerToBridgeWithName:(NSString *)name methodsDic:(NSDictionary *)methodsDic{
+//    if (name && methodsDic) {
+//
+//    }
 }
 
 - (Class)_classWithModuleName:(NSString *)name{

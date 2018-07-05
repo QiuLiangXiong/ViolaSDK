@@ -87,6 +87,16 @@
     [self _callJSMethod:@"updateInstance" args:@[instance,param ? : @{}]];
 }
 
+- (void)registerModuleWithName:(NSString *)name methods:(NSArray *)methods{
+    if (name && methods) {
+       [self _callJSMethod:@"registerModules" args:@[name , methods]];
+    }
+}
+- (void)registerComponentWithName:(NSString *)name methods:(NSArray *)methods{
+    if (name && methods) {
+        [self _callJSMethod:@"registerComponent" args:@[name , methods]];
+    }
+}
 #pragma mark - private methods
 
 - (void)_registerBridge{
