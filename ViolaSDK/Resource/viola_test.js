@@ -56,6 +56,7 @@ var container = document.createElement('scroller', {
                                        }
                                        })
 
+
 var bgIMage = document.createElement('image',{
                                      attr:{
                                      resize:'cover',
@@ -83,7 +84,7 @@ var textContainer = document.createElement('div', {
            margin:'20dp',
            borderWidth:'10dp',
            padding:'0dp',
-           animated: true,
+        //   animated: true,
     }
 })
 
@@ -253,7 +254,7 @@ function createImage(){
                            
                            //                                 borderRadius:'1000dp',
                            //                                 padding:'40dp',
-                           animated: true,
+                       //    animated: true,
                            lines:4,
                            fontSize:'16dp',
                            lineBreakMargin:'70dp',
@@ -307,6 +308,23 @@ container.appendChild(createImage());
 container.appendChild(createImage());
 container.appendChild(createImage());
 
+container.on('loadMore',function(e){
+             console.log(e);
+             
+             container.appendChild(createImage());
+             container.appendChild(createImage());container.appendChild(createImage());
+             container.appendChild(createImage());
+             container.appendChild(createImage());
+             container.appendChild(createImage());
+             container.appendChild(createImage());
+             container.appendChild(createImage());
+             container.appendChild(createImage());container.appendChild(createImage());
+             container.appendChild(createImage());
+             container.appendChild(createImage());
+             container.appendChild(createImage());
+             container.appendChild(createImage());
+             
+             });
 
 
 
