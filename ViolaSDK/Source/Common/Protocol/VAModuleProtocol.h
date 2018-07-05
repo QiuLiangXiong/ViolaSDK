@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "ViolaInstance.h"
+
+/* 必读：每个可被js调用的api 都要加 va_ 前缀 作为标识  如 va_createBody */
 /*
  * module只能使用该回调闭包
  */

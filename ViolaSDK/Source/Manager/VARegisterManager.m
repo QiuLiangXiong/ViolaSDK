@@ -25,7 +25,7 @@
     if(!_methodsDic){
         _methodsDic = [NSMutableDictionary new];
         Class currentClass = self.aClass;
-        while (currentClass && currentClass != [NSObject class] && [currentClass conformsToProtocol:@protocol(VAModuleProtocol)]) {
+        while (currentClass && currentClass != [NSObject class] && [currentClass conformsToProtocol:@protocol(VAModuleProtocol)] ) {
             unsigned int methCount = 0;
             Method *meths = class_copyMethodList(currentClass, &methCount);
             for(int i = 0; i < methCount; i++) {
@@ -33,7 +33,7 @@
                 SEL sel = method_getName(meth);
                 
                 NSString * selName = NSStringFromSelector(sel);
-                if(selName.length && ![selName hasPrefix:@"_"]){
+                if(selName.length && [selName hasPrefix:@"va_"]){
                     NSString * name = nil;
                     NSRange range = [selName rangeOfString:@":"];
                     if (range.location != NSNotFound) {
@@ -167,6 +167,7 @@
 
 - (SEL)_selectorWithModuleName:(NSString *)moduleName methodName:(NSString *)methodName{
     if ([moduleName isKindOfClass:[NSString class]] && [methodName isKindOfClass:[NSString class]]) {
+        methodName = [@"va_" stringByAppendingString:methodName];
         VAClassInfo * info = self.modulesDic[moduleName];
         if (info) {
             NSString * method = [info.methodsDic objectForKey:methodName];
@@ -180,8 +181,10 @@
 
 - (SEL)_selectorWithComponentName:(NSString *)componentName methodName:(NSString *)methodName{
     if ([componentName isKindOfClass:[NSString class]] && [methodName isKindOfClass:[NSString class]]) {
+        
         VAClassInfo * info = self.componentsDic[componentName];
         if (info) {
+            methodName = [@"va_" stringByAppendingString:methodName];
             NSString * method = [info.methodsDic objectForKey:methodName];
             if ([method isKindOfClass:[NSString class]]) {
                 return NSSelectorFromString(method);
