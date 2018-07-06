@@ -36,8 +36,10 @@
  **/
 - (void)updateInstance:(NSString *)instance
                param:(NSDictionary *)param;
-
-
-
+/*
+ * 注册module
+ */
+- (void)registerModuleWithName:(NSString *)name methods:(NSArray *)methods;
+- (void)registerComponentWithName:(NSString *)name methods:(NSArray *)methods;
 
 @end

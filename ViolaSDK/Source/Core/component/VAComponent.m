@@ -13,6 +13,7 @@
 #import "VAWeakObject.h"
 #import "VADefine.h"
 #import "ViolaInstance.h"
+#import "VABridgeManager.h"
 
 @implementation VAComponent 
 static int componentAllocCount;
@@ -124,6 +125,10 @@ static int componentAllocCount;
         [weakSelf.violaInstance.componentController addTaskToMainQueueOnComponentThead:block withAnimated:animated];
     }];
 
+}
+
+- (void)fireEventWithName:(NSString *)eventName params:(NSDictionary *)eventData{
+    [[VABridgeManager shareManager] fireEventWithIntanceID:_vaInstance.instanceId ref:_ref type:eventName params:eventData domChanges:nil];
 }
 
 #pragma mark update

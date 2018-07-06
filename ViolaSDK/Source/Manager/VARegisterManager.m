@@ -15,17 +15,25 @@
 
 @property (nullable, nonatomic, strong) Class aClass;
 @property (nullable, nonatomic, strong) NSMutableDictionary * methodsDic;
+@property (nullable, nonatomic, strong) NSMutableArray * methods;
 
 
 @end
 
 @implementation VAClassInfo
 
+
+- (void)setAClass:(Class)aClass{
+    _aClass = aClass;
+    [self methodsDic];
+}
+
 - (NSMutableDictionary *)methodsDic{
     if(!_methodsDic){
         _methodsDic = [NSMutableDictionary new];
+        _methods = [NSMutableArray new];
         Class currentClass = self.aClass;
-        while (currentClass && currentClass != [NSObject class] && [currentClass conformsToProtocol:@protocol(VAModuleProtocol)]) {
+        while (currentClass && currentClass != [NSObject class] && [currentClass conformsToProtocol:@protocol(VAModuleProtocol)] ) {
             unsigned int methCount = 0;
             Method *meths = class_copyMethodList(currentClass, &methCount);
             for(int i = 0; i < methCount; i++) {
@@ -33,7 +41,7 @@
                 SEL sel = method_getName(meth);
                 
                 NSString * selName = NSStringFromSelector(sel);
-                if(selName.length && ![selName hasPrefix:@"_"]){
+                if(selName.length && [selName hasPrefix:@"va_"]){
                     NSString * name = nil;
                     NSRange range = [selName rangeOfString:@":"];
                     if (range.location != NSNotFound) {
@@ -42,6 +50,10 @@
                         name = selName;
                     }
                     [_methodsDic setObject:selName forKey:name];
+                    NSString * jsMethodName = [name substringFromIndex:3];
+                    if (jsMethodName) {
+                        [_methods addObject:jsMethodName];
+                    }
                 }
             }
             free(meths);
@@ -133,6 +145,8 @@
             VAClassInfo * info = [VAClassInfo new];
             info.aClass = aClass;
             [self.modulesDic setObject:info forKey:name];
+            [[VABridgeManager shareManager] registerModuleWithName:name methods:info.methods];
+            
         }
     }
 }
@@ -143,8 +157,15 @@
             VAClassInfo * info = [VAClassInfo new];
             info.aClass = aClass;
             [self.componentsDic setObject:info forKey:name];
+            [[VABridgeManager shareManager] registerComponentWithName:name methods:info.methods];
         }
     }
+}
+
+- (void)_registerToBridgeWithName:(NSString *)name methodsDic:(NSDictionary *)methodsDic{
+//    if (name && methodsDic) {
+//
+//    }
 }
 
 - (Class)_classWithModuleName:(NSString *)name{
@@ -167,6 +188,7 @@
 
 - (SEL)_selectorWithModuleName:(NSString *)moduleName methodName:(NSString *)methodName{
     if ([moduleName isKindOfClass:[NSString class]] && [methodName isKindOfClass:[NSString class]]) {
+        methodName = [@"va_" stringByAppendingString:methodName];
         VAClassInfo * info = self.modulesDic[moduleName];
         if (info) {
             NSString * method = [info.methodsDic objectForKey:methodName];
@@ -180,8 +202,10 @@
 
 - (SEL)_selectorWithComponentName:(NSString *)componentName methodName:(NSString *)methodName{
     if ([componentName isKindOfClass:[NSString class]] && [methodName isKindOfClass:[NSString class]]) {
+        
         VAClassInfo * info = self.componentsDic[componentName];
         if (info) {
+            methodName = [@"va_" stringByAppendingString:methodName];
             NSString * method = [info.methodsDic objectForKey:methodName];
             if ([method isKindOfClass:[NSString class]]) {
                 return NSSelectorFromString(method);

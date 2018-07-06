@@ -44,6 +44,8 @@ callNative(1,[{module:'modal',method:'toast',args:[{ message: 'This is a toast',
 
 
 
+
+
 var container = document.createElement('scroller', {
                                        attr: { id: 'container'
                                        ,
@@ -62,6 +64,7 @@ var container = document.createElement('scroller', {
                                        
                                        }
                                        })
+
 
 var bgIMage = document.createElement('image',{
                                      attr:{
@@ -90,7 +93,7 @@ var textContainer = document.createElement('div', {
            margin:'20dp',
            borderWidth:'10dp',
            padding:'0dp',
-           animated: true,
+        //   animated: true,
     }
 })
 
@@ -260,7 +263,7 @@ function createImage(){
                            
                            //                                 borderRadius:'1000dp',
                            //                                 padding:'40dp',
-                           animated: true,
+                       //    animated: true,
                            lines:4,
                            fontSize:'16dp',
                            lineBreakMargin:'70dp',
@@ -290,8 +293,47 @@ container.appendChild(createImage());
 container.appendChild(createImage());
 container.appendChild(createImage());
 container.appendChild(createImage());
+container.appendChild(createImage());
+container.appendChild(createImage());
+container.appendChild(createImage());
+container.appendChild(createImage());
+container.appendChild(createImage());
+container.appendChild(createImage());
+container.appendChild(createImage());container.appendChild(createImage());
+container.appendChild(createImage());
+container.appendChild(createImage());
+container.appendChild(createImage());
+container.appendChild(createImage());
+container.appendChild(createImage());
+container.appendChild(createImage());container.appendChild(createImage());
+container.appendChild(createImage());
+container.appendChild(createImage());
+container.appendChild(createImage());
+container.appendChild(createImage());
+container.appendChild(createImage());
+container.appendChild(createImage());container.appendChild(createImage());
+container.appendChild(createImage());
+container.appendChild(createImage());
+container.appendChild(createImage());
+container.appendChild(createImage());
 
-
+container.on('loadMore',function(e){
+             console.log(e);
+             
+             container.appendChild(createImage());
+             container.appendChild(createImage());container.appendChild(createImage());
+             container.appendChild(createImage());
+             container.appendChild(createImage());
+             container.appendChild(createImage());
+             container.appendChild(createImage());
+             container.appendChild(createImage());
+             container.appendChild(createImage());container.appendChild(createImage());
+             container.appendChild(createImage());
+             container.appendChild(createImage());
+             container.appendChild(createImage());
+             container.appendChild(createImage());
+             
+             });
 
 
 
@@ -318,6 +360,15 @@ var imageIndex = 0;
 var ratioValues = [0.5,0.8,2,1];
 image.on('click',function(e){
          image.setAttr('value',imageArray[index++ % imageArray.length])
+         
+//         viola.request
+         
+         
+         
+         viola.requireAPI('http').requestGet('http://api.duihua.doufu.la/',{},function(res){
+                                             console.log(22222);
+                                             console.log(res);
+                                             })
          
        //  container.setAttr('showScrollerIndicator',0)
          

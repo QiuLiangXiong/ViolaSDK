@@ -32,9 +32,7 @@
         if ([instanceID isKindOfClass:[NSString class]]) {
 
             res = [[[self _getInstance] getInstancesDic] objectForKey:instanceID];
-#if DEBUG
-            res = [[self _getInstance] getInstancesDic].allValues.firstObject;
-#endif
+
         }
     } waitUntilDone:true];
     return res;

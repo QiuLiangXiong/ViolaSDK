@@ -96,6 +96,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)isBodyLayoutFinish;
 
+//发送事件到js
+
+- (void)fireEventWithName:(NSString *)eventName params:(NSDictionary *)eventData;
+
 @end
 
 

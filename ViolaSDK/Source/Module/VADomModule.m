@@ -14,28 +14,28 @@
 
 @implementation VADomModule
 @synthesize vaInstance;
-- (void)createBody:(NSDictionary *)body{
+- (void)va_createBody:(NSDictionary *)body{
     VALogDebug(@"%s_%@",__func__,body);
     VAAssertReturn(self.vaInstance, @"can't be nil");
     [self.vaInstance.componentController createBody:body];
 }
 //添加component
-- (void)addElement:(NSString *)parentRef eleData:(NSDictionary *)eleData atIndex:(NSInteger)index {
+- (void)va_addElement:(NSString *)parentRef eleData:(NSDictionary *)eleData atIndex:(NSInteger)index {
     VALogDebug(@"%s_ref:%@  eleData:%@ index:%ld",__func__,parentRef, eleData,(long)index);
    [self.vaInstance.componentController addComponent:eleData toSupercomponent:parentRef atIndex:index];
 }
 //删除component
-- (void)removeElement:(NSString *)ref {
+- (void)va_removeElement:(NSString *)ref {
     VALogDebug(@"%s_%@",__func__,ref);
     [self.vaInstance.componentController removeComponent:ref];
 }
 //更新component
--(void)updateElement:(NSString *)ref eleData:(NSDictionary *)eleData {
+-(void)va_updateElement:(NSString *)ref eleData:(NSDictionary *)eleData {
     VALogDebug(@"%s_ref:%@   eleData:%@",__func__,ref,eleData);
     [self.vaInstance.componentController updateComponentWithRef:ref componentData:eleData];
 }
 //移动component
-- (void)moveElement:(NSString *)parentRef componentRef:(NSString *)ref index:(NSInteger)index{
+- (void)va_moveElement:(NSString *)parentRef componentRef:(NSString *)ref index:(NSInteger)index{
     VALogDebug(@"%s_ref:%@  componentRef:%@ index:%ld",__func__,parentRef, ref,(long)index);
     [self.vaInstance.componentController moveComponentWithRef:ref toParent:parentRef atIndex:index];
 }

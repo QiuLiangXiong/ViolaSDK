@@ -10,7 +10,12 @@
 #import "VAComponent+private.h"
 #import "VAConvertUtl.h"
 #import "VAWrapView.h"
-
+#import "VAThreadManager.h"
+#import "VADefine.h"
+@interface VAScrollerComponent()<UIScrollViewDelegate>
+@property (nonatomic, assign)   BOOL loadMoreing;
+@property (nonatomic, assign)   CGPoint lastContentOffset;
+@end
 
 @implementation VAScrollerComponent{
 
@@ -21,7 +26,7 @@
     BOOL _pagingEnable;//分页
     CGFloat _preloadDistance;//预加载底部距离
     //events
-    BOOL _listenLoadMoreEvent;
+    BOOL _listenLoadMoreEvent;//
     BOOL _listenScrollEvent;
     BOOL _listentScrollEnd;
     BOOL _listentContentSizeChangeEvent;
@@ -31,6 +36,8 @@
     UIScrollView * _scrollView;
     
     BOOL _isVerticoalScrollDirection;
+    
+  
 }
 #pragma mark - override
 
@@ -48,6 +55,7 @@
 
 - (UIView *)loadView{
     _scrollView = [[UIScrollView alloc] init];
+    _scrollView.delegate = self;
     return [[VAWrapView alloc] initWithView:_scrollView];
 }
 
@@ -151,6 +159,51 @@ if([events containsObject:@#key]){\
     
     //预加载距离
 }
+
+#pragma mark - js
+//js响应了loadMore事件结束时 回调该api
+- (void)va_loadMoreFinish{
+    kBlockWeakSelf;
+    [VAThreadManager performOnComponentThreadWithBlock:^{
+        weakSelf.loadMoreing = false;
+    } afterDelay:0.1];
+}
+
+#pragma mark - UIScrollViewDelegate
+
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    //
+    //
+    //
+    [self _fireLoadMoreEventIfNeed];
+    
+    _lastContentOffset = scrollView.contentOffset;
+    
+}
+
+#pragma mark - private
+
+- (void)_fireLoadMoreEventIfNeed{
+    if (!_loadMoreing) {
+        CGPoint contentOffset = _scrollView.contentOffset;
+        //纵向布局
+        if (_isVerticoalScrollDirection) {
+            if (contentOffset.y >= 0 && contentOffset.y > _lastContentOffset.y &&( _scrollView.contentSize.height - (contentOffset.y + _scrollView.bounds.size.height)) < _preloadDistance ) {
+                _loadMoreing = true;
+                //会传contentHeight offset 和距离底部的距离 等参数
+                [self fireEventWithName:@"loadMore" params:@{}];
+            }
+        }else {
+            if (contentOffset.x >= 0 && contentOffset.x > _lastContentOffset.x &&( _scrollView.contentSize.width - (contentOffset.x + _scrollView.bounds.size.width)) < _preloadDistance ) {
+                _loadMoreing = true;
+                //会传contentHeight offset 和距离底部的距离 等参数
+                [self fireEventWithName:@"loadMore" params:@{}];
+            }
+        }
+    }
+}
+
 
 #pragma mark - layout
 static int cssNode_scroller_childrenCount(void * context){

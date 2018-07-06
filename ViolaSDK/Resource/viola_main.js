@@ -258,16 +258,26 @@ var Viola = this;
  function inject(name, injection) {
  injections[name] = injection;
  }
- function registerModules(modules) {
- var violaModule = injections.modules;
- var loop = function ( name ) {
- violaModule[name] || (violaModule[name] = {});
- var moduleFnc = modules[name];
- moduleFnc.forEach(function (fnc) {
-                   violaModule[name][fnc.name] = fnc.args;
-                   });
- };
- for (var name in modules) loop( name );
+ 
+ /*
+  
+  {
+      dom: ['createBody']
+  }
+  
+  */
+ 
+ function registerModules(modules, fncArr) {
+        console.log('register modules =================')
+        console.log(modules)
+         console.log(fncArr)
+        console.log('register modules =================')
+        var violaModule = injections.modules;
+        var name = modules
+        violaModule[name] || (violaModule[name] = {});
+        fncArr.forEach(function (fnc) {
+            violaModule[name][fnc] = true;
+                       });
  }
  function getModule(name) {
  return injections.modules[name]
@@ -791,7 +801,11 @@ var Viola = this;
  var cbId = this.genCallback(cb);
  args.splice(-1, 1, cbId);
  }
- return this.sendTask([moduleName, method, args])
+ return this.sendTask([{
+                       module:moduleName,
+                       method: method,
+                       args: args
+                      }])
  };
  Tasker.prototype.sendTask = function sendTask (tasks) {
  return bridge.send(this.id, tasks)
