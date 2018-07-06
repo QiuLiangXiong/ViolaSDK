@@ -97,7 +97,7 @@ static const CGFloat VAToastDefaultWidth = 230.0;
 static const CGFloat VAToastDefaultHeight = 30.0;
 static const CGFloat VAToastDefaultPadding = 30.0;
 
-- (void)toast:(NSDictionary *)param
+- (void)va_toast:(NSDictionary *)param
 {
     NSString *message = [VAConvertUtl convertToString:param[@"message"]];
     
@@ -227,7 +227,7 @@ static const CGFloat VAToastDefaultPadding = 30.0;
 
 #pragma mark - Alert
 
-- (void)alert:(NSDictionary *)param callback:(VAModuleCallback)callback
+- (void)va_alert:(NSDictionary *)param callback:(VAModuleCallback)callback
 {
     
     NSString *message = [VAConvertUtl convertToString:param[@"message"]];
@@ -242,7 +242,7 @@ static const CGFloat VAToastDefaultPadding = 30.0;
 
 #pragma mark - Confirm
 
-- (void)confirm:(NSDictionary *)param callback:(VAModuleCallback)callback
+- (void)va_confirm:(NSDictionary *)param callback:(VAModuleCallback)callback
 {
     NSString *message = [VAConvertUtl convertToString:param[@"message"]];
     NSString *okTitle = [VAConvertUtl convertToString:param[@"okTitle"]];
@@ -260,7 +260,7 @@ static const CGFloat VAToastDefaultPadding = 30.0;
 
 #pragma mark - Prompt
 
-- (void)prompt:(NSDictionary *)param callback:(VAModuleCallback)callback
+- (void)va_prompt:(NSDictionary *)param callback:(VAModuleCallback)callback
 {
     NSString *message = [VAConvertUtl convertToString:param[@"message"]];
     NSString *defaultValue = [VAConvertUtl convertToString:param[@"default"]];
