@@ -10,4 +10,6 @@
 
 @interface VARefreshComponent : VAComponent
 
+-(void)contentOffsetDidChangeWithScrollView:(UIScrollView *)scrollView;
+
 @end

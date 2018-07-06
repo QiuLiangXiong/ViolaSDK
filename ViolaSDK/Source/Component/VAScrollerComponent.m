@@ -179,8 +179,11 @@ if([events containsObject:@#key]){\
 //js响应了loadMore事件结束时 回调该api
 - (void)va_loadMoreFinish{
     kBlockWeakSelf;
+   
     [VAThreadManager performOnComponentThreadWithBlock:^{
         weakSelf.loadMoreing = false;
+        _lastContentOffset = CGPointZero;
+        [weakSelf _fireLoadMoreEventIfNeed];
     } afterDelay:0.1];
 }
 
@@ -199,19 +202,26 @@ if([events containsObject:@#key]){\
     
     _lastContentOffset = scrollView.contentOffset;
     
+    if (_refreshComponent) {
+        [_refreshComponent contentOffsetDidChangeWithScrollView:scrollView];
+    }
+    
 }
 
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView{
-    int i = 0;
-//    if (scrollView.contentOffset.y >= ) {
+
+
+    
+//    if (<#condition#>) {
 //        <#statements#>
 //    }
+    
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     _fireScollLastContentOffset = CGPointMake(MAXFLOAT, MAXFLOAT);
     [self _fireScrollEventIfNeed];
-    [self _fireScrollEndEventIfNeed];
+    [self _fireLoadMoreEventIfNeed];
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView{

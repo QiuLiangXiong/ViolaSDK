@@ -95,6 +95,7 @@ var container = document.createElement('scroller', {
 
 
 var refresh =  document.createElement('refresh', {
+                                      events:['idle','pulling','refresh'],
                                   style: {
                                       justifyContent:'center',
                                       alignItems:'center',
@@ -110,6 +111,9 @@ var refresh =  document.createElement('refresh', {
                                   })
 
 
+
+
+
 var refreshText =document.createElement('text', {
                        attr: {
                        id: 'div1',
@@ -122,6 +126,23 @@ var refreshText =document.createElement('text', {
             
                        }
                        })
+
+
+refresh.on('idle',function(e){
+           refreshText.setAttr('value','下拉刷新')
+           })
+refresh.on('pulling',function(e){
+                      refreshText.setAttr('value','松开手指即可刷新')
+           })
+refresh.on('refresh',function(e){
+              refreshText.setAttr('value','刷新中..')
+           
+           setTimeout(function(){
+                      refresh.refreshFinish();
+                      },1000);
+           
+           })
+
 refresh.appendChild(refreshText);
 
 
@@ -151,7 +172,7 @@ var bgIMage = document.createElement('image',{
                                      }
                                      )
 
-container.appendChild(bgIMage);
+//container.appendChild(bgIMage);
 
 
 var textContainer = document.createElement('div', {
