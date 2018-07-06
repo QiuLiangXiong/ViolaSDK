@@ -86,9 +86,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)moveToSuperview:(VAComponent *)supercomponent atIndex:(NSUInteger)index;//主线程更新
 
+//view
 - (void)removeFromSuperview;//主线程更新
 - (void)willMoveToSuperview:(nullable UIView *)newSuperview;
 - (void)didMoveToSuperview;
+
+//component options
+
+- (void)didInsertSubcomponent:(VAComponent *)subcomponent atIndex:(NSInteger)index;
+- (void)didRemoveFromSupercomponent;
+- (void)didMoveToSupercomponent:(VAComponent *)newSupercomponent;
+
+//task
 
 - (void)addTaskToMainQueueOnComponentThead:(dispatch_block_t)block;
 - (void)addTaskToMainQueueOnComponentThead:(dispatch_block_t)block withAnimated:(BOOL)animated;

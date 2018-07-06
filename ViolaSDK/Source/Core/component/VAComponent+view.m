@@ -214,6 +214,7 @@ if(styles[@#key]){\
 
         
         _view = [self loadView];
+        _view.va_component = self;
         _view.frame = _componentFrame;
         _view.hidden = !_visibility;
         _view.clipsToBounds = _clipToBounds;
@@ -228,7 +229,7 @@ if(styles[@#key]){\
 //        }
         
         
-        _view.va_component = self;
+       
         [self _syncTouchEventsToView];
         
         

@@ -7,8 +7,9 @@
 //
 
 #import "VAComponent.h"
+#import "VAModuleProtocol.h"
 
-@interface VAScrollerComponent : VAComponent
+@interface VAScrollerComponent : VAComponent<VAModuleProtocol>
 
 //
 

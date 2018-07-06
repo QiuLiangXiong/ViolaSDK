@@ -33,7 +33,43 @@
 //
 //return;
 
-
+var offsetText = document.createElement('text', {
+                                 attr: {
+                                 id: 'div1',
+                                 value:'0dp',
+                                        asyncDisplay:1,
+                                 },
+                                 style: {
+                                 //                                    flexDirection: 'row',
+                                 //                                 flexWrap: 'wrap',
+                                 //                                 borderColor:'r',
+                                 //                                     backgroundColor:'red',
+                                 
+                                 //                                 maxWidth:'200dp',
+                                 //                                 borderWidth:'10dp',
+                                 
+                                 
+                                 //                                 borderRadius:'1000dp',
+                                 //                                 padding:'40dp',
+                             //    animated: true,
+                                 lines:1,
+                                 fontSize:'16dp',
+                                        color:'balck',
+                                        padding:'10dp',
+                                        backgroundColor:'rgba(0,0,0,0.5)',
+                                        borderRadius:'4dp',
+                                        position:'absolute',
+                                        top:'10dp',
+                                        right:'10dp',
+                                 //                                 lineHeight:'40dp',
+                                 //  lineSpacing:'10dp',
+                                 //                                 headIndent:'20dp',
+                                 
+                                 
+                                 //                                 lineHeight:'30dp',
+                                 //                                 lineSpacing:'-20dp',
+                                 }
+                                 })
 
 
 
@@ -43,7 +79,7 @@ var container = document.createElement('scroller', {
                                        bouncesEnable:1,
                                        pagingEnable:0,
                                        },
-                                       events:['scroll','loadMore'],
+                                       events:['scroll','loadMore','contentSizeChange'],
                                        style:{
 //                                       flexDirection:'row',
 //                                       bouncesEnable:0,
@@ -56,6 +92,48 @@ var container = document.createElement('scroller', {
                                        
                                        }
                                        })
+
+
+var refresh =  document.createElement('refresh', {
+                                  style: {
+                                      justifyContent:'center',
+                                      alignItems:'center',
+//                                  flexDirection: 'row',
+                                  //           flexWrap: 'wrap',
+//                                  borderColor:'yellow',
+                                  backgroundColor:'green',
+//                                  margin:'20dp',
+//                                  borderWidth:'10dp',
+                                  padding:'20dp',
+                                  //   animated: true,
+                                  }
+                                  })
+
+
+var refreshText =document.createElement('text', {
+                       attr: {
+                       id: 'div1',
+                       value:'下拉刷新',
+                       },
+                       style: {
+                       lines:1,
+                       fontSize:'16dp',
+                       color:'balck',
+            
+                       }
+                       })
+refresh.appendChild(refreshText);
+
+
+container.appendChild(refresh);
+
+
+
+
+
+container.on('contentSizeChange',function(e){
+             console.log(e);
+             })
 
 
 var bgIMage = document.createElement('image',{
@@ -73,7 +151,7 @@ var bgIMage = document.createElement('image',{
                                      }
                                      )
 
-//container.appendChild(bgIMage);
+container.appendChild(bgIMage);
 
 
 var textContainer = document.createElement('div', {
@@ -152,6 +230,7 @@ var zhankaiText = document.createElement('text', {
 var index = 0;
 div.on('lastLineMarginChange',function(e){
        console.log(e);
+
        })
 div.on('click', function (e) {
        console.log(e);
@@ -245,6 +324,7 @@ function createImage2(){
                            placeholder:''
                            },
                            style: {
+                                 backgroundColor:'red',
                            //                                    flexDirection: 'row',
                            //                                 flexWrap: 'wrap',
                            
@@ -347,108 +427,16 @@ container.appendChild(createImage());
 container.appendChild(createImage());
 
 container.on('scroll',function(e){
-          //   console.log(e);
+             console.log(e);
+                    offsetText.setAttr('value',e.contentOffset.y);
              })
 
 container.on('loadMore',function(e){
              console.log(e);
-             
-             container.appendChild(createImage());
-             container.appendChild(createImage());container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage2());container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage());container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage2());container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage());
-             container.appendChild(createImage2());
-             container.appendChild(createImage2());
+             for(var i = 0; i < 20; i++){
+                 container.insertBefore(createImage(), container.children[container.children.length - 1]);
+             }
+             container.loadMoreFinish();
              
              });
 
@@ -480,12 +468,16 @@ image.on('click',function(e){
          
 //         viola.request
          
+         bgIMage.test({1:'aaa_test'},function(e){
+                      
+                      console.log(e);
+                      
+                      });
          
-         
-         viola.requireAPI('http').requestGet('http://api.duihua.doufu.la/',{},function(res){
-                                             console.log(22222);
-                                             console.log(res);
-                                             })
+//         viola.requireAPI('http').requestGet('http://api.duihua.doufu.la/',{},function(res){
+//                                             console.log(22222);
+//                                             console.log(res);
+//                                             })
          
        //  container.setAttr('showScrollerIndicator',0)
          
@@ -642,7 +634,43 @@ document.body.setStyle({
 
 document.body.type = 'div'
 
+
 document.body.appendChild(container)
+
+var footerRefresh =  document.createElement('div', {
+                                      style: {
+                                        
+                                      justifyContent:'center',
+                                      alignItems:'center',
+                                      //                                  flexDirection: 'row',
+                                      //           flexWrap: 'wrap',
+                                      //                                  borderColor:'yellow',
+                                      backgroundColor:'green',
+                                      //                                  margin:'20dp',
+                                      //                                  borderWidth:'10dp',
+                                      padding:'20dp',
+                                      //   animated: true,
+                                      }
+                                      })
+
+
+var refreshText2 =document.createElement('text', {
+                                        attr: {
+                                        id: 'div1',
+                                        value:'加载中...',
+                                        },
+                                        style: {
+                                        lines:1,
+                                        fontSize:'16dp',
+                                        color:'balck',
+                                        
+                                        }
+                                        })
+footerRefresh.appendChild(refreshText2);
+
+container.appendChild(footerRefresh);
+
+document.body.appendChild(offsetText)
 document.render()
 
 

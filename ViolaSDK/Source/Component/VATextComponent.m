@@ -32,6 +32,7 @@ prop = defaultValue;\
     //attr
     NSString *_text;
     NSArray *_texts;//多片段文本 用来显示富文本
+    NSNumber * _asyncDisplay;//是否异步渲染
     
     
     //css text style
@@ -232,6 +233,10 @@ prop = defaultValue;\
        _texts = [value isKindOfClass:[NSArray class]] ? value : nil;
        needUpdate = true;
     }
+    value = attrs[@"asyncDisplay"];
+    if(value){
+        _asyncDisplay = @([VAConvertUtl convertToBOOL:value]);
+    }
     return needUpdate;
 }
 
@@ -253,7 +258,6 @@ prop = defaultValue;\
 
 //创建富文本
 - (nullable  NSMutableAttributedString *)_buildNewAttributedString{
-    
     if(_text.length == 0 && _texts.count == 0) return nil;
     NSMutableAttributedString * res = nil;
     NSArray * texts = [_texts isKindOfClass:[NSArray class]] ? [_texts copy] : nil;
@@ -289,14 +293,14 @@ prop = defaultValue;\
                 isFirstLineHeight = false;
                  _lineHeightOffset = -(lineHeight - fontSize) / 2;
             }
-            NSMutableAttributedString * textAtt = [self _getAttributedStringWith:text fontSize:fontSize fontWeight:fontWeight fontFamily:fontFamily fontStyle:fontStyle color:color letterSpacing:letterSpacing textDecoration:textDecoration textAlign:textAlign lineHeight:lineHeight lineSpacing:lineSpacing != MAXFLOAT ? lineSpacing : fontSize * 0.3 headIndent:headIndent  highlightBGColor:hilightBGColor highlightBGRadius:highlightBGRadius highlightBGInset:highlightBGInset];
+            NSMutableAttributedString * textAtt = [self _getAttributedStringWith:text fontSize:fontSize fontWeight:fontWeight fontFamily:fontFamily fontStyle:fontStyle color:color letterSpacing:letterSpacing textDecoration:textDecoration textAlign:textAlign lineHeight:lineHeight lineSpacing:lineSpacing != MAXFLOAT ? lineSpacing : 2 headIndent:headIndent  highlightBGColor:hilightBGColor highlightBGRadius:highlightBGRadius highlightBGInset:highlightBGInset];
             if(textAtt){
                [res appendAttributedString:textAtt];
             }
 
         }
     }else {
-        res = [self _getAttributedStringWith:_text fontSize:_fontSize fontWeight:_fontWeight fontFamily:_fontFamily fontStyle:_fontStyle color:_color letterSpacing:_letterSpacing textDecoration:_textDecoration textAlign:_textAlign lineHeight:_lineHeight lineSpacing:_lineSpacing != MAXFLOAT ? _lineSpacing : _fontSize * 0.3 headIndent:_headIndent  highlightBGColor:_highlightBackgroundColor highlightBGRadius:_highlightBackgroundRadius highlightBGInset:_highlightBackgroundInset];
+        res = [self _getAttributedStringWith:_text fontSize:_fontSize fontWeight:_fontWeight fontFamily:_fontFamily fontStyle:_fontStyle color:_color letterSpacing:_letterSpacing textDecoration:_textDecoration textAlign:_textAlign lineHeight:_lineHeight lineSpacing:_lineSpacing != MAXFLOAT ? _lineSpacing : 2 headIndent:_headIndent  highlightBGColor:_highlightBackgroundColor highlightBGRadius:_highlightBackgroundRadius highlightBGInset:_highlightBackgroundInset];
             _lineHeightOffset = 0;
             if(_lineHeight && _lineHeight > _fontSize){
                  _lineHeightOffset = -(_lineHeight - _fontSize) / 2;//fix
@@ -421,16 +425,19 @@ prop = defaultValue;\
 
 //在屏幕中的同步渲染 在屏幕外的异步渲染
 - (void) _updateLableAsyncRender{
-    
-    if(!CGRectEqualToRect(self.view.frame, self.componentFrame)){
-        self.view.frame = self.componentFrame;
-    }
-    CGRect location = [self.view convertRect:self.view.bounds toView:nil];//在屏幕中的位置 //如果
-    CGRect windowBound = self.view.window.bounds;
-    if(CGRectIntersectsRect(location, windowBound) || CGRectContainsRect(location, windowBound)){
-        _label.displaysAsynchronously = false;
+    if(_asyncDisplay){
+        _label.displaysAsynchronously = [_asyncDisplay boolValue];
     }else {
-        _label.displaysAsynchronously = true;
+        if(!CGRectEqualToRect(self.view.frame, self.componentFrame)){
+            self.view.frame = self.componentFrame;
+        }
+        CGRect location = [self.view convertRect:self.view.bounds toView:nil];//在屏幕中的位置 //如果
+        CGRect windowBound = self.view.window.bounds;
+        if(CGRectIntersectsRect(location, windowBound) || CGRectContainsRect(location, windowBound)){
+            _label.displaysAsynchronously = false;
+        }else {
+            _label.displaysAsynchronously = true;
+        }
     }
 }
 

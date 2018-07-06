@@ -184,35 +184,39 @@
 }
 
 - (void)invoke{
-    
-    VAComponent * component = [self.instance componentWithRef:self.componentRef];
-    VAAssertReturn(component, @"component is nil");
-    
-    SEL selector  = [VARegisterManager selectorWithComponentName:component.type methodName:self.methodName];
-    VAAssertReturn(selector, @"can't be nil");
-    
-    if (component && selector) {
-        VAAssert([component respondsToSelector:selector], @"component not found seletor");
-        if ([component respondsToSelector:selector]) {
-            NSInvocation * invocation = [self invocationWithTarget:component selector:selector];
-            if ([component respondsToSelector:@selector(performOnQueue)]) {
-                dispatch_queue_t queue = [(id)component performOnQueue];
-                if (queue) {
-                    dispatch_async(queue, ^{
-                        [invocation invoke];
-                    });
+    //
+    [VAThreadManager performOnComponentThreadWithBlock:^{
+        VAComponent * component = [self.instance componentWithRef:self.componentRef];
+        VAAssertReturn(component, @"component is nil");
+        
+        SEL selector  = [VARegisterManager selectorWithComponentName:component.type methodName:self.methodName];
+        VAAssertReturn(selector, @"can't be nil");
+        
+        if (component && selector) {
+            VAAssert([component respondsToSelector:selector], @"component not found seletor");
+            if ([component respondsToSelector:selector]) {
+                NSInvocation * invocation = [self invocationWithTarget:component selector:selector];
+                if ([component respondsToSelector:@selector(performOnQueue)]) {
+                    dispatch_queue_t queue = [(id)component performOnQueue];
+                    if (queue) {
+                        dispatch_async(queue, ^{
+                            [invocation invoke];
+                        });
+                    }else {
+                        [VAThreadManager performOnComponentThreadWithBlock:^{
+                            [invocation invoke];
+                        }];
+                    }
                 }else {
                     [VAThreadManager performOnComponentThreadWithBlock:^{
                         [invocation invoke];
                     }];
                 }
-            }else {
-                [VAThreadManager performOnComponentThreadWithBlock:^{
-                    [invocation invoke];
-                }];
             }
         }
-    }
+    }];
+    
+   
 }
 
 

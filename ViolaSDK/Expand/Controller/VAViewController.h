@@ -10,7 +10,7 @@
 #import "VABaseViewController.h"
 @interface VAViewController : VABaseViewController
 
-- (instancetype)initWithSourceUrl:(NSString * _Nonnull)url pageParam:(NSDictionary * _Nullable)param;
+- (instancetype _Nullable )initWithSourceUrl:(NSString * _Nonnull)url pageParam:(NSDictionary * _Nullable)param;
 
 
 @end

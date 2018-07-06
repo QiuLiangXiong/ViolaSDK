@@ -37,6 +37,11 @@
 		FF6607FE20DBA23B00A99EE0 /* VAInstanceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6607E620DBA23B00A99EE0 /* VAInstanceManager.m */; };
 		FF6607FF20DBA23B00A99EE0 /* VARootView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6607ED20DBA23B00A99EE0 /* VARootView.m */; };
 		FF66080520DBA8B000A99EE0 /* viola_test.js in Resources */ = {isa = PBXBuildFile; fileRef = FF66080420DBA8B000A99EE0 /* viola_test.js */; };
+		FF7369B520EF5F11007134C5 /* vue_test.js in Resources */ = {isa = PBXBuildFile; fileRef = FF7369B420EF5F10007134C5 /* vue_test.js */; };
+		FF7369B820EF8366007134C5 /* VACacheModule.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7369B720EF8366007134C5 /* VACacheModule.m */; };
+		FF7369BB20EF8386007134C5 /* VAListComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7369BA20EF8386007134C5 /* VAListComponent.m */; };
+		FF7369FC20EF9428007134C5 /* VARefreshComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7369FB20EF9428007134C5 /* VARefreshComponent.m */; };
+		FF7369FF20EF9F60007134C5 /* VARefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7369FE20EF9F60007134C5 /* VARefreshView.m */; };
 		FF760ECF20E9CE5A001949F0 /* VAImageComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FF760ECE20E9CE5A001949F0 /* VAImageComponent.m */; };
 		FF760ED620EA7B5E001949F0 /* VAScrollerComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FF760ED520EA7B5E001949F0 /* VAScrollerComponent.m */; };
 		FFB278B520DE463C009FD859 /* VADivComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB278B420DE463C009FD859 /* VADivComponent.m */; };
@@ -140,6 +145,15 @@
 		FF6607ED20DBA23B00A99EE0 /* VARootView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VARootView.m; sourceTree = "<group>"; };
 		FF66080120DBA4F900A99EE0 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		FF66080420DBA8B000A99EE0 /* viola_test.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = viola_test.js; sourceTree = "<group>"; };
+		FF7369B420EF5F10007134C5 /* vue_test.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = vue_test.js; sourceTree = "<group>"; };
+		FF7369B620EF8366007134C5 /* VACacheModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VACacheModule.h; sourceTree = "<group>"; };
+		FF7369B720EF8366007134C5 /* VACacheModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VACacheModule.m; sourceTree = "<group>"; };
+		FF7369B920EF8386007134C5 /* VAListComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VAListComponent.h; sourceTree = "<group>"; };
+		FF7369BA20EF8386007134C5 /* VAListComponent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAListComponent.m; sourceTree = "<group>"; };
+		FF7369FA20EF9428007134C5 /* VARefreshComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VARefreshComponent.h; sourceTree = "<group>"; };
+		FF7369FB20EF9428007134C5 /* VARefreshComponent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VARefreshComponent.m; sourceTree = "<group>"; };
+		FF7369FD20EF9F60007134C5 /* VARefreshView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VARefreshView.h; sourceTree = "<group>"; };
+		FF7369FE20EF9F60007134C5 /* VARefreshView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VARefreshView.m; sourceTree = "<group>"; };
 		FF760ECD20E9CE5A001949F0 /* VAImageComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VAImageComponent.h; sourceTree = "<group>"; };
 		FF760ECE20E9CE5A001949F0 /* VAImageComponent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAImageComponent.m; sourceTree = "<group>"; };
 		FF760ED320E9CF76001949F0 /* VAImageHandlerProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VAImageHandlerProtocol.h; sourceTree = "<group>"; };
@@ -351,6 +365,8 @@
 				FF6607D420DBA23B00A99EE0 /* VADomModule.m */,
 				FFF1D5D820ED0CC2002F4A81 /* VAAnimationModule.h */,
 				FFF1D5D920ED0CC2002F4A81 /* VAAnimationModule.m */,
+				FF7369B620EF8366007134C5 /* VACacheModule.h */,
+				FF7369B720EF8366007134C5 /* VACacheModule.m */,
 			);
 			path = Module;
 			sourceTree = "<group>";
@@ -412,6 +428,8 @@
 				FF6607ED20DBA23B00A99EE0 /* VARootView.m */,
 				2D1B694A20EB877C00F03E33 /* VAWrapView.h */,
 				2D1B694B20EB877C00F03E33 /* VAWrapView.m */,
+				FF7369FD20EF9F60007134C5 /* VARefreshView.h */,
+				FF7369FE20EF9F60007134C5 /* VARefreshView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -428,6 +446,7 @@
 		FF66080320DBA88E00A99EE0 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				FF7369B420EF5F10007134C5 /* vue_test.js */,
 				FF17DDF820E3D4EC008F29B3 /* viola_main.js */,
 				FF66080420DBA8B000A99EE0 /* viola_test.js */,
 			);
@@ -445,6 +464,10 @@
 				FF760ECE20E9CE5A001949F0 /* VAImageComponent.m */,
 				FF760ED420EA7B5E001949F0 /* VAScrollerComponent.h */,
 				FF760ED520EA7B5E001949F0 /* VAScrollerComponent.m */,
+				FF7369B920EF8386007134C5 /* VAListComponent.h */,
+				FF7369BA20EF8386007134C5 /* VAListComponent.m */,
+				FF7369FA20EF9428007134C5 /* VARefreshComponent.h */,
+				FF7369FB20EF9428007134C5 /* VARefreshComponent.m */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -665,6 +688,7 @@
 				FF66079A20DBA1A300A99EE0 /* LaunchScreen.storyboard in Resources */,
 				FF66079720DBA1A300A99EE0 /* Assets.xcassets in Resources */,
 				FF66080520DBA8B000A99EE0 /* viola_test.js in Resources */,
+				FF7369B520EF5F11007134C5 /* vue_test.js in Resources */,
 				FF17DDF920E3D4ED008F29B3 /* viola_main.js in Resources */,
 				FF66079520DBA1A300A99EE0 /* Main.storyboard in Resources */,
 			);
@@ -753,9 +777,11 @@
 				FFF1D5E720EF1732002F4A81 /* YYWeakProxy.m in Sources */,
 				FF6607EE20DBA23B00A99EE0 /* ViolaEngine.m in Sources */,
 				FFB278C720E0F6C9009FD859 /* VAComponent+view.m in Sources */,
+				FF7369FC20EF9428007134C5 /* VARefreshComponent.m in Sources */,
 				FF6607F420DBA23B00A99EE0 /* VAJSBridge.m in Sources */,
 				FF6607FF20DBA23B00A99EE0 /* VARootView.m in Sources */,
 				FFF1D5DA20ED0CC2002F4A81 /* VAAnimationModule.m in Sources */,
+				FF7369BB20EF8386007134C5 /* VAListComponent.m in Sources */,
 				FFF1D5D720ED0B03002F4A81 /* VAHttpModule.m in Sources */,
 				FF760ECF20E9CE5A001949F0 /* VAImageComponent.m in Sources */,
 				FF6607FB20DBA23B00A99EE0 /* VARegisterManager.m in Sources */,
@@ -782,8 +808,10 @@
 				FF6607F220DBA23B00A99EE0 /* VABridgeCategory.m in Sources */,
 				FFB278BC20DE9AED009FD859 /* Layout.c in Sources */,
 				FFB2793820E206AB009FD859 /* TestViewController.m in Sources */,
+				FF7369B820EF8366007134C5 /* VACacheModule.m in Sources */,
 				FF6607F520DBA23B00A99EE0 /* VAJSContext.m in Sources */,
 				FF6607F920DBA23B00A99EE0 /* VALog.m in Sources */,
+				FF7369FF20EF9F60007134C5 /* VARefreshView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

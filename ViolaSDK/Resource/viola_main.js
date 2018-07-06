@@ -220,6 +220,7 @@ var Viola = this;
  var MODULE = {
  DOM: 'dom',
  DATA: 'data',
+ COMPONENT: 'component',
  JSAPI: 'jsapi'
  };
  var METHOD = {
@@ -249,8 +250,7 @@ var Viola = this;
  throw new Error('no callNative function injection')
  },
  globalMethods: {},
- modules: {},
- components: {}
+ modules: {}
  };
  if (typeof ENV === 'string' && ENV === 'web') {
  window.injections = injections;
@@ -258,26 +258,16 @@ var Viola = this;
  function inject(name, injection) {
  injections[name] = injection;
  }
- 
- /*
-  
-  {
-      dom: ['createBody']
-  }
-  
-  */
- 
- function registerModules(modules, fncArr) {
-        console.log('register modules =================')
-        console.log(modules)
-         console.log(fncArr)
-        console.log('register modules =================')
-        var violaModule = injections.modules;
-        var name = modules
-        violaModule[name] || (violaModule[name] = {});
-        fncArr.forEach(function (fnc) {
-            violaModule[name][fnc] = true;
-                       });
+ function registerModules(modules) {
+ var violaModule = injections.modules;
+ var loop = function ( name ) {
+ violaModule[name] || (violaModule[name] = {});
+ var moduleFnc = modules[name];
+ moduleFnc.forEach(function (fnc) {
+                   violaModule[name][fnc] = true;
+                   });
+ };
+ for (var name in modules) loop( name );
  }
  function getModule(name) {
  return injections.modules[name]
@@ -449,7 +439,7 @@ var Viola = this;
  args.push(cbId);
  }
  this$1.ownerTasker.sendTask([{
-                              module: 'dom',
+                              module: MODULE.DOM,
                               method: method,
                               args: args
                               }]);
@@ -458,11 +448,45 @@ var Viola = this;
  this.send = __send;
  }
  this.ownerTasker && this.ownerTasker.sendTask([{
-                                                module: 'dom',
+                                                module: MODULE.DOM,
                                                 method: method,
                                                 args: args
                                                 }]);
  };
+ Eventer.prototype.sendCmpTask = function sendCmpTask (cmpRef, method, args) {
+ this.ownerTasker && this.ownerTasker.cmpTask(cmpRef, method, args);
+ };
+ 
+ var components = {};
+ function registerComponent(cmps) {
+ for (var type in cmps) {
+ genComponent(type, cmps[type]);
+ }
+ }
+ function genComponent(type, fnc) {
+ if (components[type]) { return }
+ var C = (function (Element$$1) {
+          function C (type, opts, ref) {
+          Element$$1.call(this, undefined, opts, ref);
+          this.type = type;
+          }
+          if ( Element$$1 ) C.__proto__ = Element$$1;
+          C.prototype = Object.create( Element$$1 && Element$$1.prototype );
+          C.prototype.constructor = C;
+          return C;
+          }(Element));
+ fnc.forEach(function (method) {
+             C.prototype[method] = function () {
+             var args = [], len = arguments.length;
+             while ( len-- ) args[ len ] = arguments[ len ];
+             this.eventer.sendCmpTask(this.ref, method, args);
+             };
+             });
+ components[type] = C;
+ }
+ function getCmp(type) {
+ return components[type]
+ }
  
  function createBody(doc, bodyRef) {
  if ( bodyRef === void 0 ) bodyRef = 'root';
@@ -474,8 +498,13 @@ var Viola = this;
  }
  var Element = (function (Node$$1) {
                 function Element (type, opts, ref) {
-                if ( type === void 0 ) type = 'div';
                 if ( opts === void 0 ) opts = {};
+                if (type) {
+                var Cmp = getCmp(type);
+                if (Cmp) {
+                return new Cmp(type, opts, ref)
+                }
+                }
                 Node$$1.call(this, ref);
                 this.ctx = null;
                 this.type = type;
@@ -579,20 +608,20 @@ var Viola = this;
                 return node
                 };
                 Element.prototype.insertBefore = function insertBefore$$1 (node, refNode, isImmediate) {
-                if ( isImmediate === void 0 ) isImmediate = false;
-                if (refNode.previousSibling === node) { return this.children.indexOf(node) }
-                if (!isChild(this, refNode)) {
-                console.error('reference node isn\'t in this node');
-                }
-                resetNode(node);
-                var index = insertBefore(node, refNode, this.children);
-                if (node.isNatived) {
-                this.moveChild(node.ref, index);
-                } else {
-                this.addChild(node, index);
-                }
-                node.__setCTX(this.ctx);
-                return index
+                    if ( isImmediate === void 0 ) isImmediate = false;
+                    if (refNode.previousSibling === node) { return this.children.indexOf(node) }
+                    if (!isChild(this, refNode)) {
+                    console.error('reference node isn\'t in this node');
+                    }
+                    resetNode(node);
+                    var index = insertBefore(node, refNode, this.children);
+                    if (node.isNatived) {
+                    this.moveChild(node.ref, index);
+                    } else {
+                    this.addChild(node, index);
+                    }
+                    node.__setCTX(this.ctx);
+                    return index
                 };
                 Element.prototype.insertAfter = function insertAfter$$1 (node, refNode, isImmediate) {
                 if ( isImmediate === void 0 ) isImmediate = false;
@@ -793,19 +822,36 @@ var Viola = this;
  this.callbackMap[cbId] = cb;
  return cbId
  };
+ Tasker.prototype.filterArgs = function filterArgs (args) {
+ var this$1 = this;
+ for (var i = 0, len = args.length; i < len; i++) {
+ var param = args[i];
+ if (typeof param === 'function') {
+ var cbId = this$1.genCallback(param);
+ args[i] = cbId;
+ }
+ }
+ return args
+ };
  Tasker.prototype.sendNative = function sendNative (instanceId, tasks) {
  };
- Tasker.prototype.moduleTask = function moduleTask (moduleName, method, args) {
+ Tasker.prototype.moduleTask = function moduleTask (module, method, args) {
  var cb;
  if (typeof (cb = args[args.length - 1]) === 'function') {
  var cbId = this.genCallback(cb);
  args.splice(-1, 1, cbId);
  }
- return this.sendTask([{
-                       module:moduleName,
-                       method: method,
-                       args: args
-                      }])
+ this.sendTask([{
+                module: module, method: method, args: args
+                }]);
+ };
+ Tasker.prototype.cmpTask = function cmpTask (componentRef, method, args) {
+ this.filterArgs(args);
+ this.sendTask([{
+                component: componentRef,
+                method: method,
+                args: args
+                }]);
  };
  Tasker.prototype.sendTask = function sendTask (tasks) {
  return bridge.send(this.id, tasks)
@@ -5421,17 +5467,17 @@ var Viola = this;
  intoCTX: intoCTX
  };
  
- function createInstanceCtx(id, config, data) {
+ function createInstanceCtx(id, data, config) {
  var viola = new ViolaInstance(id, config, data);
- var ctx = { viola: viola, document: viola.document, doc: viola.document};
+ var ctx = { viola: viola, document: viola.document, doc: viola.document, $data: data};
  var Vue = framework.intoCTX(ctx);
  ctx.Vue = Vue;
  Object.freeze(ctx);
  return ctx
  }
- function createInstance(id, code, config, data) {
+ function createInstance(id, code, data, config) {
  if ( config === void 0 ) config = {};
- var ctx = createInstanceCtx(id, config, data);
+ var ctx = createInstanceCtx(id, data, config);
  runCodeInCtx(ctx, code);
  }
  function runCodeInCtx(ctx, code) {
@@ -5444,6 +5490,7 @@ var Viola = this;
  }
  var globalMethods = {
  registerModules: registerModules,
+ registerComponent: registerComponent,
  createInstance: createInstance,
  callJS: function callJS (id, task) {
  return bridge.receive(id, task)
@@ -5459,3 +5506,4 @@ var Viola = this;
  init();
  
  }());
+

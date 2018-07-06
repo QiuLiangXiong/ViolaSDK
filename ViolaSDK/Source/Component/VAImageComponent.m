@@ -13,6 +13,7 @@
 #import "VARegisterManager.h"
 #import "VABridgeManager.h"
 #import "ViolaInstance.h"
+#import "VAModuleProtocol.h"
 
 
 @interface VAImageComponent()

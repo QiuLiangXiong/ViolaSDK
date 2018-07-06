@@ -70,7 +70,10 @@
     }];
 }
 
-- (void)registerModuleWithName:(NSString *)name methods:(NSArray *)methods{;
+- (void)registerModuleWithName:(NSString *)name methods:(NSArray *)methods{
+    if (methods.count == 0) {
+        return ;
+    }
     [VAThreadManager performOnBridgeThreadWithBlock:^{
         if ([name isEqualToString:@"dom"]) {
             return ;//js那边不需要dom的注册
@@ -79,8 +82,11 @@
     }];
 }
 - (void)registerComponentWithName:(NSString *)name methods:(NSArray *)methods{
+    if (methods.count == 0) {
+        return ;
+    }
     [VAThreadManager performOnBridgeThreadWithBlock:^{
-        //[self.jsBridge  registerComponentWithName:name methods:methods];
+        [self.jsBridge  registerComponentWithName:name methods:methods];
     }];
 }
 

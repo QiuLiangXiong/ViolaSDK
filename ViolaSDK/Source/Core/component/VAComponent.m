@@ -131,6 +131,10 @@ static int componentAllocCount;
     [[VABridgeManager shareManager] fireEventWithIntanceID:_vaInstance.instanceId ref:_ref type:eventName params:eventData domChanges:nil];
 }
 
+- (void)didInsertSubcomponent:(VAComponent *)subcomponent atIndex:(NSInteger)index{}
+- (void)didRemoveFromSupercomponent{}
+- (void)didMoveToSupercomponent:(VAComponent *)newSupercomponent{}
+
 #pragma mark update
 
 - (void)_updateAttributesOnComponentThread:(NSDictionary *)attributes
@@ -171,6 +175,8 @@ static int componentAllocCount;
     return self.violaInstance.componentController.isBodyLayoutFinish;
 }
 
+
+
 #pragma private
 
 - (void)_insertSubcomponent:(VAComponent *)subcomponent atIndex:(NSInteger)index{
@@ -182,10 +188,14 @@ static int componentAllocCount;
     [_subcomponents insertObject:subcomponent atIndex:index];
 
     
+    
+    
     if (subcomponent->_positionType == VALayoutPositionFixed) {
 //        [_vaInstance.componentController addFixedComponent:subcomponent]; //todo tomqiu
     }
     [self setNeedsLayout];
+    [self didInsertSubcomponent:subcomponent atIndex:index];
+    [subcomponent didMoveToSupercomponent:self];
 }
 
 - (void)_removeSubcomponent:(VAComponent *)subcomponent{
@@ -201,7 +211,7 @@ static int componentAllocCount;
     if (_positionType == VALayoutPositionFixed) {
      // [_vaInstance.componentController removeFixedComponent:self]; //todo tomqiu
     }
-    
+    [self didRemoveFromSupercomponent];
 }
 
 - (void)_moveToSupercomponent:(VAComponent *)newSupercomponent atIndex:(NSUInteger)index{

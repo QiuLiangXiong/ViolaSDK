@@ -59,6 +59,8 @@
     
     //scroller
     [self registerComponent:@"scroller" withClass:NSClassFromString(@"VAScrollerComponent")];
+    [self registerComponent:@"list" withClass:NSClassFromString(@"VAListComponent")];
+    [self registerComponent:@"refresh" withClass:NSClassFromString(@"VARefreshComponent")];
     
     //handler
     

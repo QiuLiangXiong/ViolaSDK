@@ -9,7 +9,9 @@
 #import "VAViewController.h"
 #import "VABundleManager.h"
 #import "VADefine.h"
+#if DEBUG
 #import "YYFPSLabel.h"
+#endif
 @interface VAViewController()
 
 @property (nullable, nonatomic, copy) NSString * sourceUrl;

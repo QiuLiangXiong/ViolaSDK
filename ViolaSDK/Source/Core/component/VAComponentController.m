@@ -275,6 +275,7 @@
         layoutNode(rootNode, rootNode->style.dimensions[CSS_WIDTH], rootNode->style.dimensions[CSS_HEIGHT], CSS_DIRECTION_INHERIT);
         NSMutableArray * dirtyComponents = [NSMutableArray new];
         [_rootComponent _syncCSSNodeLayoutWithDirtyComponents:dirtyComponents];
+        VALogDebug(@"dirtyComponents_count_:%d",dirtyComponents.count);
         [self _notifyLayoutDidEndWithComponents:dirtyComponents];
     }
 }

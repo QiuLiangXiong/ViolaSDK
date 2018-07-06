@@ -12,9 +12,12 @@
 #import "VAWrapView.h"
 #import "VAThreadManager.h"
 #import "VADefine.h"
+#import "VAComponent.h"
+#import "VARefreshComponent.h"
 @interface VAScrollerComponent()<UIScrollViewDelegate>
 @property (nonatomic, assign)   BOOL loadMoreing;
 @property (nonatomic, assign)   CGPoint lastContentOffset;
+@property (nonatomic, assign)   CGPoint fireScollLastContentOffset;
 @end
 
 @implementation VAScrollerComponent{
@@ -25,15 +28,17 @@
     BOOL _scrollEnable;//能否滑动
     BOOL _pagingEnable;//分页
     CGFloat _preloadDistance;//预加载底部距离
+    CGFloat _scrollMinOffset;//滚动最小距离 默认为5
     //events
     BOOL _listenLoadMoreEvent;//
     BOOL _listenScrollEvent;
     BOOL _listentScrollEnd;
-    BOOL _listentContentSizeChangeEvent;
-    
+
     css_node_t *_scrollerCSSNode;
     CGSize _contentSize;//
     UIScrollView * _scrollView;
+    __weak VARefreshComponent * _refreshComponent;
+    
     
     BOOL _isVerticoalScrollDirection;
     
@@ -61,6 +66,7 @@
 }
 
 - (void)viewDidLoad{
+    [super viewDidLoad];
     _scrollView.contentSize = _contentSize;
     if (@available(iOS 11.0, *)) {
         _scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
@@ -69,6 +75,14 @@
     }
     [self _syncAttrToScrollView];
     
+}
+
+- (void)didInsertSubcomponent:(VAComponent *)subcomponent atIndex:(NSInteger)index{
+    [super didInsertSubcomponent:subcomponent atIndex:index];
+    if ([subcomponent isKindOfClass:[VARefreshComponent class]]) {
+        _refreshComponent = (VARefreshComponent *)subcomponent;
+    }
+
 }
 
 
@@ -88,6 +102,7 @@
 - (void)layoutDidEnd{
     [super layoutDidEnd];
     _scrollView.contentSize = _contentSize;
+//    _scrollView.contentInset = UIEdgeInsetsMake(-50, 0, 0, 0);
 }
 
 #pragma mark - private
@@ -121,6 +136,7 @@ prop = defaultValue;\
     VA_FILL_SCROLLL_ATTRS(scrollEnable, _scrollEnable, convertToBOOL, true);
     VA_FILL_SCROLLL_ATTRS(pagingEnable, _pagingEnable, convertToBOOL, false);
     VA_FILL_SCROLLL_ATTRS(preloadDistance, _preloadDistance, convertToFloatWithPixel, 200);
+    VA_FILL_SCROLLL_ATTRS(scrollMinOffset, _scrollMinOffset, convertToFloatWithPixel, 5);
     return needUpdate;
 }
 #define VA_FILL_SCROLLL_EVENTS(key,prop) \
@@ -132,7 +148,6 @@ if([events containsObject:@#key]){\
     VA_FILL_SCROLLL_EVENTS(loadMore, _listenLoadMoreEvent);
     VA_FILL_SCROLLL_EVENTS(scroll, _listenScrollEvent);
     VA_FILL_SCROLLL_EVENTS(scrollEnd, _listentScrollEnd);
-    VA_FILL_SCROLLL_EVENTS(contentSizeChange, _listentContentSizeChangeEvent);
 }
 
 #pragma mark mark
@@ -169,6 +184,8 @@ if([events containsObject:@#key]){\
     } afterDelay:0.1];
 }
 
+
+
 #pragma mark - UIScrollViewDelegate
 
 
@@ -184,6 +201,25 @@ if([events containsObject:@#key]){\
     
 }
 
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView{
+    int i = 0;
+//    if (scrollView.contentOffset.y >= ) {
+//        <#statements#>
+//    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    _fireScollLastContentOffset = CGPointMake(MAXFLOAT, MAXFLOAT);
+    [self _fireScrollEventIfNeed];
+    [self _fireScrollEndEventIfNeed];
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView{
+    _fireScollLastContentOffset = CGPointMake(MAXFLOAT, MAXFLOAT);
+    [self _fireScrollEventIfNeed];
+    [self _fireScrollEndEventIfNeed];
+}
+
 #pragma mark - private
 
 - (void)_fireLoadMoreEventIfNeed{
@@ -194,32 +230,49 @@ if([events containsObject:@#key]){\
         if (_isVerticoalScrollDirection) {
             if (contentOffset.y >= 0 && contentOffset.y > _lastContentOffset.y &&( _scrollView.contentSize.height - (contentOffset.y + _scrollView.bounds.size.height)) < _preloadDistance ) {
                 _loadMoreing = true;
-                //会传contentHeight offset 和距离底部的距离 等参数
-                [self fireEventWithName:@"loadMore" params:@{}];
+                [self _fireScollerEventWithName:@"loadMore" extralParam:nil];
             }
         }else {
             if (contentOffset.x >= 0 && contentOffset.x > _lastContentOffset.x &&( _scrollView.contentSize.width - (contentOffset.x + _scrollView.bounds.size.width)) < _preloadDistance ) {
                 _loadMoreing = true;
-                //会传contentHeight offset 和距离底部的距离 等参数
-                [self fireEventWithName:@"loadMore" params:@{}];
+                [self _fireScollerEventWithName:@"loadMore" extralParam:nil];
             }
         }
     }
 }
 
-- (void) _fireScrollEventIfNeed{
+
+- (void)_fireScrollEventIfNeed{
     if (_listenScrollEvent) {
-        
-        if(fabs(_lastContentOffset.y - _scrollView.contentOffset.y) < 50) return ;
-        
-        NSMutableDictionary * param = [[NSMutableDictionary alloc] init];
-        param[@"contentSize"] = [VAConvertUtl convertToDictionaryWithSize:_scrollView.contentSize];
-        param[@"contentOffset"] = [VAConvertUtl convertToDictionaryWithPoint:_scrollView.contentOffset];
-        param[@"frame"] = [VAConvertUtl convertToDictionaryWithRect:_scrollView.frame];
-        [self fireEventWithName:@"scroll" params:param];
+        if (_isVerticoalScrollDirection) {
+            if(fabs(_fireScollLastContentOffset.y - _scrollView.contentOffset.y) < _scrollMinOffset) return ;
+        }else {
+            if(fabs(_fireScollLastContentOffset.x - _scrollView.contentOffset.x) < _scrollMinOffset) return ;
+        }
+        _fireScollLastContentOffset = _scrollView.contentOffset;
+        [self _fireScollerEventWithName:@"scroll" extralParam:@{@"lastContentOffset":[VAConvertUtl convertToDictionaryWithPoint:_lastContentOffset]}];
     }
-    
 }
+
+- (void)_fireScrollEndEventIfNeed{
+    if (_listentScrollEnd) {
+        [self _fireScollerEventWithName:@"scrollEnd" extralParam:nil];
+    }
+}
+
+
+//scroller的事件发送都是调用这个api
+- (void)_fireScollerEventWithName:(NSString *)name extralParam:(NSDictionary *)extralParam{
+    NSMutableDictionary * param = [[NSMutableDictionary alloc] init];
+    param[@"contentSize"] = [VAConvertUtl convertToDictionaryWithSize:_scrollView.contentSize];
+    param[@"contentOffset"] = [VAConvertUtl convertToDictionaryWithPoint:_scrollView.contentOffset];
+    param[@"frame"] = [VAConvertUtl convertToDictionaryWithRect:_scrollView.frame];
+    if([extralParam isKindOfClass:[NSDictionary class]] && extralParam.count){
+        [param addEntriesFromDictionary:extralParam];
+    }
+    [self fireEventWithName:name params:param];
+}
+
 
 
 #pragma mark - layout
@@ -230,6 +283,9 @@ static int cssNode_scroller_childrenCount(void * context){
 
 //重写基类方法
 - (int)_getChildrenCountForCSSNode{
+    if (_subcomponents.count && [_subcomponents.firstObject isKindOfClass:[NSDictionary class]]) {
+        
+    }
     return 0;
 }
 
