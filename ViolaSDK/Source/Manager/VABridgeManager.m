@@ -38,78 +38,78 @@
 
 
 - (void)executeJSScript:(NSString *)script{
-    kBlockWeakSelf;
     [VAThreadManager performOnBridgeThreadWithBlock:^{
-        [weakSelf.jsBridge executeJSScript:script];
+        [self.jsBridge executeJSScript:script];
     }];
 }
 
 - (void)callJSMethod:(VAJSMethod *)jsMethod{
-    kBlockWeakSelf;
     [VAThreadManager performOnBridgeThreadWithBlock:^{
-        [weakSelf.jsBridge callJSMethod:jsMethod];
+        [self.jsBridge callJSMethod:jsMethod];
     }];
 }
 
 - (void)createInstanceWithID:(NSString *)instanceID
                       script:(NSString *)script
                         data:(NSDictionary *)data{
-    kBlockWeakSelf;
     [VAThreadManager performOnBridgeThreadWithBlock:^{
-        [weakSelf.jsBridge createInstanceWithID:instanceID script:script data:data];
+        [self.jsBridge createInstanceWithID:instanceID script:script data:data];
     }];
 }
 
 - (void)destroyInstanceWithID:(NSString *)instanceID{
-    kBlockWeakSelf;
     [VAThreadManager performOnBridgeThreadWithBlock:^{
-        [weakSelf.jsBridge  destroyInstanceWithID:instanceID];
+        [self.jsBridge  destroyInstanceWithID:instanceID];
     }];
 }
 
 - (void)updateInstance:(NSString *)instance
                  param:(NSDictionary *)param{
-    kBlockWeakSelf;
     [VAThreadManager performOnBridgeThreadWithBlock:^{
-        [weakSelf.jsBridge  updateInstance:instance param:param];
+        [self.jsBridge  updateInstance:instance param:param];
     }];
 }
 
-- (void)registerModuleWithName:(NSString *)name methods:(NSArray *)methods{
-    kBlockWeakSelf;
+- (void)registerModuleWithName:(NSString *)name methods:(NSArray *)methods{;
     [VAThreadManager performOnBridgeThreadWithBlock:^{
         if ([name isEqualToString:@"dom"]) {
             return ;//js那边不需要dom的注册
         }
-        [weakSelf.jsBridge  registerModuleWithName:name methods:methods];
+        [self.jsBridge  registerModuleWithName:name methods:methods];
     }];
 }
 - (void)registerComponentWithName:(NSString *)name methods:(NSArray *)methods{
-    kBlockWeakSelf;
     [VAThreadManager performOnBridgeThreadWithBlock:^{
-        //[weakSelf.jsBridge  registerComponentWithName:name methods:methods];
+        //[self.jsBridge  registerComponentWithName:name methods:methods];
     }];
 }
 
 - (void)fireEventWithIntanceID:(NSString *)instanceId ref:(NSString *)ref type:(NSString *)type params:(NSDictionary *)params domChanges:(NSDictionary *)domChanges{
     VAAssertReturn(ref && type, @"can't be nil");
-    NSArray *args = @[ref, type, params?:@{}, domChanges?:@{}];
-    ViolaInstance * instance = [VAInstanceManager getInstanceWithID:instanceId];
-    VAJSMethod * method = [[VAJSMethod alloc] initWithModuleName:nil methodName:@"fireEvent" arguments:args instance:instance];
-    [self callJSMethod:method];
+    [VAThreadManager performOnBridgeThreadWithBlock:^{
+        NSArray *args = @[ref, type, params?:@{}, domChanges?:@{}];
+        ViolaInstance * instance = [VAInstanceManager getInstanceWithID:instanceId];
+        VAJSMethod * method = [[VAJSMethod alloc] initWithModuleName:nil methodName:@"fireEvent" arguments:args instance:instance];
+        [self callJSMethod:method];
+    }];
+
+    
 }
 
 
 - (void)callJSCallback:(NSString *)instanceId func:(NSString *)funcId data:(id)data{
-    NSArray *args = nil;
-    if (data) {
-       args = @[[funcId copy], data];
-    }else {
-       args = @[[funcId copy]];
-    }
-    ViolaInstance * instance = [VAInstanceManager getInstanceWithID:instanceId];
-    VAJSMethod * method = [[VAJSMethod alloc] initWithModuleName:@"jsBridge" methodName:@"callback" arguments:args instance:instance];
-    [self callJSMethod:method];
+    [VAThreadManager performOnBridgeThreadWithBlock:^{
+        NSArray *args = nil;
+        if (data) {
+            args = @[[funcId copy], data];
+        }else {
+            args = @[[funcId copy]];
+        }
+        ViolaInstance * instance = [VAInstanceManager getInstanceWithID:instanceId];
+        VAJSMethod * method = [[VAJSMethod alloc] initWithModuleName:@"jsBridge" methodName:@"callback" arguments:args instance:instance];
+        [self callJSMethod:method];
+    }];
+   
 }
 
 @end

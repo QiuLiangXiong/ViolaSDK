@@ -12,6 +12,7 @@
 @interface VAInstanceManager : NSObject
 
 
+//这个api尽可能在bridge线程调用 不然容易卡
 + (ViolaInstance *)getInstanceWithID:(NSString *)instanceID;
 
 + (void)setInstance:(ViolaInstance *)instance forID:(NSString *)instanceID;

@@ -9,7 +9,7 @@
 #import "VAViewController.h"
 #import "VABundleManager.h"
 #import "VADefine.h"
-
+#import "YYFPSLabel.h"
 @interface VAViewController()
 
 @property (nullable, nonatomic, copy) NSString * sourceUrl;
@@ -56,6 +56,13 @@
         }];
 
     }
+    
+#if DEBUG
+    YYFPSLabel *fpsLabel = [[YYFPSLabel alloc] initWithFrame:CGRectMake(5, 5, 50,25)];
+    [self.view addSubview:fpsLabel];
+#endif
+    
+
     
 
     

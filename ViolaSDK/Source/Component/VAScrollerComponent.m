@@ -46,6 +46,7 @@
         //
         [self _fillScrollerComponentAtts:attributes init:true];
         [self _fillScrollerComponentStyles:attributes init:true];
+        [self _fillScrollerEvents:events];
         _scrollerCSSNode = new_css_node();
         
        
@@ -119,7 +120,7 @@ prop = defaultValue;\
     VA_FILL_SCROLLL_ATTRS(bouncesEnable, _bouncesEnable, convertToBOOL, true);
     VA_FILL_SCROLLL_ATTRS(scrollEnable, _scrollEnable, convertToBOOL, true);
     VA_FILL_SCROLLL_ATTRS(pagingEnable, _pagingEnable, convertToBOOL, false);
-    VA_FILL_SCROLLL_ATTRS(preloadDistance, _preloadDistance, convertToFloatWithPixel, 50);
+    VA_FILL_SCROLLL_ATTRS(preloadDistance, _preloadDistance, convertToFloatWithPixel, 200);
     return needUpdate;
 }
 #define VA_FILL_SCROLLL_EVENTS(key,prop) \
@@ -157,7 +158,6 @@ if([events containsObject:@#key]){\
         _scrollView.alwaysBounceHorizontal = !_isVerticoalScrollDirection;
     }
     
-    //预加载距离
 }
 
 #pragma mark - js
@@ -177,6 +177,8 @@ if([events containsObject:@#key]){\
     //
     //
     [self _fireLoadMoreEventIfNeed];
+    [self _fireScrollEventIfNeed];
+    
     
     _lastContentOffset = scrollView.contentOffset;
     
@@ -185,6 +187,7 @@ if([events containsObject:@#key]){\
 #pragma mark - private
 
 - (void)_fireLoadMoreEventIfNeed{
+    if(!_listenLoadMoreEvent) return;
     if (!_loadMoreing) {
         CGPoint contentOffset = _scrollView.contentOffset;
         //纵向布局
@@ -202,6 +205,20 @@ if([events containsObject:@#key]){\
             }
         }
     }
+}
+
+- (void) _fireScrollEventIfNeed{
+    if (_listenScrollEvent) {
+        
+        if(fabs(_lastContentOffset.y - _scrollView.contentOffset.y) < 50) return ;
+        
+        NSMutableDictionary * param = [[NSMutableDictionary alloc] init];
+        param[@"contentSize"] = [VAConvertUtl convertToDictionaryWithSize:_scrollView.contentSize];
+        param[@"contentOffset"] = [VAConvertUtl convertToDictionaryWithPoint:_scrollView.contentOffset];
+        param[@"frame"] = [VAConvertUtl convertToDictionaryWithRect:_scrollView.frame];
+        [self fireEventWithName:@"scroll" params:param];
+    }
+    
 }
 
 

@@ -8,6 +8,7 @@
 
 #import "VAInstanceManager.h"
 #import "VAThreadManager.h"
+#import "VADefine.h"
 
 @interface VAInstanceManager()
 
@@ -27,12 +28,11 @@
 }
 
 + (ViolaInstance *)getInstanceWithID:(NSString *)instanceID{
+    VAAssertBridgeThread();
     __block ViolaInstance * res = nil;
     [VAThreadManager performOnBridgeThreadWithBlock:^{
         if ([instanceID isKindOfClass:[NSString class]]) {
-
             res = [[[self _getInstance] getInstancesDic] objectForKey:instanceID];
-
         }
     } waitUntilDone:true];
     return res;

@@ -546,5 +546,26 @@ if([string isEqualToString:@#key]){\
     return UIViewContentModeScaleToFill;
 }
 
++ (NSMutableDictionary *)convertToDictionaryWithSize:(CGSize)size{
+    NSMutableDictionary * res = [NSMutableDictionary new];
+    res[@"width"] = [NSString stringWithFormat:@"%.2lfdp",size.width];
+    res[@"height"] = [NSString stringWithFormat:@"%.2lfdp",size.height];
+    return res;
+}
++ (NSMutableDictionary *)convertToDictionaryWithPoint:(CGPoint)point{
+    NSMutableDictionary * res = [NSMutableDictionary new];
+    res[@"x"] = [NSString stringWithFormat:@"%.2lfdp",point.x];
+    res[@"y"] = [NSString stringWithFormat:@"%.2lfdp",point.y];
+    return res;
+}
++ (NSMutableDictionary *)convertToDictionaryWithRect:(CGRect)rect{
+    NSMutableDictionary * res = [NSMutableDictionary new];
+    res[@"x"] = [NSString stringWithFormat:@"%.2lfdp",rect.origin.x];
+    res[@"y"] = [NSString stringWithFormat:@"%.2lfdp",rect.origin.y];
+    res[@"width"] = [NSString stringWithFormat:@"%.2lfdp", rect.size.width];
+    res[@"height"] = [NSString stringWithFormat:@"%.2lfdp",rect.size.height];
+    return res;
+}
+
 //convertToTextDecoration
 @end

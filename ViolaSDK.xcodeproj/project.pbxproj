@@ -55,6 +55,8 @@
 		FFF1D5D020ECE536002F4A81 /* QLXHttpRequestTool.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF1D5CD20ECE536002F4A81 /* QLXHttpRequestTool.m */; };
 		FFF1D5D720ED0B03002F4A81 /* VAHttpModule.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF1D5D620ED0B03002F4A81 /* VAHttpModule.m */; };
 		FFF1D5DA20ED0CC2002F4A81 /* VAAnimationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF1D5D920ED0CC2002F4A81 /* VAAnimationModule.m */; };
+		FFF1D5E620EF1732002F4A81 /* YYFPSLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF1D5E220EF1731002F4A81 /* YYFPSLabel.m */; };
+		FFF1D5E720EF1732002F4A81 /* YYWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF1D5E520EF1732002F4A81 /* YYWeakProxy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -176,6 +178,10 @@
 		FFF1D5D620ED0B03002F4A81 /* VAHttpModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAHttpModule.m; sourceTree = "<group>"; };
 		FFF1D5D820ED0CC2002F4A81 /* VAAnimationModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VAAnimationModule.h; sourceTree = "<group>"; };
 		FFF1D5D920ED0CC2002F4A81 /* VAAnimationModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAAnimationModule.m; sourceTree = "<group>"; };
+		FFF1D5E220EF1731002F4A81 /* YYFPSLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYFPSLabel.m; sourceTree = "<group>"; };
+		FFF1D5E320EF1731002F4A81 /* YYFPSLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYFPSLabel.h; sourceTree = "<group>"; };
+		FFF1D5E420EF1732002F4A81 /* YYWeakProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYWeakProxy.h; sourceTree = "<group>"; };
+		FFF1D5E520EF1732002F4A81 /* YYWeakProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYWeakProxy.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,6 +213,7 @@
 		2D1B694520E9FE7100F03E33 /* Expand */ = {
 			isa = PBXGroup;
 			children = (
+				FFF1D5DB20EF14B2002F4A81 /* FPS */,
 				FFF1D5D420ED0AF9002F4A81 /* Module */,
 				FFF1D5CA20ECE536002F4A81 /* QLXHttpRequest */,
 				FFF1D5C620ECC606002F4A81 /* Manager */,
@@ -535,6 +542,17 @@
 			path = Module;
 			sourceTree = "<group>";
 		};
+		FFF1D5DB20EF14B2002F4A81 /* FPS */ = {
+			isa = PBXGroup;
+			children = (
+				FFF1D5E320EF1731002F4A81 /* YYFPSLabel.h */,
+				FFF1D5E220EF1731002F4A81 /* YYFPSLabel.m */,
+				FFF1D5E420EF1732002F4A81 /* YYWeakProxy.h */,
+				FFF1D5E520EF1732002F4A81 /* YYWeakProxy.m */,
+			);
+			path = FPS;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -725,12 +743,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				FFF1D5C920ECC856002F4A81 /* VABundleManager.m in Sources */,
+				FFF1D5E620EF1732002F4A81 /* YYFPSLabel.m in Sources */,
 				FF760ED620EA7B5E001949F0 /* VAScrollerComponent.m in Sources */,
 				FFB278C220DE9C41009FD859 /* VAComponent+layout.m in Sources */,
 				FF6607F320DBA23B00A99EE0 /* VAMethod.m in Sources */,
 				2D1B694C20EB877C00F03E33 /* VAWrapView.m in Sources */,
 				FF66079220DBA1A300A99EE0 /* ViewController.m in Sources */,
 				FF6607F120DBA23B00A99EE0 /* VAComponent.m in Sources */,
+				FFF1D5E720EF1732002F4A81 /* YYWeakProxy.m in Sources */,
 				FF6607EE20DBA23B00A99EE0 /* ViolaEngine.m in Sources */,
 				FFB278C720E0F6C9009FD859 /* VAComponent+view.m in Sources */,
 				FF6607F420DBA23B00A99EE0 /* VAJSBridge.m in Sources */,

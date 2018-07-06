@@ -43,6 +43,7 @@ var container = document.createElement('scroller', {
                                        bouncesEnable:1,
                                        pagingEnable:0,
                                        },
+                                       events:['scroll','loadMore'],
                                        style:{
 //                                       flexDirection:'row',
 //                                       bouncesEnable:0,
@@ -203,7 +204,7 @@ var image = document.createElement('image', {
                                                      attr: {
                                                      id: 'image2',
                                    resize:'cover',
-                                                     value:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530606236618&di=ac19662b9b4d4170d64cdbc75c1d722a&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01006f55e2d00932f875a1328c5f44.gif',
+                                                     value:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530857863802&di=5c6cc8452132ce537d6fe9c739da8d0e&imgtype=0&src=http%3A%2F%2Fp1.gexing.com%2Fshaitu%2F20120927%2F0230%2F506349c471510.jpg',
                                    placeholder:''
                                                      },
                                                      style: {
@@ -234,6 +235,43 @@ var image = document.createElement('image', {
                                                      }
                                                      })
 
+function createImage2(){
+   return document.createElement('image', {
+                           
+                           attr: {
+                           id: 'image2',
+                           resize:'cover',
+                           value:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530857863802&di=5c6cc8452132ce537d6fe9c739da8d0e&imgtype=0&src=http%3A%2F%2Fp1.gexing.com%2Fshaitu%2F20120927%2F0230%2F506349c471510.jpg',
+                           placeholder:''
+                           },
+                           style: {
+                           //                                    flexDirection: 'row',
+                           //                                 flexWrap: 'wrap',
+                           
+                           
+                           //                                                     position:'absolute',
+                           //                                                     right:'10dp',
+                           //                                                     bottom:'10dp',
+                           //                                                     fontSize:'16dp',
+                           //                                                     color:'blue',
+                           
+                           
+                           
+                           //                                   backgroundColor:'yellow',
+                           
+                           aspectRatio:1.8,
+                           borderRadius:'10dp',
+                           margin:'10dp',
+                           borderColor:'yellow',
+                           //                                   borderWidth:'10dp',
+                           
+                           
+                           //                                 borderRadius:'1000dp',
+                           //                                 padding:'40dp',
+
+                           }
+                           })
+}
 
 function createImage(){
    return document.createElement('text', {
@@ -308,21 +346,109 @@ container.appendChild(createImage());
 container.appendChild(createImage());
 container.appendChild(createImage());
 
+container.on('scroll',function(e){
+          //   console.log(e);
+             })
+
 container.on('loadMore',function(e){
              console.log(e);
              
              container.appendChild(createImage());
              container.appendChild(createImage());container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage2());container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());
+             container.appendChild(createImage2());container.appendChild(createImage());
+             container.appendChild(createImage2());
              container.appendChild(createImage());
              container.appendChild(createImage());
+             container.appendChild(createImage2());
              container.appendChild(createImage());
+             container.appendChild(createImage2());container.appendChild(createImage());
+             container.appendChild(createImage2());
              container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage2());
              container.appendChild(createImage());
              container.appendChild(createImage());container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage2());container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage());
+             container.appendChild(createImage2());container.appendChild(createImage());
+             container.appendChild(createImage2());
              container.appendChild(createImage());
              container.appendChild(createImage());
+             container.appendChild(createImage2());
              container.appendChild(createImage());
+             container.appendChild(createImage2());container.appendChild(createImage());
+             container.appendChild(createImage2());
              container.appendChild(createImage());
+             container.appendChild(createImage2());
+             container.appendChild(createImage2());
              
              });
 

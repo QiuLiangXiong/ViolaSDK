@@ -102,35 +102,19 @@
 }
 
 + (Class)classWithModuleName:(NSString *)name{
-    __block Class res = nil;
-    [VAThreadManager performOnBridgeThreadWithBlock:^{
-        res = [[self _getInstance] _classWithModuleName:name];
-    } waitUntilDone:true];
-    return res;
+    return  [[self _getInstance] _classWithModuleName:name];
 }
 
 + (Class)classWithComponentType:(NSString *)type{
-    __block Class res = nil;
-    [VAThreadManager performOnComponentThreadWithBlock:^{
-        res = [[self _getInstance] _classWithComponentTypeName:type];
-    } waitUntilDone:true];
-    return res;
+    return  [[self _getInstance] _classWithComponentTypeName:type];
 }
 
 + (SEL)selectorWithModuleName:(NSString *)moduleName methodName:(NSString *)methodName{
-    __block SEL res = nil;
-    [VAThreadManager performOnBridgeThreadWithBlock:^{
-        res = [[self _getInstance] _selectorWithModuleName:moduleName methodName:methodName];
-    } waitUntilDone:true];
-    return res;
+    return [[self _getInstance] _selectorWithModuleName:moduleName methodName:methodName];
 }
 
 + (SEL)selectorWithComponentName:(NSString *)componentName methodName:(NSString *)methodName{
-    __block SEL res = nil;
-    [VAThreadManager performOnComponentThreadWithBlock:^{
-        res = [[self _getInstance] _selectorWithComponentName:componentName methodName:methodName];
-    } waitUntilDone:true];
-    return res;
+    return  [[self _getInstance] _selectorWithComponentName:componentName methodName:methodName];
 }
 
 + (id)handlerWithProtocol:(Protocol *)protocol{

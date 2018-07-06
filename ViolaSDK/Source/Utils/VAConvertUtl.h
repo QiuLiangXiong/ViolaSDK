@@ -86,5 +86,8 @@ CGFloat VAFloorValue(CGFloat value);
 + (NSLineBreakMode)convertToTextOverflow:(id)value;
 + (UIEdgeInsets)converToEdgeInsets:(id)value;
 + (UIViewContentMode)converToContentMode:(id)value;
++ (NSMutableDictionary *)convertToDictionaryWithSize:(CGSize)size;
++ (NSMutableDictionary *)convertToDictionaryWithPoint:(CGPoint)point;
++ (NSMutableDictionary *)convertToDictionaryWithRect:(CGRect)rect;
 @end
 
