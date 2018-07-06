@@ -187,36 +187,20 @@ if([events containsObject:@#key]){\
     } afterDelay:0.1];
 }
 
-
-
 #pragma mark - UIScrollViewDelegate
 
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    //
-    //
-    //
     [self _fireLoadMoreEventIfNeed];
     [self _fireScrollEventIfNeed];
-    
-    
     _lastContentOffset = scrollView.contentOffset;
-    
     if (_refreshComponent) {
         [_refreshComponent contentOffsetDidChangeWithScrollView:scrollView];
     }
     
 }
 
-- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView{
 
-
-    
-//    if (<#condition#>) {
-//        <#statements#>
-//    }
-    
-}
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     _fireScollLastContentOffset = CGPointMake(MAXFLOAT, MAXFLOAT);
@@ -299,7 +283,6 @@ static int cssNode_scroller_childrenCount(void * context){
     return 0;
 }
 
-
 //真正子节点个数
 - (int)_realChildrenCountForCSSNode{
     return [super _getChildrenCountForCSSNode];
@@ -331,19 +314,14 @@ static int cssNode_scroller_childrenCount(void * context){
             VARoundValue(_scrollerCSSNode->layout.dimensions[CSS_WIDTH]),
             VARoundValue(_scrollerCSSNode->layout.dimensions[CSS_HEIGHT])
         };
-        
         if (!CGSizeEqualToSize(size, _contentSize)) {
             // content size
-            
             _contentSize = size;
             [dirtyComponents addObject:self];
         }
         _scrollerCSSNode->layout.dimensions[CSS_WIDTH] = CSS_UNDEFINED;
         _scrollerCSSNode->layout.dimensions[CSS_HEIGHT] = CSS_UNDEFINED;
     }
-    
-    
-    
     [super _syncCSSNodeLayoutWithDirtyComponents:dirtyComponents];
 }
 
