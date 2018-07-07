@@ -38,11 +38,13 @@
     //先判断本地是否存在该脚本
     
     self.view.backgroundColor = [UIColor whiteColor];
+
+    
     
     NSString * script = [[VABundleManager shareManager] getLocalScriptWithUrl:_sourceUrl];
     
     if (script.length) {
-        [self renderWithJSScript:script pageParam:_pageParam];
+        [self renderWithJSScript:script pageParam:_pageParam pageUrl:_sourceUrl];
     }else {
         //开始网络请求
         //
@@ -50,7 +52,7 @@
         //加载中 这边等待loading效果
         [[VABundleManager shareManager] downloadJSFileWithUrl:_sourceUrl completedBlocK:^(NSString * _Nullable script, NSError * _Nullable error) {
             if (script.length) {
-                [weakSelf renderWithJSScript:script pageParam:_pageParam];
+                [weakSelf renderWithJSScript:script pageParam:_pageParam pageUrl:_sourceUrl];
                 
             }else {
                 //加载失败

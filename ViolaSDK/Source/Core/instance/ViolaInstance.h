@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 //- (void)renderViewWithURL:(NSURL *)scriptURL data:(NSDictionary *)data;
 
-- (void)renderViewWithScript:(NSString *)script data:(NSDictionary *)data;
+- (void)renderViewWithScript:(NSString *)script data:(NSDictionary *)data url:(NSString *)url;
 
 
 - (id<VAModuleProtocol>)moduleWithClass:(Class)moduleClass;

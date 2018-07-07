@@ -41,11 +41,11 @@
 
 #pragma mark - public
 
-- (void)renderWithJSScript:(NSString *)script  pageParam:(NSDictionary *)param{
+- (void)renderWithJSScript:(NSString * _Nonnull)script  pageParam:(NSDictionary * _Nullable)param pageUrl:(NSString *)url{
     VAAssertMainThread();
     if (script.length) {
         self.renderScripting = true;
-        [self.instance renderViewWithScript:script data:param];
+        [self.instance renderViewWithScript:script data:param url:url];
     }
 
 }

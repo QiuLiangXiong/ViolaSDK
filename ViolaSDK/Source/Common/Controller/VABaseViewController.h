@@ -14,11 +14,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nullable, nonatomic, strong) ViolaInstance * instance;
 
+
 /**
  * 渲染viola实例
  * 拿到脚本后调用该方法去渲染
  */
-- (void)renderWithJSScript:(NSString * _Nonnull)script  pageParam:(NSDictionary * _Nullable)param;
+- (void)renderWithJSScript:(NSString * _Nonnull)script  pageParam:(NSDictionary * _Nullable)param pageUrl:(NSString *)url;
 
 
 //可以重写

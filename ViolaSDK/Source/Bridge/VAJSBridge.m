@@ -135,8 +135,8 @@
     
     
     ViolaInstance *instance = [VAInstanceManager getInstanceWithID:instanceID];
-    VAAssertReturn(instance,@"can't be nil");
-    
+    if (!instance)  return ;
+
     for(NSDictionary * task in tasks){
         if ([task isKindOfClass:[NSDictionary class]]) {
             NSString *methodName = [VAConvertUtl convertToString:task[@"method"]];

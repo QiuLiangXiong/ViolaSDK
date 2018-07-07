@@ -39,19 +39,26 @@
 //    [intance renderViewWithScript:script data:@{@"os":@"iOS"}];
     // Do any additional setup after loading the view, typically from a nib.
     
-    UIButton * jumpBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
-    jumpBtn.center = CGPointMake(self.view.frame.size.width/2 , self.view.frame.size.height / 2);
+    UIButton * jumpBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 150, 150)];
+//    jumpBtn.center = CGPointMake(self.view.frame.size.width/2 , self.view.frame.size.height / 2);
     [jumpBtn setTitle:@"push" forState:(UIControlStateNormal)];
     jumpBtn.backgroundColor = [UIColor blueColor];
     [jumpBtn addTarget:self action:@selector(onClickJumpBtnWithSender:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:jumpBtn];
+    jumpBtn.transform = CGAffineTransformMakeScale(0.5, 0.5);
+    
+//    CGRect frame = jumpBtn.frame;
+//    NSLog(@"%@",NSStringFromCGRect(frame));
+//    jumpBtn.transform = CGAffineTransformIdentity;
+//    jumpBtn.frame = CGRectMake(0, 0, 150, 150);
+//    jumpBtn.transform = CGAffineTransformMakeScale(0.5, 0.5);
     
 }
 
 #pragma mark - action
 
 - (void)onClickJumpBtnWithSender:(UIButton *)sender{
-    VAViewController * vc = [[VAViewController alloc] initWithSourceUrl:@"viola_test.js" pageParam:nil];
+    VAViewController * vc = [[VAViewController alloc] initWithSourceUrl:@"dist/bundle.js" pageParam:nil];
     [self.navigationController pushViewController:vc animated:true];
 }
 

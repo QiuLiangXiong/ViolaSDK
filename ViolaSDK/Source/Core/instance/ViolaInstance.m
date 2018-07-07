@@ -56,8 +56,11 @@
 //    
 //}
 
-- (void)renderViewWithScript:(NSString *)script data:(NSDictionary *)data{
-    NSMutableDictionary * realData = [NSMutableDictionary dictionaryWithDictionary:data];
+- (void)renderViewWithScript:(NSString *)script data:(NSDictionary *)data url:(NSString *)url{
+    NSMutableDictionary * pageData = [NSMutableDictionary new];
+    pageData[@"url"] = url ? : @"";
+    pageData[@"param"] = data ? : @{};
+    pageData[@"name"] = self.viewController ? NSStringFromClass([self.viewController class]):@"";
     
 
     kBlockWeakSelf;
@@ -68,11 +71,7 @@
             [weakSelf.delegate violaIntance:weakSelf didCreatedView:_rootView];
         }
     }];
-
-
-    
-
-    [[VABridgeManager shareManager] createInstanceWithID:self.instanceId script:script data:realData];
+    [[VABridgeManager shareManager] createInstanceWithID:self.instanceId script:script data:pageData];
 }
 
 
