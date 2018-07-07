@@ -11,7 +11,7 @@
 
 #if DEBUG
 //#define va_baseUrl @"http://0.0."     //正式服务器地址
-#define va_baseUrl @"http://172.20.10.8/viola/"     //本地服务器地址
+#define va_baseUrl @"http://10.66.95.67/viola/viola-demo/"     //本地服务器地址
 #else
  #define va_baseUrl @""//正式服务器地址
 #endif

@@ -9,6 +9,7 @@
 #import "VABaseViewController.h"
 #import "VAThreadManager.h"
 #import "ViolaEngine.h"
+#import "VADefine.h"
 
 
 @interface VABaseViewController ()
@@ -41,6 +42,7 @@
 #pragma mark - public
 
 - (void)renderWithJSScript:(NSString *)script  pageParam:(NSDictionary *)param{
+    VAAssertMainThread();
     if (script.length) {
         self.renderScripting = true;
         [self.instance renderViewWithScript:script data:param];
@@ -65,7 +67,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.instance.instanceFrame = self.view.frame;
+    self.instance.instanceFrame = self.view.bounds;
     // Do any additional setup after loading the view.
 }
 
@@ -105,7 +107,7 @@
 
 - (void)viewDidLayoutSubviews{
     [super viewDidLayoutSubviews];
-    self.instance.instanceFrame = self.view.frame;
+    self.instance.instanceFrame = self.view.bounds;
 }
 
 
