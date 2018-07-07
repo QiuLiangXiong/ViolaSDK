@@ -38,10 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 //@property (nonatomic, weak) ViolaInstance * parentInstance;
 
 
-
-//- (void)renderViewWithURL:(NSURL *)scriptURL data:(NSDictionary *)data;
-
-- (void)renderViewWithScript:(NSString *)script data:(NSDictionary *)data url:(NSString *)url;
+- (void)renderViewWithScript:(NSString *)script param:(NSDictionary * _Nullable)param url:(NSString *)url cachaData:(NSDictionary * _Nullable)cacheData;
 
 
 - (id<VAModuleProtocol>)moduleWithClass:(Class)moduleClass;

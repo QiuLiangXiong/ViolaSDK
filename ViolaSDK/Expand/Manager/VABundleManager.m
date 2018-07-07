@@ -111,7 +111,7 @@
 - (NSString *)_convertToRrealativePathWithUrl:(NSString *)url{
     NSString * realativeUrl = @"";
     if ([url isKindOfClass:[NSString class]]) {
-        NSRange range = [url rangeOfString:@"viola/[A-Za-z0-9/-_]*.js" options:(NSRegularExpressionSearch)];
+        NSRange range = [url rangeOfString:@"viola/[A-Za-z0-9-_/-_]*.js" options:(NSRegularExpressionSearch)];
         if (range.length) {
             range = NSMakeRange(range.location + 6, range.length - 6);
             realativeUrl = [url substringWithRange:range];

@@ -58,7 +58,8 @@
 #pragma mark - action
 
 - (void)onClickJumpBtnWithSender:(UIButton *)sender{
-    VAViewController * vc = [[VAViewController alloc] initWithSourceUrl:@"dist/bundle.js" pageParam:nil];
+//    dist/bundle.js
+    VAViewController * vc = [[VAViewController alloc] initWithSourceUrl:@"viola_test.js" pageParam:nil];
     [self.navigationController pushViewController:vc animated:true];
 }
 

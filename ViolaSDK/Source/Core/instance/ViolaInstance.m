@@ -52,17 +52,13 @@
     return self;
 }
 
-//- (void)renderViewWithURL:(NSURL *)scriptURL data:(NSDictionary *)data{
-//    
-//}
 
-- (void)renderViewWithScript:(NSString *)script data:(NSDictionary *)data url:(NSString *)url{
+- (void)renderViewWithScript:(NSString *)script param:(NSDictionary * _Nullable)param url:(NSString *)url cachaData:(NSDictionary * _Nullable)cacheData{
     NSMutableDictionary * pageData = [NSMutableDictionary new];
     pageData[@"url"] = url ? : @"";
-    pageData[@"param"] = data ? : @{};
+    pageData[@"param"] = param ? : @{};
     pageData[@"name"] = self.viewController ? NSStringFromClass([self.viewController class]):@"";
-    
-
+    pageData[@"cache"] = cacheData ? : @{};
     kBlockWeakSelf;
     [VAThreadManager performOnMainThreadWithBlock:^{
         _rootView = [[VARootView alloc] initWithFrame:self.instanceFrame];
@@ -94,20 +90,22 @@
 }
 
 - (void)refreshInstance:(NSDictionary *)data{
-    //todo tomqiu
+    [[VABridgeManager shareManager] updateInstance:_instanceId param:data];
 }
 
 - (void)destroyInstance{
     
-    [[VABridgeManager shareManager] destroyInstanceWithID:self.instanceId];//还有其他逻辑 稍后继续
+    [[VABridgeManager shareManager] destroyInstanceWithID:self.instanceId];
     [VAInstanceManager removeInstanceWithID:_instanceId];
-    
-    kBlockWeakSelf;
-    [VAThreadManager performOnComponentThreadWithBlock:^{
-        kBlockStrongSelf;
-        [strongSelf.componentController unload];
-        [VAInstanceManager removeInstanceWithID:strongSelf.instanceId];
-    }];
+
+     self.componentController.isEnable = false;
+     [VAInstanceManager removeInstanceWithID:self.instanceId];
+    //    kBlockWeakSelf;
+    //    [VAThreadManager performOnComponentThreadWithBlock:^{
+    //        kBlockStrongSelf;
+    ////        [strongSelf.componentController unload];//
+    //
+    //    }];
 }
 
 - (void)addTaskToMainQueue:(dispatch_block_t)block{

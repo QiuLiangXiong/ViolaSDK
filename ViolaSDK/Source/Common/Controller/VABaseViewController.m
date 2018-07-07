@@ -45,7 +45,7 @@
     VAAssertMainThread();
     if (script.length) {
         self.renderScripting = true;
-        [self.instance renderViewWithScript:script data:param url:url];
+        [self.instance renderViewWithScript:script param:param url:url cachaData:nil];
     }
 
 }
