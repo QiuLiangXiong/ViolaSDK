@@ -16,6 +16,7 @@
 
 @property (nullable, nonatomic, copy) NSString * sourceUrl;
 @property (nullable, nonatomic, strong) NSDictionary * pageParam;
+@property(nullable, nonatomic, strong)  UILabel * fpsLabel;
 
 @end
 
@@ -62,6 +63,7 @@
 #if DEBUG
     YYFPSLabel *fpsLabel = [[YYFPSLabel alloc] initWithFrame:CGRectMake(5, 5, 50,25)];
     [self.view addSubview:fpsLabel];
+    _fpsLabel = fpsLabel;
 #endif
     
 
@@ -75,6 +77,13 @@
 
 }
 
+
+- (void)viewDidLayoutSubviews{
+    [super viewDidLayoutSubviews];
+#if DEBUG
+    [self.view bringSubviewToFront:_fpsLabel];
+#endif
+}
 
 
 @end

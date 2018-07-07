@@ -102,8 +102,14 @@
 - (void)layoutDidEnd{
     [super layoutDidEnd];
     _scrollView.contentSize = _contentSize;
-//    _scrollView.contentInset = UIEdgeInsetsMake(-50, 0, 0, 0);
 }
+- (void)componentFrameWillChange{
+    [super componentFrameWillChange];
+    if(!CGRectEqualToRect(_componentFrame , CGRectZero) && ![self isNeedsLayout]){
+        [self setNeedsLayout];
+    }
+}
+
 
 #pragma mark - private
 #define VA_FILL_SCROLLL_ATTRS(key,prop,method,defaultValue) \
@@ -288,8 +294,15 @@ static int cssNode_scroller_childrenCount(void * context){
     return [super _getChildrenCountForCSSNode];
 }
 
+
+
+
 - (void)_syncCSSNodeLayoutWithDirtyComponents:(NSMutableArray *)dirtyComponents{
-    //
+    [self _layoutSubCSSNodesWithDirtyComponents:dirtyComponents];
+    [super _syncCSSNodeLayoutWithDirtyComponents:dirtyComponents];
+}
+
+- (void)_layoutSubCSSNodesWithDirtyComponents:(NSMutableArray *)dirtyComponents{
     if ([self isNeedsLayout]) {
         memcpy(_scrollerCSSNode, self->_cssNode, sizeof(css_node_t));
         _scrollerCSSNode->children_count = cssNode_scroller_childrenCount;
@@ -309,7 +322,7 @@ static int cssNode_scroller_childrenCount(void * context){
         _scrollerCSSNode->layout.dimensions[CSS_HEIGHT] = CSS_UNDEFINED;
         
         layoutNode(_scrollerCSSNode, CSS_UNDEFINED, CSS_UNDEFINED, CSS_DIRECTION_INHERIT);
-       
+        
         CGSize size = {
             VARoundValue(_scrollerCSSNode->layout.dimensions[CSS_WIDTH]),
             VARoundValue(_scrollerCSSNode->layout.dimensions[CSS_HEIGHT])
@@ -322,7 +335,6 @@ static int cssNode_scroller_childrenCount(void * context){
         _scrollerCSSNode->layout.dimensions[CSS_WIDTH] = CSS_UNDEFINED;
         _scrollerCSSNode->layout.dimensions[CSS_HEIGHT] = CSS_UNDEFINED;
     }
-    [super _syncCSSNodeLayoutWithDirtyComponents:dirtyComponents];
 }
 
 
