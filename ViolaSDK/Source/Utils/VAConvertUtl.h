@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 #import "Layout.h"
 #import "VATransform.h"
+NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSInteger, VALayoutPosition) {
     VALayoutPositionRelative,
     VALayoutPositionAbsolute,
@@ -90,5 +91,7 @@ CGFloat VAFloorValue(CGFloat value);
 + (NSMutableDictionary *)convertToDictionaryWithPoint:(CGPoint)point;
 + (NSMutableDictionary *)convertToDictionaryWithRect:(CGRect)rect;
 + (VATransform * _Nullable)converToTransform:(id)transform origin:(id)origin;
++ (NSArray *)componentsSeparatedByString:(NSString *)string originStr:(nonnull NSString *)value;
 @end
+NS_ASSUME_NONNULL_END
 

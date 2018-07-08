@@ -85,7 +85,6 @@
         [_transform transformToView:self.view];
     }
     
-    //todo tomqiu  transform and border
     if([self _fillBorderWithStyles:styles]){
         [self _syncBorderRadiusAndDraw];
     }
@@ -102,8 +101,66 @@ if(styles[@#key]){\
    update = true;\
 }
 
+#define VA_FILL_BORDER_MULTI_COMPONENT(key) \
+value = styles[@#key];\
+if ([value isKindOfClass:[NSString class]] && value.length) {\
+    NSArray * components = [VAConvertUtl componentsSeparatedByString:@" " originStr:value];\
+    NSString * widthValue = components.count > 0 ? components[0]:nil;\
+    NSString * styleValue = components.count > 1 ? components[1]:nil;\
+    NSString * colorValue = components.count > 2 ? components[2]:nil;\
+    if (![styles isKindOfClass:[NSMutableDictionary class]]) {\
+        styles = [NSMutableDictionary dictionaryWithDictionary:styles];\
+    }\
+    if (widthValue) {\
+NSString * _key = [@#key stringByAppendingString:@"Width"]; \
+((NSMutableDictionary *)styles)[_key] = widthValue;\
+    }\
+    if (styleValue) {\
+NSString * _key = [@#key stringByAppendingString:@"Style"]; \
+((NSMutableDictionary *)styles)[_key] = styleValue;\
+    }\
+    if (colorValue) {\
+NSString * _key = [@#key stringByAppendingString:@"Color"]; \
+((NSMutableDictionary *)styles)[_key] = colorValue;\
+    }\
+}\
+
+#define VA_FILL_BORDER_MULTI_RADIUS(key) \
+value = styles[@#key];\
+if ([value isKindOfClass:[NSString class]] && value.length) {\
+NSArray * components = [VAConvertUtl componentsSeparatedByString:@" " originStr:value];\
+if(components.count > 1){\
+NSString * leftTop = components.count > 0 ? components[0]:nil;\
+NSString * rightTop = components.count > 1 ? components[1]:nil;\
+NSString * rightBottom = components.count > 2 ? components[2]:nil;\
+NSString * leftBottom = components.count > 3 ? components[3]:nil;\
+if (![styles isKindOfClass:[NSMutableDictionary class]]) {\
+    styles = [NSMutableDictionary dictionaryWithDictionary:styles];\
+}\
+if (leftTop) {\
+    ((NSMutableDictionary *)styles)[@"borderTopLeftRadius"] = leftTop;\
+}\
+if (rightTop) {\
+    ((NSMutableDictionary *)styles)[@"borderTopRightRadius"] = rightTop;\
+}\
+if (rightBottom) {\
+    ((NSMutableDictionary *)styles)[@"borderBottomRightRadius"] = rightBottom;\
+}\
+if (leftBottom) {\
+    ((NSMutableDictionary *)styles)[@"borderBottomLeftRadius"] = leftBottom;\
+}\
+}\
+}
+
 - (BOOL)_fillBorderWithStyles:(NSDictionary *)styles{
     BOOL update = false;
+    NSString * value = nil;
+    VA_FILL_BORDER_MULTI_COMPONENT(border);
+    VA_FILL_BORDER_MULTI_COMPONENT(borderTop);
+    VA_FILL_BORDER_MULTI_COMPONENT(borderLeft);
+    VA_FILL_BORDER_MULTI_COMPONENT(borderRight);
+    VA_FILL_BORDER_MULTI_COMPONENT(borderBottom);
+    VA_FILL_BORDER_MULTI_RADIUS(borderRadius);
     
    VA_FILL_ALL_BORDER(borderRadius,_borderTopLeftRadius,_borderTopRightRadius,_borderBottomLeftRadius,_borderBottomRightRadius,convertToFloatWithPixel);
    VA_FILL_BORDER(borderTopLeftRadius, _borderTopLeftRadius, convertToFloatWithPixel);
@@ -348,7 +405,7 @@ if(styles[@#key]){\
     CGSize size = _view.bounds.size;
     if([self __isSameBorder]){
         
-        if(_borderTopLeftRadius == 0 && _borderTopRightRadius == 0 && _borderBottomLeftRadius == 0 && _borderBottomRightRadius == 0){
+        if(_borderTopLeftRadius == 0 && _borderTopRightRadius == 0 && _borderBottomLeftRadius == 0 && _borderBottomRightRadius == 0 && _borderLeftStyle == VABorderStyleSolid){
             _view.layer.borderColor = _borderTopColor.CGColor ? : [UIColor clearColor].CGColor;
             _view.layer.borderWidth = _borderTopWidth;
         }else {

@@ -578,5 +578,21 @@ if([string isEqualToString:@#key]){\
     return nil;
 }
 
++ (NSArray *)componentsSeparatedByString:(NSString *)string originStr:(nonnull NSString *)value{
+    if ([value isKindOfClass:[NSString class]]){
+        if (value.length) {
+            NSArray * components = [value componentsSeparatedByString:string];
+            NSMutableArray * res = [[NSMutableArray alloc] initWithCapacity:components.count];
+            for (NSString * component in components) {
+                if (component.length) {
+                    [res addObject:component];
+                }
+            }
+            return res;
+        }
+    }
+    return nil;
+}
+
 //convertToTextDecoration
 @end

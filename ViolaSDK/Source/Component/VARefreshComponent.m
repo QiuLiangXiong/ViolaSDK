@@ -169,8 +169,7 @@ typedef enum {
         // 恢复inset和offset
         [UIView animateWithDuration:0.3 animations:^{
             UIEdgeInsets insets = _scrollView.contentInset;
-            insets.top = insets.top - size.height;
-            _scrollView.contentInset = insets;
+            _scrollView.contentInset = UIEdgeInsetsMake(0, insets.left, insets.bottom, insets.right);
         } completion:^(BOOL finished) {
             _pullingPercent = 0.0;
             _pullingOffset = 0.0;
