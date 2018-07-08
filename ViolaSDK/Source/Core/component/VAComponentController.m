@@ -110,7 +110,7 @@
     VAAssertComponentThread();
     VAAssertReturn(componentData && parentRef, @"can't be nil");
     
-     BOOL animated = [VAConvertUtl convertToBOOL:componentData[@"animated"]];
+    BOOL animated = [VAConvertUtl convertToBOOL:componentData[@"animated"]];
     if (animated) {
         self.mainQueueSyncWithAnimated = animated;
     }

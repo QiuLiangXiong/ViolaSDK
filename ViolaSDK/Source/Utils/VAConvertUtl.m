@@ -567,5 +567,16 @@ if([string isEqualToString:@#key]){\
     return res;
 }
 
++ (VATransform *)converToTransform:(id)transform origin:(id)origin{
+    if (transform || origin) {
+        NSString * transformStr = [VAConvertUtl convertToString:transform];
+        NSString * originStr = [VAConvertUtl convertToString:origin];
+        if (transformStr.length || originStr.length) {
+            return [[VATransform alloc] initWithCSSTransform:transformStr cssOrigin:originStr];
+        }
+    }
+    return nil;
+}
+
 //convertToTextDecoration
 @end

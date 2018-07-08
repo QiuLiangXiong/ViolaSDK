@@ -38,6 +38,8 @@
     if(styles[@"animated"]){
         self.animatedEnable = [VAConvertUtl convertToBOOL:styles[@"animated"]];
     }
+    //transform  特殊
+    _transform = [VAConvertUtl converToTransform:styles[@"transform"] origin:styles[@"transformOrigin"]];
     //    _transform = styles[@"transform"] || styles[@"transformOrigin"] ?//todo tomqiu  transform //这个一般和动画相关
      //todo tomqiu  transform and border
     
@@ -77,7 +79,12 @@
         _touchEnable = @([VAConvertUtl convertToBOOLWithClipValue:styles[@"touchEnable"]]);
         _view.userInteractionEnabled = [_touchEnable boolValue];
     }
-   
+    VATransform * transform = [VAConvertUtl converToTransform:styles[@"transform"] origin:styles[@"transformOrigin"]];
+    if (transform) {
+        _transform = transform;
+        [_transform transformToView:self.view];
+    }
+    
     //todo tomqiu  transform and border
     if([self _fillBorderWithStyles:styles]){
         [self _syncBorderRadiusAndDraw];
@@ -122,6 +129,9 @@ if(styles[@#key]){\
    VA_FILL_BORDER(borderBottomStyle, _borderBottomStyle, converToBorderStyle);
    VA_FILL_BORDER(borderLeftStyle, _borderLeftStyle, converToBorderStyle);
    VA_FILL_BORDER(borderRightStyle, _borderRightStyle, converToBorderStyle);
+    
+   
+    
     return update;
 }
 
@@ -246,7 +256,16 @@ if(styles[@#key]){\
 #pragma mark - private
 
 - (void)_componentFrameDidChange{
+    //
+    
+    if (_transform) {
+        self.view.transform = CGAffineTransformIdentity;
+    }
     self.view.frame = _componentFrame;
+    if (_transform) {
+        [_transform transformToView:self.view];
+    }
+    
     //圆角
    [self _syncBorderRadiusAndDraw];
     //

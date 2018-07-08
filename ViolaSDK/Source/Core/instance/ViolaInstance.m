@@ -98,8 +98,8 @@
     [[VABridgeManager shareManager] destroyInstanceWithID:self.instanceId];
     [VAInstanceManager removeInstanceWithID:_instanceId];
 
-     self.componentController.isEnable = false;
-     [VAInstanceManager removeInstanceWithID:self.instanceId];
+    self.componentController.isEnable = false;
+    [VAInstanceManager removeInstanceWithID:self.instanceId];
     //    kBlockWeakSelf;
     //    [VAThreadManager performOnComponentThreadWithBlock:^{
     //        kBlockStrongSelf;
@@ -153,7 +153,7 @@
 }
 
 - (void)dealloc{
-    
+    VALogDebug(@"instance_id_delloc:%@",_instanceId);
 }
 
 

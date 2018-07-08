@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "Layout.h"
-
+#import "VATransform.h"
 typedef NS_ENUM(NSInteger, VALayoutPosition) {
     VALayoutPositionRelative,
     VALayoutPositionAbsolute,
@@ -89,5 +89,6 @@ CGFloat VAFloorValue(CGFloat value);
 + (NSMutableDictionary *)convertToDictionaryWithSize:(CGSize)size;
 + (NSMutableDictionary *)convertToDictionaryWithPoint:(CGPoint)point;
 + (NSMutableDictionary *)convertToDictionaryWithRect:(CGRect)rect;
++ (VATransform * _Nullable)converToTransform:(id)transform origin:(id)origin;
 @end
 

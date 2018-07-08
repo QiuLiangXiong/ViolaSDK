@@ -10,6 +10,8 @@
 		1C10F37641523840519DA37E /* libPods-ViolaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81E0BFB4061778097807BAD1 /* libPods-ViolaSDK.a */; };
 		2D1B694920E9FEA200F03E33 /* VAImageHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D1B694820E9FEA200F03E33 /* VAImageHandler.m */; };
 		2D1B694C20EB877C00F03E33 /* VAWrapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D1B694B20EB877C00F03E33 /* VAWrapView.m */; };
+		2D6083AD20F1C86B00094C37 /* VATransform.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D6083AC20F1C86B00094C37 /* VATransform.m */; };
+		2D6083B320F1F4C800094C37 /* VAValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D6083B220F1F4C800094C37 /* VAValue.m */; };
 		FF17DDF920E3D4ED008F29B3 /* viola_main.js in Resources */ = {isa = PBXBuildFile; fileRef = FF17DDF820E3D4EC008F29B3 /* viola_main.js */; };
 		FF66078F20DBA1A300A99EE0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FF66078E20DBA1A300A99EE0 /* AppDelegate.m */; };
 		FF66079220DBA1A300A99EE0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF66079120DBA1A300A99EE0 /* ViewController.m */; };
@@ -86,6 +88,10 @@
 		2D1B694820E9FEA200F03E33 /* VAImageHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAImageHandler.m; sourceTree = "<group>"; };
 		2D1B694A20EB877C00F03E33 /* VAWrapView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VAWrapView.h; sourceTree = "<group>"; };
 		2D1B694B20EB877C00F03E33 /* VAWrapView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAWrapView.m; sourceTree = "<group>"; };
+		2D6083AB20F1C86B00094C37 /* VATransform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VATransform.h; sourceTree = "<group>"; };
+		2D6083AC20F1C86B00094C37 /* VATransform.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VATransform.m; sourceTree = "<group>"; };
+		2D6083B120F1F4C800094C37 /* VAValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VAValue.h; sourceTree = "<group>"; };
+		2D6083B220F1F4C800094C37 /* VAValue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAValue.m; sourceTree = "<group>"; };
 		3BB39F8B722A98E20AF0546B /* Pods-ViolaSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ViolaSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ViolaSDK/Pods-ViolaSDK.debug.xcconfig"; sourceTree = "<group>"; };
 		81E0BFB4061778097807BAD1 /* libPods-ViolaSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ViolaSDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D327B15CF3B1F42B86E46D13 /* Pods-ViolaSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ViolaSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-ViolaSDK/Pods-ViolaSDK.release.xcconfig"; sourceTree = "<group>"; };
@@ -383,6 +389,10 @@
 				FF6607DD20DBA23B00A99EE0 /* VAUtil.m */,
 				FFB278C820E0FD14009FD859 /* VAWeakObject.h */,
 				FFB278C920E0FD14009FD859 /* VAWeakObject.m */,
+				2D6083AB20F1C86B00094C37 /* VATransform.h */,
+				2D6083AC20F1C86B00094C37 /* VATransform.m */,
+				2D6083B120F1F4C800094C37 /* VAValue.h */,
+				2D6083B220F1F4C800094C37 /* VAValue.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -790,8 +800,10 @@
 				FF6607FA20DBA23B00A99EE0 /* VAUtil.m in Sources */,
 				FF6607FD20DBA23B00A99EE0 /* VABridgeManager.m in Sources */,
 				FFB278B520DE463C009FD859 /* VADivComponent.m in Sources */,
+				2D6083B320F1F4C800094C37 /* VAValue.m in Sources */,
 				FFF1D5C520EC9A09002F4A81 /* VAViewController.m in Sources */,
 				FF6607EF20DBA23B00A99EE0 /* ViolaInstance.m in Sources */,
+				2D6083AD20F1C86B00094C37 /* VATransform.m in Sources */,
 				FF6607F820DBA23B00A99EE0 /* VAConvertUtl.m in Sources */,
 				FF6607FC20DBA23B00A99EE0 /* VAThreadManager.m in Sources */,
 				FF66079D20DBA1A300A99EE0 /* main.m in Sources */,

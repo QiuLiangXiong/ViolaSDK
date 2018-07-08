@@ -10,6 +10,7 @@
 #define VAComponent_private_h
 #import "Layout.h"
 #import "VAConvertUtl.h"
+#import "VATransform.h"
 
 @interface VAComponent ()
 {
@@ -37,6 +38,7 @@
     BOOL _visibility;
     CGFloat _opacity;
     NSNumber * _touchEnable;
+    VATransform * _transform;
     
     UIEdgeInsets _contentEdge;//内容边距  包括padding 和 borderWidth
     

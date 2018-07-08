@@ -77,18 +77,11 @@
     self.willAppearTimes++;
     if (self.willAppearTimes <= 1 && self.renderScripting) {
         [VAThreadManager waitUntilViolaIntanceRenderFinish];
-        
-
         self.view.backgroundColor = self.instance.rootViewBackgroundColor;
         self.instance.rootView.alpha = 0;
         [UIView animateWithDuration:0.1 animations:^{
             self.instance.rootView.alpha = 1;
         }];
-        
-        
-//        dispatch_sync(dispatch_get_main_queue(), ^{
-//
-//        });
     }
 }
 

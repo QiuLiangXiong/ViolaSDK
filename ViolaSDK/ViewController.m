@@ -45,7 +45,18 @@
     jumpBtn.backgroundColor = [UIColor blueColor];
     [jumpBtn addTarget:self action:@selector(onClickJumpBtnWithSender:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:jumpBtn];
-    jumpBtn.transform = CGAffineTransformMakeScale(0.5, 0.5);
+   // jumpBtn.transform = CGAffineTransformMakeScale(0.5, 0.5);
+      jumpBtn.frame = CGRectMake(20, 20, 150, 150);
+    CGPoint dddd = jumpBtn.layer.anchorPoint;
+    jumpBtn.layer.anchorPoint = CGPointMake(1, 1);
+
+    CGPoint position = jumpBtn.layer.position;
+    position = CGPointMake(position.x + 75, position.y + 75);
+    jumpBtn.layer.position = position;
+    
+    jumpBtn.frame = CGRectMake(0, 0, 150, 150);
+    CGPoint dddd2 = jumpBtn.layer.anchorPoint;
+    int i = 0;
     
 //    CGRect frame = jumpBtn.frame;
 //    NSLog(@"%@",NSStringFromCGRect(frame));
@@ -59,7 +70,7 @@
 
 - (void)onClickJumpBtnWithSender:(UIButton *)sender{
 //    dist/bundle.js
-    VAViewController * vc = [[VAViewController alloc] initWithSourceUrl:@"viola_test.js" pageParam:nil];
+    VAViewController * vc = [[VAViewController alloc] initWithSourceUrl:@"dist/bundle.js" pageParam:nil];
     [self.navigationController pushViewController:vc animated:true];
 }
 
