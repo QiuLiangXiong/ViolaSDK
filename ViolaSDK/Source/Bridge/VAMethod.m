@@ -114,7 +114,7 @@
     return @{@"module":self.moduleName ?: @"",
              @"method":self.methodName ?: @"",
              @"args":self.arguments ?: @[],
-             @"data":self.eventData ? :@{}
+             @"data":self.data ? : @{}
              };
 }
 @end

@@ -93,27 +93,22 @@
 - (void)fireEventWithIntanceID:(NSString *)instanceId ref:(NSString *)ref type:(NSString *)type params:(NSDictionary *)params domChanges:(NSDictionary *)domChanges{
     VAAssertReturn(ref && type, @"can't be nil");
     [VAThreadManager performOnBridgeThreadWithBlock:^{
-        NSArray *args = @[ref, type, domChanges?:@{}];
+        NSArray *args = @[ref, type];
+        
         ViolaInstance * instance = [VAInstanceManager getInstanceWithID:instanceId];
-        VAJSMethod * method = [[VAJSMethod alloc] initWithModuleName:nil methodName:@"fireEvent" arguments:args instance:instance];
-        method.eventData = params;
+        VAJSMethod * method = [[VAJSMethod alloc] initWithModuleName:@"dom" methodName:@"fireEvent" arguments:args instance:instance];
+        method.data = params;
         [self callJSMethod:method];
     }];
-
-    
 }
 
 
 - (void)callJSCallback:(NSString *)instanceId func:(NSString *)funcId data:(id)data{
     [VAThreadManager performOnBridgeThreadWithBlock:^{
-        NSArray *args = nil;
-        if (data) {
-            args = @[[funcId copy], data];
-        }else {
-            args = @[[funcId copy]];
-        }
+        NSArray *args = @[[funcId copy]];;
         ViolaInstance * instance = [VAInstanceManager getInstanceWithID:instanceId];
         VAJSMethod * method = [[VAJSMethod alloc] initWithModuleName:@"jsBridge" methodName:@"callback" arguments:args instance:instance];
+        method.data = data;
         [self callJSMethod:method];
     }];
    

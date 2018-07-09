@@ -208,6 +208,7 @@ VA_LAYOUT_FILL_CSS_NODE(key, prop[CSS_BOTTOM], convertToFloatWithPixel);
                                         _cssNode->style.padding[CSS_LEFT] + _cssNode->style.border[CSS_LEFT],
                                         _cssNode->style.padding[CSS_BOTTOM] + _cssNode->style.border[CSS_BOTTOM],
                                         _cssNode->style.padding[CSS_RIGHT] + _cssNode->style.border[CSS_RIGHT]);
+    
         [self setNeedsLayout];
     }
 }

@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
                          arguments:(NSArray *)arguments
                           instance:(ViolaInstance *)instance;
 
-@property(nullable, nonatomic, strong) NSDictionary * eventData;
+@property(nullable, nonatomic, strong) NSDictionary * data;
 
 - (NSDictionary *)callJSTask;
 
