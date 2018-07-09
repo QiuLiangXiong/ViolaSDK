@@ -26,7 +26,7 @@ static int componentAllocCount;
     if(self = [super init]){
         _ref = ref;
         _type = type;
-        _styles = [VAConvertUtl convertToMutableDictionary:styles];
+        _styles = [VAConvertUtl convertToMutableDictionaryForStyles:styles];
         _attributes = [VAConvertUtl convertToMutableDictionary:attributes];
         _events = [VAConvertUtl convertToMutableArray:events];
         _vaInstance = violaInstance;

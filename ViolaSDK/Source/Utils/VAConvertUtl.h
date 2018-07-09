@@ -92,6 +92,7 @@ CGFloat VAFloorValue(CGFloat value);
 + (NSMutableDictionary *)convertToDictionaryWithRect:(CGRect)rect;
 + (VATransform * _Nullable)converToTransform:(id)transform origin:(id)origin;
 + (NSArray *)componentsSeparatedByString:(NSString *)string originStr:(nonnull NSString *)value;
++ (NSMutableDictionary *)convertToMutableDictionaryForStyles:(NSDictionary *)dictionary;
 @end
 NS_ASSUME_NONNULL_END
 
