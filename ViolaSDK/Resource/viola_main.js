@@ -457,37 +457,6 @@ var Viola = this;
  this.ownerTasker && this.ownerTasker.cmpTask(cmpRef, method, args);
  };
  
- var components = {};
- function registerComponent(cmps) {
- for (var type in cmps) {
- genComponent(type, cmps[type]);
- }
- }
- function genComponent(type, fnc) {
- if (components[type]) { return }
- var C = (function (Element$$1) {
-          function C (type, opts, ref) {
-          Element$$1.call(this, undefined, opts, ref);
-          this.type = type;
-          }
-          if ( Element$$1 ) C.__proto__ = Element$$1;
-          C.prototype = Object.create( Element$$1 && Element$$1.prototype );
-          C.prototype.constructor = C;
-          return C;
-          }(Element));
- fnc.forEach(function (method) {
-             C.prototype[method] = function () {
-             var args = [], len = arguments.length;
-             while ( len-- ) args[ len ] = arguments[ len ];
-             this.eventer.sendCmpTask(this.ref, method, args);
-             };
-             });
- components[type] = C;
- }
- function getCmp(type) {
- return components[type]
- }
- 
  function createBody(doc, bodyRef) {
  if ( bodyRef === void 0 ) bodyRef = 'root';
  var body = new Element('div', {}, bodyRef);
@@ -500,7 +469,7 @@ var Viola = this;
                 function Element (type, opts, ref) {
                 if ( opts === void 0 ) opts = {};
                 if (type) {
-                var Cmp = getCmp(type);
+                var Cmp = Element.getCmp(type);
                 if (Cmp) {
                 return new Cmp(type, opts, ref)
                 }
@@ -608,20 +577,20 @@ var Viola = this;
                 return node
                 };
                 Element.prototype.insertBefore = function insertBefore$$1 (node, refNode, isImmediate) {
-                    if ( isImmediate === void 0 ) isImmediate = false;
-                    if (refNode.previousSibling === node) { return this.children.indexOf(node) }
-                    if (!isChild(this, refNode)) {
-                    console.error('reference node isn\'t in this node');
-                    }
-                    resetNode(node);
-                    var index = insertBefore(node, refNode, this.children);
-                    if (node.isNatived) {
-                    this.moveChild(node.ref, index);
-                    } else {
-                    this.addChild(node, index);
-                    }
-                    node.__setCTX(this.ctx);
-                    return index
+                if ( isImmediate === void 0 ) isImmediate = false;
+                if (refNode.previousSibling === node) { return this.children.indexOf(node) }
+                if (!isChild(this, refNode)) {
+                console.error('reference node isn\'t in this node');
+                }
+                resetNode(node);
+                var index = insertBefore(node, refNode, this.children);
+                if (node.isNatived) {
+                this.moveChild(node.ref, index);
+                } else {
+                this.addChild(node, index);
+                }
+                node.__setCTX(this.ctx);
+                return index
                 };
                 Element.prototype.insertAfter = function insertAfter$$1 (node, refNode, isImmediate) {
                 if ( isImmediate === void 0 ) isImmediate = false;
@@ -689,8 +658,8 @@ var Viola = this;
                 }(Node));
  
  var TextNode = (function (Element$$1) {
-                 function TextNode (text) {
-                 Element$$1.call(this);
+                 function TextNode (text, opts) {
+                 Element$$1.call(this, undefined, opts);
                  this.text = text;
                  this.attr.value = text;
                  this.nodeType = NodeType.TEXT_NODE;
@@ -702,23 +671,6 @@ var Viola = this;
                  TextNode.prototype.setText = function setText (text) {
                  this.attr.value = this.text = text;
                  this.setAttr('value', text);
-                 };
-                 TextNode.prototype.toJSON = function toJSON () {
-                 var ref$1 = this;
-                 var ref = ref$1.ref;
-                 var text = ref$1.text;
-                 var type = ref$1.type;
-                 var attr = ref$1.attr;
-                 var children = ref$1.children;
-                 var style = ref$1.style;
-                 return {
-                 ref: ref,
-                 text: text,
-                 type: type,
-                 attr: attr,
-                 children: children,
-                 style: style
-                 }
                  };
                  return TextNode;
                  }(Element));
@@ -750,8 +702,10 @@ var Viola = this;
  el.__setCTX(this.ctx);
  return el
  };
- Document.prototype.createTextNode = function createTextNode (text) {
- return new TextNode(text)
+ Document.prototype.createTextNode = function createTextNode (text, opts) {
+ var textNode = new TextNode(text, opts);
+ textNode.__setCTX(this.ctx);
+ return textNode
  };
  Document.prototype.createComment = function createComment () {
  };
@@ -836,11 +790,7 @@ var Viola = this;
  Tasker.prototype.sendNative = function sendNative (instanceId, tasks) {
  };
  Tasker.prototype.moduleTask = function moduleTask (module, method, args) {
- var cb;
- if (typeof (cb = args[args.length - 1]) === 'function') {
- var cbId = this.genCallback(cb);
- args.splice(-1, 1, cbId);
- }
+ this.filterArgs(args);
  this.sendTask([{
                 module: module, method: method, args: args
                 }]);
@@ -868,9 +818,10 @@ var Viola = this;
                this$1.actCallback(task);
                break
                case METHOD.FIRE_EVENT:
-               (ref = this$1.domModuler).actEvent.apply(ref, task.args);
+               (ref = this$1.domModuler).actEvent.apply(ref, task.args.concat( [task.data] ));
                break
                case METHOD.CMP_HOOK:
+               console.log(METHOD.CMP_HOOK + ' 暂未实现');
                default:
                break
                }
@@ -879,8 +830,9 @@ var Viola = this;
  console.log('========== receive End ==========');
  };
  Tasker.prototype.actCallback = function actCallback (task) {
- var args = task.args;
- this.callbackMap[args.shift()].apply(null, args);
+ var args = task.args,
+ data = task.data;
+ this.callbackMap[args.shift()].call(null, data);
  };
  
  var ViolaInstanceMap = {};
@@ -949,6 +901,38 @@ var Viola = this;
  };
  for (var name in methods) loop( name );
  }
+ 
+ var components = {};
+ function registerComponent(cmps) {
+ for (var type in cmps) {
+ genComponent(type, cmps[type]);
+ }
+ }
+ function genComponent(type, fnc) {
+ if (components[type]) { return }
+ var C = (function (Element$$1) {
+          function C (type, opts, ref) {
+          Element$$1.call(this, undefined, opts, ref);
+          this.type = type;
+          }
+          if ( Element$$1 ) C.__proto__ = Element$$1;
+          C.prototype = Object.create( Element$$1 && Element$$1.prototype );
+          C.prototype.constructor = C;
+          return C;
+          }(Element));
+ fnc.forEach(function (method) {
+             C.prototype[method] = function () {
+             var args = [], len = arguments.length;
+             while ( len-- ) args[ len ] = arguments[ len ];
+             this.eventer.sendCmpTask(this.ref, method, args);
+             };
+             });
+ components[type] = C;
+ }
+ function getCmp(type) {
+ return components[type]
+ }
+ Element.getCmp = getCmp;
  
  function VueScopeUp (exports, document) {
  var emptyObject = Object.freeze({});
@@ -4120,15 +4104,11 @@ var Viola = this;
  function insertBefore (
                         node,
                         target,
-                        beforeMount
+                        referenceNode
                         ) {
- node.insertBefore(target, before);
+ node.insertBefore(target, referenceNode);
  }
  function removeChild (node, child) {
- if (child.nodeType === 3) {
- node.setText('');
- return
- }
  node.removeChild(child);
  }
  function appendChild (node, child) {
@@ -5506,4 +5486,3 @@ var Viola = this;
  init();
  
  }());
-

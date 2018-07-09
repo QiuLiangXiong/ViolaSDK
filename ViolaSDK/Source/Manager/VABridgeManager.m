@@ -93,9 +93,10 @@
 - (void)fireEventWithIntanceID:(NSString *)instanceId ref:(NSString *)ref type:(NSString *)type params:(NSDictionary *)params domChanges:(NSDictionary *)domChanges{
     VAAssertReturn(ref && type, @"can't be nil");
     [VAThreadManager performOnBridgeThreadWithBlock:^{
-        NSArray *args = @[ref, type, params?:@{}, domChanges?:@{}];
+        NSArray *args = @[ref, type, domChanges?:@{}];
         ViolaInstance * instance = [VAInstanceManager getInstanceWithID:instanceId];
         VAJSMethod * method = [[VAJSMethod alloc] initWithModuleName:nil methodName:@"fireEvent" arguments:args instance:instance];
+        method.eventData = params;
         [self callJSMethod:method];
     }];
 

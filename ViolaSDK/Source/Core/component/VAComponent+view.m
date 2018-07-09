@@ -277,9 +277,6 @@ if (leftBottom) {\
         VAAssertMainThread();
         
         [self viewWillLoad];
-        
-
-        
         _view = [self loadView];
         _view.va_component = self;
         _view.frame = _componentFrame;
@@ -290,21 +287,9 @@ if (leftBottom) {\
         if (_touchEnable) {
             _view.userInteractionEnabled = [_touchEnable boolValue];
         }
-    
-//        if (_transform) {//todo tomqiu
-
-//        }
-        
-        
-       
         [self _syncTouchEventsToView];
         
-        
-        [self viewDidLoad];//viewdidload
-
-    //    [self _syncBorderDraw];
-//        [self _createShapeLayer];
-        
+        [self viewDidLoad];
         return _view;
     }
 }

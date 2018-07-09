@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 @class ViolaInstance;
+NS_ASSUME_NONNULL_BEGIN
 @interface VABridgeMethod : NSObject
 @property (nonatomic, strong, readonly) NSString *methodName;
 @property (nonatomic, copy, readonly) NSMutableArray *arguments;
@@ -27,6 +28,8 @@
                         methodName:(NSString *)methodName
                          arguments:(NSArray *)arguments
                           instance:(ViolaInstance *)instance;
+
+@property(nullable, nonatomic, strong) NSDictionary * eventData;
 
 - (NSDictionary *)callJSTask;
 
@@ -48,3 +51,4 @@
                           instance:(ViolaInstance *)instance;
 - (void)invoke;
 @end
+NS_ASSUME_NONNULL_END

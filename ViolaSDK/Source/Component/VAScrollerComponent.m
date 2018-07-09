@@ -283,9 +283,6 @@ static int cssNode_scroller_childrenCount(void * context){
 
 //重写基类方法
 - (int)_getChildrenCountForCSSNode{
-    if (_subcomponents.count && [_subcomponents.firstObject isKindOfClass:[NSDictionary class]]) {
-        
-    }
     return 0;
 }
 
